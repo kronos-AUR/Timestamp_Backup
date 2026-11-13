@@ -43,7 +43,16 @@ sha256sums=('SKIP'
             '99ae2234c584031bb0e3bb9846548945c0109d7bfd8d52906422accafeb0cb60')
 
 package() {
-    cd "${srcdir}"/Timestamp_Backup-*
+    # Le tarball du tag vX.Y s'extrait dans Timestamp_Backup-X.Y. Si plusieurs
+    # extractions cohabitent dans srcdir (builds successifs de versions
+    # differentes), le glob Timestamp_Backup-* ne doit pas etre utilise tel
+    # quel dans cd (trop d'arguments) : on prend le dossier de la version
+    # courante, ou a defaut le plus recent.
+    repo_dir="${srcdir}/Timestamp_Backup-${pkgver}"
+    if [ ! -d "$repo_dir" ]; then
+        repo_dir="$(find "${srcdir}" -maxdepth 1 -type d -name 'Timestamp_Backup-*' | sort -V | tail -n 1)"
+    fi
+    cd "$repo_dir" || return 1
 
     # Install Python files to /usr/lib/timestamp-backup
     install -d "${pkgdir}/usr/lib/${pkgname}"
