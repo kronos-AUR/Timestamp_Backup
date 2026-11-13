@@ -67,7 +67,7 @@ package() {
     # Install default configuration file
     install -d "${pkgdir}/usr/share/${pkgname}"
     install -Dm644 timestamp/requirements.txt "${pkgdir}/usr/share/${pkgname}/requirements.txt"
-    install -Dm644 config.json.default "${pkgdir}/usr/share/${pkgname}/config.json.default"
+    install -Dm644 "${srcdir}/config.json.default" "${pkgdir}/usr/share/${pkgname}/config.json.default"
     
     # Install documentation
     install -d "${pkgdir}/usr/share/doc/${pkgname}"
