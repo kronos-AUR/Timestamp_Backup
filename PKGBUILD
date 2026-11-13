@@ -43,7 +43,7 @@ sha256sums=('SKIP'
             'SKIP')
 
 package() {
-    cd "${pkgname}-${pkgver}"
+    cd "Timestamp_Backup-${pkgver}"
     
     # Install Python files to /usr/lib/timestamp
     install -d "${pkgdir}/usr/lib/${pkgname}"
