@@ -1,31 +1,31 @@
 #!/usr/bin/env python3
 """
-Timestamp - Point d'entrée de l'interface graphique.
+Timestamp - Graphical user interface entry point.
 
-Ce module lance l'interface graphique de sauvegarde.
+This module launches the backup GUI.
 """
 
 import os
 import sys
 from pathlib import Path
 
-# Importer le module d'initialisation pour définir les chemins
+# Import the initialization module to set paths
 from timestamp import CONFIG_DIR, RUNTIME_DIR, ICONS_DIR, ensure_directories
 
-# S'assurer que les répertoires existent
+# Ensure directories exist
 ensure_directories()
 
-# Définir le répertoire de projet pour le module backup
+# Set the project directory for the backup module
 import backup.config
 backup.config._project_root = CONFIG_DIR
 
-# Importer webview et l'API
+# Import webview and the API
 import webview
 from timestamp.gui.api import BackupAPI
 
 
 def _generate_icon():
-    """Génère les icônes runtime depuis le SVG."""
+    """Generate runtime icons from the SVG."""
     svg_path = ICONS_DIR / "timestamp.svg"
     out_dir = RUNTIME_DIR
     png_path = out_dir / "icon.png"
@@ -34,7 +34,7 @@ def _generate_icon():
     if ico_path.exists() and png_path.exists():
         return ico_path, png_path
     if not svg_path.exists():
-        # Essayer avec le chemin d'installation
+        # Try with installation path
         svg_path = Path("/usr/share/icons/hicolor/scalable/apps/timestamp.svg")
         if not svg_path.exists():
             return None, None
@@ -59,7 +59,7 @@ def _generate_icon():
             return (r, g, b, int(opacity * 255))
 
         def parse_path(d):
-            """Parse SVG path commands M/H/V/L/Z (no curves) → list of (x,y)."""
+            """Parse SVG path commands M/H/V/L/Z (no curves) -> list of (x,y)."""
             tokens = re.findall(r"[MmHhVvLlZz]|[-+]?\d*\.?\d+", d)
             pts, cx, cy, sx, sy = [], 0.0, 0.0, 0.0, 0.0
             cmd, i = None, 0
@@ -149,19 +149,19 @@ def _generate_icon():
         out_dir.mkdir(exist_ok=True)
         canvas.save(str(png_path))
 
-        # Redimensionne depuis le canvas 512px vers chaque taille cible.
+        # Resize from the 512px canvas to each target size.
         ico_sizes = [(16,16),(20,20),(24,24),(32,32),(40,40),(48,48),(64,64),(96,96),(128,128),(256,256)]
         canvas.save(str(ico_path), format="ICO", sizes=ico_sizes)
 
         return ico_path, png_path
     except Exception as e:
-        print(f"[icon] Generation ignoree : {e}")
+        print(f"[icon] Generation skipped: {e}")
         return None, None
 
 
-# Couleur de fond de la fenêtre par thème. Appliquée avant le rendu de la
-# page : sans elle, la fenêtre s'ouvre en sombre puis bascule, ce qui produit
-# un flash visible avec le thème clair.
+# Background color of the window by theme. Applied before page rendering:
+# without it, the window opens in dark then switches, which produces a
+# visible flash with the light theme.
 _THEME_BG = {
     "dark":    "#14171C",
     "monokai": "#272822",
@@ -171,7 +171,7 @@ _THEME_BG = {
 
 
 def _select_qt_binding() -> None:
-    """Force qtpy à utiliser PyQt6."""
+    """Force qtpy to use PyQt6."""
     if os.environ.get("QT_API"):
         return
     try:
@@ -183,25 +183,25 @@ def _select_qt_binding() -> None:
 
 
 def _configure_qtwebengine() -> None:
-    """Réglages QtWebEngine nécessaires sur certaines distributions Linux."""
+    """Necessary QtWebEngine settings on some Linux distributions."""
     if os.name == "nt":
         return
 
-    # Kali s'utilise couramment en root ; le bac à sable Chromium refuse alors
-    # de démarrer et la fenêtre reste blanche.
+    # Kali is often used as root; the Chromium sandbox refuses to start
+    # and the window remains blank.
     if hasattr(os, "geteuid") and os.geteuid() == 0:
         flags = os.environ.get("QTWEBENGINE_CHROMIUM_FLAGS", "")
         if "--no-sandbox" not in flags:
             os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = (flags + " --no-sandbox").strip()
 
-    # Sous Wayland, QtWebEngine passe par XWayland
+    # Under Wayland, QtWebEngine goes through XWayland
     if not os.environ.get("QT_QPA_PLATFORM") and os.environ.get("WAYLAND_DISPLAY") \
             and os.environ.get("DISPLAY"):
         os.environ["QT_QPA_PLATFORM"] = "xcb"
 
 
 def _gui_backends() -> list:
-    """Backends pywebview à essayer, dans l'ordre."""
+    """pywebview backends to try, in order."""
     forced = os.environ.get("TIMESTAMP_GUI")
     if forced:
         return [forced]
@@ -220,9 +220,9 @@ def main():
         from backup.config import get_theme
         theme = get_theme()
     except Exception:
-        theme = "dark"
+        theme = "flexoki"
 
-    # Le thème est injecté dans le gabarit
+    # Theme is injected into the template
     html = index.read_text(encoding="utf-8").replace("__THEME__", theme, 1)
 
     webview.create_window(
@@ -245,13 +245,13 @@ def main():
             return
         except Exception as e:
             last_error = e
-            print(f"[gui] Backend '{backend}' indisponible : {e}")
+            print(f"[gui] Backend '{backend}' unavailable: {e}")
 
     print(
-        "Aucun moteur d'affichage utilisable.\n"
+        "No usable display engine.\n"
         "  Linux (Debian/Kali/Ubuntu) : sudo apt install python3-pyqt6 python3-pyqt6.qtwebengine\n"
         "  Linux (Arch/CachyOS)       : sudo pacman -S python-pyqt6 python-pyqt6-webengine\n"
-        "  Windows                    : installez PyQt6",
+        "  Windows                    : Install PyQt6",
         file=sys.stderr,
     )
     raise SystemExit(1 if last_error else 0)

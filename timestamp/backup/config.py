@@ -256,7 +256,7 @@ THEMES = ("dark", "monokai", "amber", "flexoki")
 def get_settings() -> dict:
     settings = load_config().get("settings", {})
     if settings.get("theme") not in THEMES:
-        settings["theme"] = "dark"
+        settings["theme"] = "flexoki"
     return settings
 
 

@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=Timestamp
-Comment=Outil de sauvegarde et de restauration
+Comment=Backup and restore tool
 Exec=timestamp-gui
 Icon=timestamp
 Terminal=false

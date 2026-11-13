@@ -1,55 +1,55 @@
 """
-Timestamp - Module d'initialisation pour l'installation AUR.
+Timestamp - Initialization module for AUR installation.
 
-Ce module définit les chemins de base pour une installation système.
-Il doit être importé avant tout autre module timestamp.
+This module defines the base paths for a system installation.
+It must be imported before any other timestamp module.
 """
 
 import os
 import sys
 from pathlib import Path
 
-# Chemins pour l'installation AUR
+# Paths for AUR installation
 PKG_DIR = Path("/usr/lib/timestamp")
 
-# Dossier de configuration utilisateur (XDG compliant)
+# User configuration directory (XDG compliant)
 CONFIG_DIR = Path.home() / ".config" / "timestamp"
 
-# Dossier de données utilisateur (XDG compliant)
+# User data directory (XDG compliant)
 DATA_DIR = Path.home() / ".local" / "share" / "timestamp"
 
-# Dossier de cache utilisateur (XDG compliant)
+# User cache directory (XDG compliant)
 CACHE_DIR = Path.home() / ".cache" / "timestamp"
 
-# Dossier de logs
+# Logs directory
 LOGS_DIR = DATA_DIR / "logs"
 
-# Dossier runtime
+# Runtime directory
 RUNTIME_DIR = DATA_DIR / "runtime"
 
-# Dossier des icônes
+# Icons directory
 ICONS_DIR = Path("/usr/share/icons/hicolor/scalable/apps")
 
 
 def ensure_directories():
-    """Créer les répertoires nécessaires si ils n'existent pas."""
+    """Create necessary directories if they don't exist."""
     for directory in [CONFIG_DIR, DATA_DIR, LOGS_DIR, RUNTIME_DIR, CACHE_DIR]:
         directory.mkdir(parents=True, exist_ok=True)
 
 
-# Ajouter le dossier du paquet à sys.path si nécessaire
+# Add package directory to sys.path if needed
 if str(PKG_DIR) not in sys.path:
     sys.path.insert(0, str(PKG_DIR))
 
-# Initialiser les répertoires
+# Initialize directories
 ensure_directories()
 
-# Définir les variables pour les autres modules
-# Ces variables seront utilisées par backup.config, netshares, etc.
+# Define variables for other modules
+# These variables will be used by backup.config, netshares, etc.
 _project_root = CONFIG_DIR
 _runtime_root = RUNTIME_DIR
 
-# Exporter pour compatibilité
+# Export for compatibility
 __all__ = [
     'PKG_DIR', 'CONFIG_DIR', 'DATA_DIR', 'CACHE_DIR', 
     'LOGS_DIR', 'RUNTIME_DIR', 'ICONS_DIR',

@@ -1,124 +1,205 @@
 # Timestamp
 
+**Backup and restore tool with graphical user interface for Linux**
+
 [![AUR version](https://img.shields.io/aur/version/timestamp?style=flat-square)](https://aur.archlinux.org/packages/timestamp)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-GPL--3.0--only-blue.svg?style=flat-square)](LICENSE)
 
-**Timestamp** est un outil de sauvegarde et de restauration portable avec interface graphique, compatible Windows & Linux.
+Timestamp is a simple yet powerful backup solution designed for Linux users who want an easy-to-use tool with both GUI and CLI interfaces.
 
-## Fonctionnalités
+## Features
 
-- ✅ **Sauvegarde simple** : Copie de fichiers/dossiers vers une destination locale ou réseau
-- ✅ **Compression** : Création d'archives ZIP ou TAR.GZ
-- ✅ **Sauvegarde incrémentale** : Seuls les fichiers modifiés sont copiés
-- ✅ **Groupes de sauvegarde** : Exécution de plusieurs sauvegardes en séquence
-- ✅ **Restauration** : Restauration depuis une sauvegarde existante
-- ✅ **Planification** : Planification automatique via cron (Linux) ou Planificateur de tâches (Windows)
-- ✅ **Partages réseau** : Support des partages SMB/CIFS
-- ✅ **Multi-thèmes** : 4 thèmes disponibles (Sombre, Monokai, Jaune/Gris, Flexoki)
-- ✅ **Interface graphique** : Interface web moderne avec PyQt6
-- ✅ **CLI** : Interface en ligne de commande complète
+- **Graphical User Interface** - Modern, intuitive GUI based on PyQt6/WebView
+- **Command Line Interface** - Full-featured CLI for automation and scripting
+- **Multiple Backup Types** - Simple copy or compressed archives (zip, tar.gz)
+- **Incremental Backups** - Only copy changed files to save time and space
+- **Network Shares Support** - Backup to SMB/CIFS network shares
+- **Scheduled Backups** - Automate backups using cron or systemd timers
+- **Multiple Themes** - Choose from 4 different themes (Dark, Monokai, Amber, Flexoki)
+- **Restore Functionality** - Restore individual files or entire backups
+- **Backup Groups** - Run multiple backups in sequence
+- **Cross-platform** - Works on Linux (tested on Arch, Debian, Ubuntu, Kali, Fedora)
 
 ## Installation
 
-### Depuis l'AUR (Arch Linux)
+### From AUR (Arch Linux)
 
 ```bash
-# Avec yay
+# With yay (recommended)
 yay -S timestamp
 
-# Avec paru
+# With paru
 paru -S timestamp
 
-# Avec makepkg
+# With makepkg
 git clone https://aur.archlinux.org/timestamp.git
 cd timestamp
 makepkg -si
 ```
 
-### Dépendances
+### Requirements
 
-**Obligatoires** :
+**Required:**
 - python
-- python-pywebview
-- python-qtpy
-- python-pillow
-- python-cryptography
+- python-pywebview (>=4.4)
+- python-qtpy (>=2.4)
+- python-pillow (>=10.0)
+- python-cryptography (>=40.0)
 - python-pyqt6
 - python-pyqt6-webengine
 - cronie
+- xcb-util-cursor
 
-**Optionnelles** :
-- python-smbc : Support SMB direct (accès aux partages réseau sans montage)
-- gvfs-smb : Support montage SMB pour GNOME
-- xdg-user-dirs : Gestion des dossiers utilisateur
-- kio-fuse : Support montage SMB pour KDE
+**Optional:**
+- python-smbc: Direct SMB support (network shares access without mounting)
+- gvfs-smb: SMB mounting support for GNOME
+- xdg-user-dirs: User directories management
+- kio-fuse: SMB mounting support for KDE
 
-## Utilisation
+Install optional dependencies with:
+```bash
+yay -S python-smbc gvfs-smb xdg-user-dirs kio-fuse
+```
 
-### Interface Graphique
+## Usage
+
+### Graphical Interface
 
 ```bash
 timestamp-gui
 ```
 
-### Interface en Ligne de Commande
+### Command Line Interface
 
-#### Gestion des profils
+#### Profile Management
 
 ```bash
-# Lister les profils
+# List profiles
 timestamp-cli profile list
 
-# Ajouter un profil
-timestamp-cli profile add <nom> <destination> <source1> [source2...] [--compress]
+# Add a backup profile
+timestamp-cli profile add my_backup /backup/path /home/user/Documents
 
-# Supprimer un profil
-timestamp-cli profile remove <nom>
+# Add a backup profile with compression
+timestamp-cli profile add my_backup /backup/path /home/user/Documents --compress
+
+# Remove a profile
+timestamp-cli profile remove my_backup
 ```
 
-#### Sauvegarde
+#### Backup
 
 ```bash
-# Lancer une sauvegarde
-timestamp-cli run <profil> [--full] [--group]
+# Run a backup
+timestamp-cli run my_backup
 
-# Sauvegarde complète (ignore l'incrémental)
-timestamp-cli run <profil> --full
+# Full backup (ignore incremental)
+timestamp-cli run my_backup --full
+
+# Run a backup group
+timestamp-cli run my_group --group
 ```
 
-#### Restauration
+#### Restore
 
 ```bash
-# Restauration manuelle
-timestamp-cli restore <source> <destination> [--incremental]
+# Manual restore
+timestamp-cli restore /backup/archive.tar.gz /restore/path
 
-# Restauration via un profil
-timestamp-cli restore --profile <nom>
+# Restore with incremental check
+timestamp-cli restore /backup/archive.tar.gz /restore/path --incremental
+
+# Restore using a profile
+timestamp-cli restore --profile my_restore_profile
 ```
 
-#### Planification
+#### Scheduled Backups
 
-Les planifications sont gérées via l'interface graphique ou automatiquement lors de la création de profils.
+Scheduled backups are managed through the GUI or automatically when creating schedules.
 
 ## Configuration
 
-Les fichiers de configuration sont stockés dans :
-- `~/.config/timestamp/config.json` - Configuration principale
-- `~/.local/share/timestamp/logs/` - Journaux
-- `~/.local/share/timestamp/runtime/` - Données runtime
+After installation, configuration files are stored in:
+- `~/.config/timestamp/config.json` - Main configuration
+- `~/.local/share/timestamp/logs/` - Log files
+- `~/.local/share/timestamp/runtime/` - Runtime data (icons, encryption keys)
 
-## Thèmes
+## Themes
 
-4 thèmes sont disponibles :
-- `dark` - Sombre (par défaut)
-- `monokai` - Monokai
-- `amber` - Jaune/Gris
-- `flexoki` - Flexoki
+4 themes are available:
+- `dark` - Dark theme (default)
+- `monokai` - Monokai theme
+- `amber` - Yellow/Gray theme
+- `flexoki` - Flexoki theme
 
-## Contribution
+## Network Shares
 
-Les contributions sont les bienvenues ! Veuillez ouvrir une issue ou une pull request sur le dépôt GitHub.
+### SMB Support
 
-## Licence
+Timestamp supports SMB/CIFS network shares through multiple methods:
 
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+1. **Direct SMB (recommended)** - Install `python-smbc` for direct access without mounting
+2. **GNOME GVFS** - Install `gvfs-smb` for GNOME integration
+3. **KDE kio-fuse** - Install `kio-fuse` for KDE integration
+
+### Adding a Network Share
+
+In the GUI:
+1. Go to Network page
+2. Click "Add" button
+3. Enter server details, credentials, and share name
+4. Save and test connection
+
+## Troubleshooting
+
+### QtWebEngine and Wayland
+
+If you use Wayland and the GUI doesn't open, try:
+```bash
+QT_QPA_PLATFORM=xcb timestamp-gui
+```
+
+### SMB Issues
+
+If network shares don't work:
+1. Install `python-smbc` for direct SMB support
+2. Or install `gvfs-smb` (GNOME) or `kio-fuse` (KDE) for mounting
+
+### Cron Not Enabled
+
+If scheduled backups don't run:
+```bash
+sudo systemctl enable --now cronie
+```
+
+## Uninstallation
+
+```bash
+# With AUR helper
+yay -Rns timestamp
+
+# Manual
+sudo pacman -Rns timestamp
+
+# Remove configuration files (optional)
+rm -rf ~/.config/timestamp/
+rm -rf ~/.local/share/timestamp/
+```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## License
+
+GNU General Public License version 3 (GPL-3.0-only) - see [LICENSE](LICENSE) file for details.
+
+---
+
+## Documentation en Français
+
+Voir [AUR-README.md](AUR-README.md) pour la documentation en français.
+
+---
+
+**Note:** This project is not affiliated with any commercial backup service. It's a free and open-source backup tool for personal use.

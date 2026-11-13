@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="__THEME__">
+<html lang="en" data-theme="__THEME__">
 <head>
 <meta charset="UTF-8">
-<title>Timestamp</title>
+<title>Timestamp - Backup Tool</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ── Thèmes ───────────────────────────────────────────
-   Chaque thème ne redéfinit que des variables : aucune règle de mise en page
-   n'est dupliquée. Le thème actif est posé sur <html data-theme="…"> par
-   app.py au chargement (évite le clignotement) puis par setTheme(). */
+/* ── Theme system ───────────────────────────────────────────
+   Each theme only redefines variables; no layout rules are duplicated.
+   Active theme is set on <html data-theme="..."> by app.py on load
+   (prevents flickering) and then by setTheme(). */
 
 :root {
-  /* Sombre (par défaut) */
+  /* Dark (default) */
   --bg:             #14171C;
   --sidebar:        #0E1013;
   --sidebar-text:   #E6E9EE;
@@ -168,9 +168,9 @@
   --logo-arrow:     #1B7F5A;
 }
 
-/* Flexoki — palette de Steph Ango (stephango.com/flexoki), variante sombre
-   officielle : noirs chauds (#100F0F), texte base-200 (#CECDC3),
-   accent cyan-400, danger red-400, succès green-400. */
+/* Flexoki — palette by Steph Ango (stephango.com/flexoki),
+   official dark variant: warm blacks (#100F0F), base-200 text (#CECDC3),
+   cyan-400 accent, red-400 danger, green-400 success. */
 :root[data-theme="flexoki"] {
   --bg:             #100F0F;
   --sidebar:        #1C1B1A;
@@ -425,7 +425,7 @@ body {
   vertical-align: middle;
 }
 
-/* Type badge (profil / groupe) */
+/* Type badge (profile / group) */
 .type-badge {
   display: inline-block;
   padding: 2px 8px;
@@ -553,7 +553,7 @@ body {
 
 .form-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 
-/* Tabs (page Sauvegarder) */
+/* Tabs (page Backup) */
 .tab-bar { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 1px solid var(--border2); }
 .tab-btn {
   padding: 10px 16px; background: transparent; border: none;
@@ -636,13 +636,13 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
 .share-msg.err { display: block; background: var(--danger-bg); color: var(--danger-hl); border: 1px solid var(--danger-border); }
 .ns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
 
-/* Logo : les couleurs suivent le thème (le CSS prime sur l'attribut fill) */
+/* Logo: colors follow the theme (CSS overrides fill attribute) */
 .ts-bg    { fill: var(--logo-bg); }
 .ts-ring  { fill: none; stroke: var(--logo-ring); }
 .ts-tick  { fill: var(--logo-tick); }
 .ts-arrow { fill: var(--logo-arrow); }
 
-/* Sélecteur de thème */
+/* Theme selector */
 .theme-grid { display: flex; gap: 10px; flex-wrap: wrap; }
 .theme-card {
   flex: 1; min-width: 150px;
@@ -662,6 +662,177 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
 }
 @media (max-width: 680px) { .ns-grid { grid-template-columns: 1fr; } }
 </style>
+<!-- SVG Icons Library -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+
+<!-- Profiles Icon -->
+<symbol id="icon-profiles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM12 14a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7z"/>
+</symbol>
+
+<!-- Backup Icon -->
+<symbol id="icon-backup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+  <polyline points="7 10 12 15 17 10"/>
+  <line x1="12" y1="15" x2="12" y2="3"/>
+</symbol>
+
+<!-- Restore Icon -->
+<symbol id="icon-restore" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+  <polyline points="15 9 12 12 9 9"/>
+</symbol>
+
+<!-- Schedule/Clock Icon -->
+<symbol id="icon-schedule" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 16 14"/>
+</symbol>
+
+<!-- Network/Globe Icon -->
+<symbol id="icon-network" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"/>
+  <line x1="2" y1="12" x2="22" y2="12"/>
+  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+</symbol>
+
+<!-- Logs/File-Text Icon -->
+<symbol id="icon-logs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+  <polyline points="14 2 14 8 20 8"/>
+  <line x1="16" y1="13" x2="8" y2="13"/>
+  <line x1="16" y1="17" x2="8" y2="17"/>
+  <polyline points="10 9 9 9 8 9"/>
+</symbol>
+
+<!-- Settings/Gear Icon -->
+<symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+</symbol>
+
+<!-- Folder Icon -->
+<symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+</symbol>
+
+<!-- File Icon -->
+<symbol id="icon-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+  <polyline points="13 2 13 9 20 9"/>
+</symbol>
+
+<!-- Delete/X Icon -->
+<symbol id="icon-delete" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"/>
+  <line x1="15" y1="9" x2="9" y2="15"/>
+  <line x1="9" y1="9" x2="15" y2="15"/>
+</symbol>
+
+<!-- Play Icon -->
+<symbol id="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polygon points="5 3 19 12 5 21 5 3"/>
+</symbol>
+
+<!-- Restore Arrow Icon (for restore button) -->
+<symbol id="icon-restore-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M13 2L3 14h9l-1 8 10-11h-9l1-8z"/>
+</symbol>
+
+<!-- Trash Icon -->
+<symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="3 6 5 6 21 6"/>
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+</symbol>
+
+<!-- Copy/Clipboard Icon -->
+<symbol id="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+</symbol>
+
+<!-- Compress/Archive Icon -->
+<symbol id="icon-compress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+  <line x1="9" y1="9" x2="15" y2="9"/>
+  <line x1="9" y1="15" x2="15" y2="15"/>
+  <line x1="9" y1="9" x2="9" y2="15"/>
+  <line x1="15" y1="9" x2="15" y2="15"/>
+</symbol>
+
+<!-- Eye Icon -->
+<symbol id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+  <circle cx="12" cy="12" r="3"/>
+</symbol>
+
+<!-- Eye-Off Icon -->
+<symbol id="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+  <line x1="1" y1="1" x2="23" y2="23"/>
+</symbol>
+
+<!-- Refresh Icon -->
+<symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M23 4v6h-6"/>
+  <path d="M1 20v-6h6"/>
+  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+</symbol>
+
+<!-- Group/Folder-Open Icon -->
+<symbol id="icon-group" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+  <line x1="12" y1="11" x2="12" y2="17"/>
+  <polyline points="9 14 12 17 15 14"/>
+</symbol>
+
+<!-- Calendar Icon -->
+<symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+</symbol>
+
+<!-- Timer/Hourglass Icon -->
+<symbol id="icon-timer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+  <path d="M12 2v20"/>
+</symbol>
+
+<!-- Up Arrow Icon -->
+<symbol id="icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="12" y1="19" x2="12" y2="5"/>
+  <polyline points="5 12 12 5 19 12"/>
+</symbol>
+
+<!-- Down Arrow Icon -->
+<symbol id="icon-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="12" y1="5" x2="12" y2="19"/>
+  <polyline points="19 12 12 19 5 12"/>
+</symbol>
+
+<!-- Checkmark Icon -->
+<symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="20 6 9 17 4 12"/>
+</symbol>
+
+<!-- Warning Icon -->
+<symbol id="icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+  <line x1="12" y1="9" x2="12" y2="13"/>
+  <line x1="12" y1="17" x2="12.01" y2="17"/>
+</symbol>
+
+<!-- Server/Computer Icon -->
+<symbol id="icon-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+  <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+  <line x1="6" y1="6" x2="6.01" y2="6"/>
+  <line x1="6" y1="18" x2="6.01" y2="18"/>
+</symbol>
+
+</svg>
 </head>
 <body>
 
@@ -684,30 +855,30 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
     <svg class="logo-svg"><use href="#ts-icon"/></svg>
     <div>
       <div class="logo-title">Timestamp</div>
-      <div class="logo-sub">Windows &amp; Linux</div>
+      <div class="logo-sub">Backup Tool</div>
     </div>
   </div>
   <div class="nav">
     <div class="nav-item active" id="nav-profiles" onclick="nav('profiles')">
-      <span class="nav-sym">&#x25A3;</span> Profils
+      <span class="nav-sym"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-profiles"/></svg></span> Profiles
     </div>
     <div class="nav-item" id="nav-backup" onclick="nav('backup')">
-      <span class="nav-sym">&#x25BA;</span> Sauvegarder
+      <span class="nav-sym"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-backup"/></svg></span> Backup
     </div>
     <div class="nav-item" id="nav-restore" onclick="nav('restore')">
-      <span class="nav-sym">&#x21A9;</span> Restaurer
+      <span class="nav-sym"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-restore"/></svg></span> Restore
     </div>
     <div class="nav-item" id="nav-schedule" onclick="nav('schedule')">
-      <span class="nav-sym">&#x23F0;</span> Planifier
+      <span class="nav-sym"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-schedule"/></svg></span> Schedule
     </div>
     <div class="nav-item" id="nav-network" onclick="nav('network')">
-      <span class="nav-sym">&#x1F310;</span> R&eacute;seau
+      <span class="nav-sym"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-network"/></svg></span> Network
     </div>
     <div class="nav-item" id="nav-logs" onclick="nav('logs')">
-      <span class="nav-sym">&#x1F4CB;</span> Journaux
+      <span class="nav-sym"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-logs"/></svg></span> Logs
     </div>
     <div class="nav-item" id="nav-settings" onclick="nav('settings')">
-      <span class="nav-sym">&#x2699;</span> Param&egrave;tres
+      <span class="nav-sym"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-settings"/></svg></span> Settings
     </div>
   </div>
 </nav>
@@ -715,43 +886,43 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
 <!-- ── Main ─────────────────────────────────────────────── -->
 <main class="main">
 
-  <!-- ═══ PROFILS ═══════════════════════════════════════ -->
+  <!-- ==== PROFILES ============================================ -->
   <section class="page active" id="page-profiles">
     <div class="page-header">
-      <div class="page-title">Profils</div>
-      <button class="btn btn-primary" onclick="toggleAddForm()">+ Ajouter</button>
+      <div class="page-title">Profiles</div>
+      <button class="btn btn-primary" onclick="toggleAddForm()">+ Add</button>
     </div>
 
     <div class="card add-form" id="add-form">
       <div class="form-title-row">
-        <span class="section-label" id="profile-form-title" style="margin-bottom:0">Nouveau profil</span>
-        <span id="profile-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode édition</span>
+        <span class="section-label" id="profile-form-title" style="margin-bottom:0">New Profile</span>
+        <span id="profile-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Edit Mode</span>
       </div>
       <div class="form-group">
-        <label class="form-label">Nom du profil</label>
-        <input class="form-input" id="p-name" placeholder="ex : Documents_quotidien">
+        <label class="form-label">Profile Name</label>
+        <input class="form-input" id="p-name" placeholder="e.g.: Documents_Daily">
       </div>
       <div class="form-group">
         <label class="form-label">Sources</label>
         <div class="source-list" id="source-list">
           <div class="source-row">
-            <input class="form-input" placeholder="Dossier ou fichier source">
-            <button class="btn-icon" onclick="pickFolderForInput(this)" title="Parcourir">📂</button>
-            <button class="btn-icon del" onclick="removeSource(this)" title="Supprimer">✕</button>
+            <input class="form-input" placeholder="Source folder or file">
+            <button class="btn-icon" onclick="pickFolderForInput(this)" title="Browse"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
+            <button class="btn-icon del" onclick="removeSource(this)" title="Delete"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-delete"/></svg></button>
           </div>
         </div>
-        <button class="btn btn-ghost" style="margin-top:8px;font-size:12px" onclick="addSource()">+ Ajouter une source</button>
+        <button class="btn btn-ghost" style="margin-top:8px;font-size:12px" onclick="addSource()">+ Add Source</button>
       </div>
       <div class="form-group">
         <label class="form-label">Destination</label>
         <div class="input-row">
-          <input class="form-input" id="p-dest" placeholder="Dossier de sauvegarde">
-          <button class="btn-icon" onclick="pickFolderForId('p-dest')" title="Parcourir">📂</button>
+          <input class="form-input" id="p-dest" placeholder="Backup destination folder">
+          <button class="btn-icon" onclick="pickFolderForId('p-dest')" title="Browse"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
         </div>
         <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
-          <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">ou partage réseau :</span>
+          <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">or network share:</span>
           <select class="form-select" id="p-dest-share" onchange="applyShareDest()" style="flex:1;font-size:12px;height:32px;padding:4px 8px">
-            <option value="">— Sélectionner un partage enregistré —</option>
+            <option value="">— Select a saved share —</option>
           </select>
         </div>
       </div>
@@ -762,33 +933,33 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
             <input type="checkbox" id="p-compress">
             <span class="slider"></span>
           </label>
-          <span>Compresser les sauvegardes</span>
+          <span>Compress backups</span>
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn btn-primary" id="btn-save-profile" onclick="submitProfile()">Enregistrer</button>
-        <button class="btn btn-ghost" onclick="closeProfileForm()">Annuler</button>
+        <button class="btn btn-primary" id="btn-save-profile" onclick="submitProfile()">Save</button>
+        <button class="btn btn-ghost" onclick="closeProfileForm()">Cancel</button>
       </div>
     </div>
 
     <div id="profiles-list"></div>
   </section>
 
-  <!-- ═══ SAUVEGARDER ═══════════════════════════════════ -->
+  <!-- ==== BACKUP ============================================== -->
   <section class="page" id="page-backup">
     <div class="page-header">
-      <div class="page-title">Sauvegarder</div>
+      <div class="page-title">Backup</div>
     </div>
 
     <div class="tab-bar">
-      <button class="tab-btn active" id="tab-btn-single" onclick="switchBackupTab('single')">Sauvegarde individuelle</button>
-      <button class="tab-btn" id="tab-btn-groups" onclick="switchBackupTab('groups')">Groupes</button>
+      <button class="tab-btn active" id="tab-btn-single" onclick="switchBackupTab('single')">Single Backup</button>
+      <button class="tab-btn" id="tab-btn-groups" onclick="switchBackupTab('groups')">Groups</button>
     </div>
 
     <div class="tab-panel active" id="tab-single">
       <div class="card">
         <div class="form-group">
-          <label class="form-label">Profil</label>
+          <label class="form-label">Profile</label>
           <select class="form-select" id="backup-profile" onchange="onProfileChange()"></select>
         </div>
         <div class="form-group">
@@ -796,18 +967,18 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
           <div class="mode-selector">
             <label class="mode-option selected" id="mode-copy" onclick="selectMode('copy')">
               <input type="radio" name="backup-mode" value="copy" checked>
-              <span class="mode-icon">📋</span>
+              <span class="mode-icon"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-copy"/></svg></span>
               <div>
-                <div class="mode-label">Copie simple</div>
-                <div class="mode-desc">Fichiers copiés tels quels</div>
+                <div class="mode-label">Simple Copy</div>
+                <div class="mode-desc">Files copied as-is</div>
               </div>
             </label>
             <label class="mode-option" id="mode-compress" onclick="selectMode('compress')">
               <input type="radio" name="backup-mode" value="compress">
-              <span class="mode-icon">🗜</span>
+              <span class="mode-icon"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-compress"/></svg></span>
               <div>
                 <div class="mode-label">Compression</div>
-                <div class="mode-desc">Archive .zip / .tar.gz</div>
+                <div class="mode-desc">Archive (.zip / .tar.gz)</div>
               </div>
             </label>
           </div>
@@ -815,16 +986,16 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
         <div class="form-group">
           <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--gray)">
             <input type="checkbox" id="backup-full" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <span>Sauvegarde complète (ignore l'incrémental)</span>
+            <span>Full backup (ignore incremental)</span>
           </label>
         </div>
-        <button class="btn btn-primary" id="btn-run" onclick="startBackup()">▶ Lancer la sauvegarde</button>
+        <button class="btn btn-primary" id="btn-run" onclick="startBackup()">▶ Start Backup</button>
       </div>
 
       <div class="card hidden" id="backup-progress">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           <span class="running-dot" id="backup-dot"></span>
-          <strong id="backup-status">Sauvegarde en cours…</strong>
+          <strong id="backup-status">Backup in progress...</strong>
         </div>
         <div class="progress-wrap"><div class="progress-bar" id="backup-bar"></div></div>
         <div class="progress-info">
@@ -834,43 +1005,43 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
       </div>
 
       <div class="card hidden" id="backup-results">
-        <div class="section-label">Résultats</div>
+        <div class="section-label">Results</div>
         <div class="stat-row">
-          <div class="stat-box s"><div class="val" id="r-copied">0</div><div class="lbl">Copiés</div></div>
-          <div class="stat-box n"><div class="val" id="r-skipped">0</div><div class="lbl">Ignorés</div></div>
-          <div class="stat-box d"><div class="val" id="r-errcnt">0</div><div class="lbl">Erreurs</div></div>
+          <div class="stat-box s"><div class="val" id="r-copied">0</div><div class="lbl">Copied</div></div>
+          <div class="stat-box n"><div class="val" id="r-skipped">0</div><div class="lbl">Skipped</div></div>
+          <div class="stat-box d"><div class="val" id="r-errcnt">0</div><div class="lbl">Errors</div></div>
         </div>
-        <div class="archive-info hidden" id="r-archive">Archive : <span id="r-archive-path"></span></div>
+        <div class="archive-info hidden" id="r-archive">Archive: <span id="r-archive-path"></span></div>
         <div class="err-list hidden" id="r-errlist"></div>
       </div>
     </div>
 
     <div class="tab-panel" id="tab-groups">
       <div class="page-header" style="margin-bottom:14px">
-        <span class="section-label" style="margin-bottom:0">Groupes de sauvegarde</span>
-        <button class="btn btn-primary" onclick="toggleGroupForm()">+ Créer un groupe</button>
+        <span class="section-label" style="margin-bottom:0">Backup Groups</span>
+        <button class="btn btn-primary" onclick="toggleGroupForm()">+ Create Group</button>
       </div>
 
       <div class="card add-form" id="group-form">
         <div class="form-title-row">
-          <span class="section-label" id="group-form-title" style="margin-bottom:0">Nouveau groupe</span>
-          <span id="group-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode édition</span>
+          <span class="section-label" id="group-form-title" style="margin-bottom:0">New Group</span>
+          <span id="group-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Edit Mode</span>
         </div>
         <div class="form-group">
-          <label class="form-label">Nom du groupe</label>
-          <input class="form-input" id="g-name" placeholder="ex : Sauvegarde_complete">
+          <label class="form-label">Group Name</label>
+          <input class="form-input" id="g-name" placeholder="e.g.: Complete_Backup">
         </div>
         <div class="form-group">
-          <label class="form-label">Profils inclus (dans l'ordre d'exécution)</label>
+          <label class="form-label">Included Profiles (in execution order)</label>
           <div class="source-list" id="group-profile-list"></div>
           <div class="input-row" style="margin-top:8px">
             <select class="form-select" id="group-add-profile-select"></select>
-            <button class="btn btn-ghost" onclick="addProfileToGroup()">+ Ajouter</button>
+            <button class="btn btn-ghost" onclick="addProfileToGroup()">+ Add</button>
           </div>
         </div>
         <div class="form-actions">
-          <button class="btn btn-primary" id="btn-save-group" onclick="submitGroup()">Enregistrer</button>
-          <button class="btn btn-ghost" onclick="closeGroupForm()">Annuler</button>
+          <button class="btn btn-primary" id="btn-save-group" onclick="submitGroup()">Save</button>
+          <button class="btn btn-ghost" onclick="closeGroupForm()">Cancel</button>
         </div>
       </div>
 
@@ -879,7 +1050,7 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
       <div class="card hidden" id="group-progress">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           <span class="running-dot" id="group-dot"></span>
-          <strong id="group-status">Sauvegarde du groupe en cours…</strong>
+          <strong id="group-status">Group backup in progress...</strong>
         </div>
         <div class="progress-wrap"><div class="progress-bar" id="group-bar"></div></div>
         <div class="progress-info">
@@ -889,11 +1060,11 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
       </div>
 
       <div class="card hidden" id="group-results">
-        <div class="section-label">Résultats</div>
+        <div class="section-label">Results</div>
         <div class="stat-row">
-          <div class="stat-box s"><div class="val" id="g-copied">0</div><div class="lbl">Copiés</div></div>
-          <div class="stat-box n"><div class="val" id="g-skipped">0</div><div class="lbl">Ignorés</div></div>
-          <div class="stat-box d"><div class="val" id="g-errcnt">0</div><div class="lbl">Erreurs</div></div>
+          <div class="stat-box s"><div class="val" id="g-copied">0</div><div class="lbl">Copied</div></div>
+          <div class="stat-box n"><div class="val" id="g-skipped">0</div><div class="lbl">Skipped</div></div>
+          <div class="stat-box d"><div class="val" id="g-errcnt">0</div><div class="lbl">Errors</div></div>
         </div>
         <div style="margin-top:12px" id="group-breakdown"></div>
         <div class="err-list hidden" id="g-errlist"></div>
@@ -901,39 +1072,39 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
     </div>
   </section>
 
-  <!-- ═══ RESTAURER ════════════════════════════════════ -->
+  <!-- ==== RESTORE ============================================ -->
   <section class="page" id="page-restore">
     <div class="page-header">
-      <div class="page-title">Restaurer</div>
+      <div class="page-title">Restore</div>
     </div>
 
     <div class="tab-bar">
-      <button class="tab-btn active" id="tab-btn-rst-manual" onclick="switchRestoreTab('manual')">Restauration manuelle</button>
-      <button class="tab-btn" id="tab-btn-rst-profiles" onclick="switchRestoreTab('profiles')">Profils de restauration</button>
+      <button class="tab-btn active" id="tab-btn-rst-manual" onclick="switchRestoreTab('manual')">Manual Restore</button>
+      <button class="tab-btn" id="tab-btn-rst-profiles" onclick="switchRestoreTab('profiles')">Restore Profiles</button>
     </div>
 
-    <!-- ── Restauration ponctuelle ── -->
+    <!-- ── Restore ponctuelle ── -->
     <div class="tab-panel active" id="tab-rst-manual">
       <div class="card">
         <div class="form-group">
-          <label class="form-label">Source (archive .zip / .tar.gz ou dossier de sauvegarde)</label>
+          <label class="form-label">Source (archive .zip / .tar.gz or backup folder)</label>
           <div class="input-row">
-            <input class="form-input" id="rst-src" placeholder="Chemin vers l'archive ou le dossier">
-            <button class="btn-icon" onclick="pickFileForId('rst-src')" title="Sélectionner une archive">📄</button>
-            <button class="btn-icon" onclick="pickFolderForId('rst-src')" title="Sélectionner un dossier">📂</button>
+            <input class="form-input" id="rst-src" placeholder="Path to archive or folder">
+            <button class="btn-icon" onclick="pickFileForId('rst-src')" title="Select Archive"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-file"/></svg></button>
+            <button class="btn-icon" onclick="pickFolderForId('rst-src')" title="Select Folder"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
           </div>
           <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
-            <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">ou partage réseau :</span>
+            <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">or network share:</span>
             <select class="form-select" id="rst-src-share" onchange="applyShareTo('rst-src-share','rst-src')" style="flex:1;font-size:12px;height:32px;padding:4px 8px">
-              <option value="">— Sélectionner un partage enregistré —</option>
+              <option value="">— Select a saved share —</option>
             </select>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Destination (son contenu sera écrasé)</label>
+          <label class="form-label">Destination (its content will be overwritten)</label>
           <div class="input-row">
-            <input class="form-input" id="rst-dest" placeholder="Dossier où restaurer les fichiers">
-            <button class="btn-icon" onclick="pickFolderForId('rst-dest')" title="Parcourir">📂</button>
+            <input class="form-input" id="rst-dest" placeholder="Folder to restore files">
+            <button class="btn-icon" onclick="pickFolderForId('rst-dest')" title="Browse"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
           </div>
         </div>
         <div class="form-group">
@@ -942,16 +1113,16 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
               <input type="checkbox" id="rst-incremental">
               <span class="slider"></span>
             </label>
-            <span>Ignorer les fichiers déjà identiques (restauration incrémentale)</span>
+            <span>Skip identical files (incremental restore)</span>
           </div>
         </div>
-        <button class="btn btn-primary" id="btn-restore" onclick="startRestore()">↩ Restaurer</button>
+        <button class="btn btn-primary" id="btn-restore" onclick="startRestore()">↩ Restore</button>
       </div>
 
       <div class="card hidden" id="restore-progress">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           <span class="running-dot"></span>
-          <strong id="restore-status">Restauration en cours…</strong>
+          <strong id="restore-status">Restore in progress...</strong>
         </div>
         <div class="progress-wrap"><div class="progress-bar" id="restore-bar"></div></div>
         <div class="progress-info">
@@ -961,51 +1132,51 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
       </div>
 
       <div class="card hidden" id="restore-results">
-        <div class="section-label">Résultats</div>
+        <div class="section-label">Results</div>
         <div class="stat-row">
-          <div class="stat-box s"><div class="val" id="rst-restored">0</div><div class="lbl">Restaurés</div></div>
-          <div class="stat-box n"><div class="val" id="rst-skipped">0</div><div class="lbl">Ignorés</div></div>
-          <div class="stat-box d"><div class="val" id="rst-errcnt">0</div><div class="lbl">Erreurs</div></div>
+          <div class="stat-box s"><div class="val" id="rst-restored">0</div><div class="lbl">Restored</div></div>
+          <div class="stat-box n"><div class="val" id="rst-skipped">0</div><div class="lbl">Skipped</div></div>
+          <div class="stat-box d"><div class="val" id="rst-errcnt">0</div><div class="lbl">Errors</div></div>
         </div>
         <div class="err-list hidden" id="rst-errlist"></div>
       </div>
     </div>
 
-    <!-- ── Profils de restauration ── -->
+    <!-- ── Restore Profiles ── -->
     <div class="tab-panel" id="tab-rst-profiles">
       <div class="page-header" style="margin-bottom:14px">
-        <span class="section-label" style="margin-bottom:0">Profils enregistrés</span>
-        <button class="btn btn-primary" onclick="toggleRestoreForm()">+ Créer un profil</button>
+        <span class="section-label" style="margin-bottom:0">Saved Profiles</span>
+        <button class="btn btn-primary" onclick="toggleRestoreForm()">+ Create Profile</button>
       </div>
 
       <div class="card add-form" id="restore-form">
         <div class="form-title-row">
-          <span class="section-label" id="restore-form-title" style="margin-bottom:0">Nouveau profil de restauration</span>
-          <span id="restore-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode édition</span>
+          <span class="section-label" id="restore-form-title" style="margin-bottom:0">New Restore Profile</span>
+          <span id="restore-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Edit Mode</span>
         </div>
         <div class="form-group">
-          <label class="form-label">Nom du profil</label>
-          <input class="form-input" id="rp-name" placeholder="ex : Restauration_Documents">
+          <label class="form-label">Profile Name</label>
+          <input class="form-input" id="rp-name" placeholder="e.g.: Documents_Restore">
         </div>
         <div class="form-group">
-          <label class="form-label">Source (dossier ou archive, locale ou distante)</label>
+          <label class="form-label">Source (folder or archive, local or remote)</label>
           <div class="input-row">
-            <input class="form-input" id="rp-src" placeholder="Chemin vers l'archive ou le dossier">
-            <button class="btn-icon" onclick="pickFileForId('rp-src')" title="Sélectionner une archive">📄</button>
-            <button class="btn-icon" onclick="pickFolderForId('rp-src')" title="Sélectionner un dossier">📂</button>
+            <input class="form-input" id="rp-src" placeholder="Path to archive or folder">
+            <button class="btn-icon" onclick="pickFileForId('rp-src')" title="Select Archive"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-file"/></svg></button>
+            <button class="btn-icon" onclick="pickFolderForId('rp-src')" title="Select Folder"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
           </div>
           <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
-            <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">ou partage réseau :</span>
+            <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">or network share:</span>
             <select class="form-select" id="rp-src-share" onchange="applyShareTo('rp-src-share','rp-src')" style="flex:1;font-size:12px;height:32px;padding:4px 8px">
-              <option value="">— Sélectionner un partage enregistré —</option>
+              <option value="">— Select a saved share —</option>
             </select>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Destination (son contenu sera écrasé)</label>
+          <label class="form-label">Destination (its content will be overwritten)</label>
           <div class="input-row">
-            <input class="form-input" id="rp-dest" placeholder="Dossier à restaurer">
-            <button class="btn-icon" onclick="pickFolderForId('rp-dest')" title="Parcourir">📂</button>
+            <input class="form-input" id="rp-dest" placeholder="Restore folder">
+            <button class="btn-icon" onclick="pickFolderForId('rp-dest')" title="Browse"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
           </div>
         </div>
         <div class="form-group">
@@ -1015,12 +1186,12 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
               <input type="checkbox" id="rp-incremental">
               <span class="slider"></span>
             </label>
-            <span>Ignorer les fichiers déjà identiques (restauration incrémentale)</span>
+            <span>Skip identical files (incremental restore)</span>
           </div>
         </div>
         <div class="form-actions">
-          <button class="btn btn-primary" id="btn-save-restore" onclick="submitRestoreProfile()">Enregistrer</button>
-          <button class="btn btn-ghost" onclick="closeRestoreForm()">Annuler</button>
+          <button class="btn btn-primary" id="btn-save-restore" onclick="submitRestoreProfile()">Save</button>
+          <button class="btn btn-ghost" onclick="closeRestoreForm()">Cancel</button>
         </div>
       </div>
 
@@ -1029,7 +1200,7 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
       <div class="card hidden" id="rp-progress">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           <span class="running-dot"></span>
-          <strong id="rp-status">Restauration en cours…</strong>
+          <strong id="rp-status">Restore in progress...</strong>
         </div>
         <div class="progress-wrap"><div class="progress-bar" id="rp-bar"></div></div>
         <div class="progress-info">
@@ -1039,176 +1210,176 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
       </div>
 
       <div class="card hidden" id="rp-results">
-        <div class="section-label">Résultats</div>
+        <div class="section-label">Results</div>
         <div class="stat-row">
-          <div class="stat-box s"><div class="val" id="rp-restored">0</div><div class="lbl">Restaurés</div></div>
-          <div class="stat-box n"><div class="val" id="rp-skipped">0</div><div class="lbl">Ignorés</div></div>
-          <div class="stat-box d"><div class="val" id="rp-errcnt">0</div><div class="lbl">Erreurs</div></div>
+          <div class="stat-box s"><div class="val" id="rp-restored">0</div><div class="lbl">Restored</div></div>
+          <div class="stat-box n"><div class="val" id="rp-skipped">0</div><div class="lbl">Skipped</div></div>
+          <div class="stat-box d"><div class="val" id="rp-errcnt">0</div><div class="lbl">Errors</div></div>
         </div>
         <div class="err-list hidden" id="rp-errlist"></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ PLANIFIER ════════════════════════════════════ -->
+  <!-- ==== SCHEDULE ========================================== -->
   <section class="page" id="page-schedule">
     <div class="page-header">
-      <div class="page-title">Tâches automatiques</div>
-      <button class="btn btn-primary" onclick="toggleScheduleForm()">+ Planifier</button>
+      <div class="page-title">Automated Tasks</div>
+      <button class="btn btn-primary" onclick="toggleScheduleForm()">+ Schedule</button>
     </div>
     <div style="font-size:12px;color:var(--gray);margin:-12px 0 16px" id="sched-backend"></div>
 
     <div class="card add-form" id="schedule-form">
       <div class="form-title-row">
-        <span class="section-label" id="schedule-form-title" style="margin-bottom:0">Nouvelle planification</span>
-        <span id="schedule-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode édition</span>
+        <span class="section-label" id="schedule-form-title" style="margin-bottom:0">New Schedule</span>
+        <span id="schedule-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Edit Mode</span>
       </div>
       <div class="form-group">
-        <label class="form-label">Nom</label>
-        <input class="form-input" id="sch-name" placeholder="ex : Sauvegarde_nuit">
+        <label class="form-label">Name</label>
+        <input class="form-input" id="sch-name" placeholder="e.g.: Night_Backup">
       </div>
       <div class="form-group">
         <label class="form-label">Type</label>
         <div class="mode-selector">
           <label class="mode-option selected" id="type-profile" onclick="selectSchedType('profile')">
             <input type="radio" name="sch-type" value="profile" checked>
-            <span class="mode-icon">📋</span>
-            <div><div class="mode-label">Profil simple</div><div class="mode-desc">Une seule sauvegarde</div></div>
+            <span class="mode-icon"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-copy"/></svg></span>
+            <div><div class="mode-label">Profile simple</div><div class="mode-desc">Single backup</div></div>
           </label>
           <label class="mode-option" id="type-group" onclick="selectSchedType('group')">
             <input type="radio" name="sch-type" value="group">
-            <span class="mode-icon">🗂</span>
-            <div><div class="mode-label">Groupe</div><div class="mode-desc">Plusieurs sauvegardes enchaînées</div></div>
+            <span class="mode-icon"><svg class="inline-icon" style="width:20px;height:20px"><use href="#icon-group"/></svg></span>
+            <div><div class="mode-label">Group</div><div class="mode-desc">Multiple backups in sequence</div></div>
           </label>
           <label class="mode-option" id="type-restore" onclick="selectSchedType('restore')">
             <input type="radio" name="sch-type" value="restore">
-            <span class="mode-icon">↩</span>
-            <div><div class="mode-label">Restauration</div><div class="mode-desc">Profil de restauration</div></div>
+            <span class="mode-icon"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-restore-arrow"/></svg></span>
+            <div><div class="mode-label">Restore</div><div class="mode-desc">Restore Profile</div></div>
           </label>
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label" id="sch-target-label">Profil</label>
+        <label class="form-label" id="sch-target-label">Profile</label>
         <select class="form-select" id="sch-target"></select>
       </div>
       <div class="form-group">
-        <label class="form-label">Fréquence</label>
+        <label class="form-label">Frequency</label>
         <div class="mode-selector">
           <label class="mode-option selected" id="freq-hourly" onclick="selectFreq('hourly')">
             <input type="radio" name="sch-freq" value="hourly" checked>
-            <span class="mode-icon">⏱</span>
-            <div><div class="mode-label">Horaire</div><div class="mode-desc">Toutes les heures</div></div>
+            <span class="mode-icon"><svg class="mode-icon" style="width:20px;height:20px"><use href="#icon-timer"/></svg></span>
+            <div><div class="mode-label">Hourly</div><div class="mode-desc">Every hour</div></div>
           </label>
           <label class="mode-option" id="freq-daily" onclick="selectFreq('daily')">
             <input type="radio" name="sch-freq" value="daily">
-            <span class="mode-icon">📅</span>
-            <div><div class="mode-label">Quotidien</div><div class="mode-desc">Une fois par jour</div></div>
+            <span class="mode-icon"><svg class="mode-icon" style="width:20px;height:20px"><use href="#icon-calendar"/></svg></span>
+            <div><div class="mode-label">Daily</div><div class="mode-desc">Once per day</div></div>
           </label>
           <label class="mode-option" id="freq-weekly" onclick="selectFreq('weekly')">
             <input type="radio" name="sch-freq" value="weekly">
-            <span class="mode-icon">📆</span>
-            <div><div class="mode-label">Hebdomadaire</div><div class="mode-desc">Un jour par semaine</div></div>
+            <span class="mode-icon"><svg class="mode-icon" style="width:20px;height:20px"><use href="#icon-calendar"/></svg></span>
+            <div><div class="mode-label">Weekly</div><div class="mode-desc">Once per week</div></div>
           </label>
         </div>
       </div>
       <div id="sch-time-group" class="form-group hidden">
-        <label class="form-label">Heure</label>
+        <label class="form-label">Time</label>
         <input type="time" class="form-input" id="sch-time" value="02:00" style="width:150px">
       </div>
       <div id="sch-day-group" class="form-group hidden">
-        <label class="form-label">Jour</label>
+        <label class="form-label">Day</label>
         <select class="form-select" id="sch-day" style="width:200px">
-          <option value="MON">Lundi</option>
-          <option value="TUE">Mardi</option>
-          <option value="WED">Mercredi</option>
-          <option value="THU">Jeudi</option>
-          <option value="FRI">Vendredi</option>
-          <option value="SAT">Samedi</option>
-          <option value="SUN">Dimanche</option>
+          <option value="MON">Monday</option>
+          <option value="TUE">Tuesday</option>
+          <option value="WED">Wednesday</option>
+          <option value="THU">Thursday</option>
+          <option value="FRI">Friday</option>
+          <option value="SAT">Saturday</option>
+          <option value="SUN">Sunday</option>
         </select>
       </div>
       <div class="form-actions">
-        <button class="btn btn-primary" id="btn-save-schedule" onclick="submitSchedule()">Enregistrer</button>
-        <button class="btn btn-ghost" onclick="closeScheduleForm()">Annuler</button>
+        <button class="btn btn-primary" id="btn-save-schedule" onclick="submitSchedule()">Save</button>
+        <button class="btn btn-ghost" onclick="closeScheduleForm()">Cancel</button>
       </div>
     </div>
 
     <div id="schedule-list"></div>
   </section>
 
-  <!-- ═══ RÉSEAU ══════════════════════════════════════════ -->
+  <!-- ==== NETWORK ========================================== -->
   <section class="page" id="page-network">
     <div class="page-header">
-      <div class="page-title">Partages r&eacute;seau</div>
+      <div class="page-title">Network Shares</div>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-ghost" onclick="refreshShares()">&#x21BB; Actualiser</button>
-        <button class="btn btn-primary" onclick="toggleShareForm()">+ Ajouter</button>
+        <button class="btn btn-ghost" onclick="refreshShares()"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-refresh"/></svg> Refresh</button>
+        <button class="btn btn-primary" onclick="toggleShareForm()">+ Add</button>
       </div>
     </div>
 
     <div class="card add-form" id="share-form">
       <div class="form-title-row">
-        <span class="section-label" id="share-form-title" style="margin-bottom:0">Nouveau partage</span>
-        <span id="share-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode &eacute;dition</span>
+        <span class="section-label" id="share-form-title" style="margin-bottom:0">New Share</span>
+        <span id="share-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Edit Mode</span>
       </div>
       <div class="ns-grid">
         <div class="form-group">
-          <label class="form-label">Nom affich&eacute; *</label>
-          <input class="form-input" id="ns-name" placeholder="ex : NAS_Bureau" autocomplete="off">
+          <label class="form-label">Name affich&eacute; *</label>
+          <input class="form-input" id="ns-name" placeholder="e.g.: NAS_Office" autocomplete="off">
         </div>
         <div class="form-group">
-          <label class="form-label">Domaine (optionnel)</label>
-          <input class="form-input" id="ns-domain" placeholder="ex : WORKGROUP" autocomplete="off">
+          <label class="form-label">Domain (optional)</label>
+          <input class="form-input" id="ns-domain" placeholder="e.g.: WORKGROUP" autocomplete="off">
         </div>
         <div class="form-group">
           <label class="form-label">Adresse du serveur *</label>
-          <input class="form-input" id="ns-server" placeholder="ex : 192.168.1.10" autocomplete="off">
+          <input class="form-input" id="ns-server" placeholder="e.g.: 192.168.1.10" autocomplete="off">
         </div>
         <div class="form-group">
-          <label class="form-label">Nom du partage SMB *</label>
-          <input class="form-input" id="ns-share" placeholder="ex : Partage" autocomplete="off">
+          <label class="form-label">Name du partage SMB *</label>
+          <input class="form-input" id="ns-share" placeholder="e.g.: Share" autocomplete="off">
         </div>
         <div class="form-group">
-          <label class="form-label">Utilisateur</label>
-          <input class="form-input" id="ns-user" placeholder="ex : kronos" autocomplete="off">
+          <label class="form-label">Username</label>
+          <input class="form-input" id="ns-user" placeholder="e.g.: user" autocomplete="off">
         </div>
         <div class="form-group">
-          <label class="form-label">Mot de passe</label>
+          <label class="form-label">Password</label>
           <div class="pw-wrap">
-            <input class="form-input" id="ns-pass" type="password" placeholder="Mot de passe" autocomplete="new-password">
-            <span class="pw-eye" onclick="togglePw('ns-pass',this)" title="Afficher / masquer">&#x1F441;</span>
+            <input class="form-input" id="ns-pass" type="password" placeholder="Password" autocomplete="new-password">
+            <span class="pw-eye" onclick="togglePw('ns-pass',this)" title="Show / Hide">&#x1F441;</span>
           </div>
           <div id="ns-pass-hint" class="hidden" style="font-size:11px;color:var(--gray);margin-top:3px">
-            Laisser vide pour conserver le mot de passe existant
+            Leave empty to keep existing password
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Sous-dossier dans le partage (optionnel)</label>
-        <input class="form-input" id="ns-subpath" placeholder="ex : Sauvegardes/Linux" autocomplete="off">
+        <label class="form-label">Subfolder in share (optionnel)</label>
+        <input class="form-input" id="ns-subpath" placeholder="e.g.: Backups/Linux" autocomplete="off">
       </div>
       <div class="form-actions">
-        <button class="btn btn-primary" id="btn-save-share" onclick="submitShare()">Enregistrer</button>
-        <button class="btn btn-ghost" onclick="closeShareForm()">Annuler</button>
+        <button class="btn btn-primary" id="btn-save-share" onclick="submitShare()">Save</button>
+        <button class="btn btn-ghost" onclick="closeShareForm()">Cancel</button>
       </div>
     </div>
 
     <div id="shares-list"></div>
   </section>
 
-  <!-- ═══ JOURNAUX ══════════════════════════════════════ -->
+  <!-- ==== LOGS ============================================== -->
   <section class="page" id="page-logs">
     <div class="page-header">
-      <div class="page-title">Journaux</div>
-      <button class="btn btn-danger" onclick="clearLogs()">🗑 Vider les journaux</button>
+      <div class="page-title">Logs</div>
+      <button class="btn btn-danger" onclick="clearLogs()">🗑 Clear Logs</button>
     </div>
     <div id="logs-list"></div>
     <div class="card hidden" id="log-viewer-card">
       <div class="log-viewer-header">
         <span class="log-viewer-title" id="log-viewer-title"></span>
         <div style="display:flex;gap:6px">
-          <button class="btn btn-ghost" style="font-size:12px" id="btn-copy-log" onclick="copyLogContent()">📋 Copier</button>
-          <button class="btn btn-ghost" style="font-size:12px" onclick="closeLogViewer()">✕ Fermer</button>
+          <button class="btn btn-ghost" style="font-size:12px" id="btn-copy-log" onclick="copyLogContent()">📋 Copy</button>
+          <button class="btn btn-ghost" style="font-size:12px" onclick="closeLogViewer()"><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-delete"/></svg> Close</button>
         </div>
       </div>
       <div class="log-viewer" id="log-viewer-content"></div>
@@ -1218,7 +1389,7 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
   <!-- ═══ PARAMETRES ════════════════════════════════════ -->
   <section class="page" id="page-settings">
     <div class="page-header">
-      <div class="page-title">Paramètres</div>
+      <div class="page-title">Settings</div>
     </div>
 
     <div class="about-box">
@@ -1227,17 +1398,17 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
         <h2>Timestamp</h2>
         <p>
           Version 1.1<br>
-          Logiciel de sauvegarde et de restauration portable<br>
-          Compatible Windows &amp; Linux (Debian, Kali, Ubuntu, Arch, CachyOS)
+          Portable backup and restore software<br>
+          Compatible Backup Tool (Debian, Kali, Ubuntu, Arch, CachyOS)
         </p>
       </div>
     </div>
 
     <div class="card">
-      <div class="section-label">Apparence</div>
+      <div class="section-label">Appearance</div>
       <div class="theme-grid" id="theme-grid">
         <div class="theme-card" data-theme-id="dark" onclick="setTheme('dark')">
-          <div class="theme-name">Sombre <span class="theme-check">✓</span></div>
+          <div class="theme-name">Dark <span class="theme-check"><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg></span></div>
           <div class="theme-preview">
             <div class="theme-swatch" style="background:#14171C"></div>
             <div class="theme-swatch" style="background:#1B1F26"></div>
@@ -1246,7 +1417,7 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
           </div>
         </div>
         <div class="theme-card" data-theme-id="monokai" onclick="setTheme('monokai')">
-          <div class="theme-name">Monokai <span class="theme-check">✓</span></div>
+          <div class="theme-name">Monokai <span class="theme-check"><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg></span></div>
           <div class="theme-preview">
             <div class="theme-swatch" style="background:#272822"></div>
             <div class="theme-swatch" style="background:#66D9EF"></div>
@@ -1255,7 +1426,7 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
           </div>
         </div>
         <div class="theme-card" data-theme-id="amber" onclick="setTheme('amber')">
-          <div class="theme-name">Jaune / Gris <span class="theme-check">✓</span></div>
+          <div class="theme-name">Yellow / Gray <span class="theme-check"><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg></span></div>
           <div class="theme-preview">
             <div class="theme-swatch" style="background:#EDEDF0"></div>
             <div class="theme-swatch" style="background:#DDDDE2"></div>
@@ -1264,7 +1435,7 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
           </div>
         </div>
         <div class="theme-card" data-theme-id="flexoki" onclick="setTheme('flexoki')">
-          <div class="theme-name">Flexoki <span class="theme-check">✓</span></div>
+          <div class="theme-name">Flexoki <span class="theme-check"><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg></span></div>
           <div class="theme-preview">
             <div class="theme-swatch" style="background:#100F0F"></div>
             <div class="theme-swatch" style="background:#282726"></div>
@@ -1279,12 +1450,12 @@ input[type="time"].form-input { color-scheme: var(--scheme); }
     <div class="card">
       <div class="setting-row">
         <div class="setting-info">
-          <h4>Raccourci bureau</h4>
-          <p>Crée un raccourci Timestamp sur le bureau (.lnk Windows / .desktop Linux)</p>
+          <h4>Desktop Shortcut</h4>
+          <p>Create a Timestamp shortcut on desktop (.lnk Windows / .desktop Linux)</p>
           <div class="setting-msg" id="shortcut-msg"></div>
         </div>
         <button class="btn btn-primary" id="btn-shortcut" onclick="createShortcut()">
-          Ajouter au bureau
+          Add au bureau
         </button>
       </div>
     </div>
@@ -1328,10 +1499,10 @@ function esc(s) {
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-// Littéral JavaScript utilisable à l'intérieur d'un attribut onclick="…".
-// esc() seul ne suffit pas ici : une apostrophe devenue &#39; est redécodée
-// en ' par l'analyseur HTML avant l'analyse JS et referme la chaîne — un nom
-// comme « Sauvegarde d'été » cassait alors le bouton.
+// JavaScript literal usable inside an onclick="..." attribute.
+// esc() alone is not enough here: an apostrophe converted to &#39; gets
+// decoded back to ' by the HTML parser before JS parsing and closes the string.
+// Names with apostrophes used to break the button.
 function jsq(v) {
   const js = String(v)
     .replace(/\\/g, '\\\\').replace(/'/g, "\\'")
@@ -1340,7 +1511,7 @@ function jsq(v) {
                  .replace(/>/g, '&gt;').replace(/"/g, '&quot;') + "'";
 }
 
-// ── Profils ───────────────────────────────────────────────
+// ── Profiles ───────────────────────────────────────────────
 let _editingProfile = null;
 let _allProfiles = {};
 
@@ -1356,18 +1527,18 @@ function toggleAddForm() {
 function closeProfileForm() {
   _editingProfile = null;
   document.getElementById('add-form').classList.remove('open');
-  document.getElementById('profile-form-title').textContent = 'Nouveau profil';
+  document.getElementById('profile-form-title').textContent = 'New Profile';
   document.getElementById('profile-edit-badge').classList.add('hidden');
-  document.getElementById('btn-save-profile').textContent = 'Enregistrer';
+  document.getElementById('btn-save-profile').textContent = 'Save';
   document.getElementById('p-name').value = '';
   document.getElementById('p-dest').value = '';
   document.getElementById('p-dest-share').value = '';
   document.getElementById('p-compress').checked = false;
   document.getElementById('source-list').innerHTML = `
     <div class="source-row">
-      <input class="form-input" placeholder="Dossier ou fichier source">
-      <button class="btn-icon" onclick="pickFolderForInput(this)">📂</button>
-      <button class="btn-icon del" onclick="removeSource(this)">✕</button>
+      <input class="form-input" placeholder="Source folder or file">
+      <button class="btn-icon" onclick="pickFolderForInput(this)"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
+      <button class="btn-icon del" onclick="removeSource(this)"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-delete"/></svg></button>
     </div>`;
 }
 
@@ -1380,13 +1551,13 @@ function editProfile(name) {
   document.getElementById('p-compress').checked = !!p.compress;
   document.getElementById('source-list').innerHTML = p.sources.map(src => `
     <div class="source-row">
-      <input class="form-input" value="${esc(src)}" placeholder="Dossier ou fichier source">
-      <button class="btn-icon" onclick="pickFolderForInput(this)">📂</button>
-      <button class="btn-icon del" onclick="removeSource(this)">✕</button>
+      <input class="form-input" value="${esc(src)}" placeholder="Source folder or file">
+      <button class="btn-icon" onclick="pickFolderForInput(this)"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
+      <button class="btn-icon del" onclick="removeSource(this)"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-delete"/></svg></button>
     </div>`).join('');
-  document.getElementById('profile-form-title').textContent = 'Modifier le profil';
+  document.getElementById('profile-form-title').textContent = 'Edit Profile';
   document.getElementById('profile-edit-badge').classList.remove('hidden');
-  document.getElementById('btn-save-profile').textContent = 'Modifier';
+  document.getElementById('btn-save-profile').textContent = 'Update';
   document.getElementById('add-form').classList.add('open');
   populateSharePicker(p.destination);
   document.getElementById('p-name').focus();
@@ -1396,9 +1567,9 @@ function addSource() {
   const row = document.createElement('div');
   row.className = 'source-row';
   row.innerHTML = `
-    <input class="form-input" placeholder="Dossier ou fichier source">
-    <button class="btn-icon" onclick="pickFolderForInput(this)" title="Parcourir">📂</button>
-    <button class="btn-icon del" onclick="removeSource(this)" title="Supprimer">✕</button>`;
+    <input class="form-input" placeholder="Source folder or file">
+    <button class="btn-icon" onclick="pickFolderForInput(this)" title="Browse"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-folder"/></svg></button>
+    <button class="btn-icon del" onclick="removeSource(this)" title="Delete"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-delete"/></svg></button>`;
   document.getElementById('source-list').appendChild(row);
 }
 
@@ -1429,7 +1600,7 @@ function pickFileForId(id) {
   pywebview.api.pick_file().then(p => { if (p) document.getElementById(id).value = p; });
 }
 
-// Recopie l'URI SMB du partage choisi dans le champ de chemin associé.
+// Copies the SMB URI of the selected share to the associated path field.
 function applyShareTo(selectId, inputId) {
   const val = document.getElementById(selectId).value;
   if (val) document.getElementById(inputId).value = val;
@@ -1439,7 +1610,7 @@ async function fillShareSelect(selectId, preselect) {
   const sel = document.getElementById(selectId);
   if (!sel) return;
   const shares = await pywebview.api.get_network_shares();
-  sel.innerHTML = '<option value="">— Sélectionner un partage enregistré —</option>';
+  sel.innerHTML = '<option value="">— Select a saved share —</option>';
   for (const [name, s] of Object.entries(shares)) {
     const opt = document.createElement('option');
     opt.value = s.smb_uri;
@@ -1456,7 +1627,7 @@ async function submitProfile() {
   const dest     = document.getElementById('p-dest').value.trim();
   const compress = document.getElementById('p-compress').checked;
   if (!name || !sources.length || !dest) {
-    alert('Veuillez remplir tous les champs obligatoires.'); return;
+    alert('Please fill in all required fields.'); return;
   }
   let res;
   if (_editingProfile) {
@@ -1465,7 +1636,7 @@ async function submitProfile() {
     res = await pywebview.api.add_profile(name, sources, dest, compress);
   }
   if (res.ok) { closeProfileForm(); loadProfiles(); }
-  else         { alert('Erreur : ' + res.error); }
+  else         { alert('Error: ' + res.error); }
 }
 
 async function loadProfiles() {
@@ -1473,8 +1644,8 @@ async function loadProfiles() {
   const keys = Object.keys(_allProfiles);
   const el = document.getElementById('profiles-list');
   if (!keys.length) {
-    el.innerHTML = `<div class="empty"><div class="ico">📭</div>
-      <p>Aucun profil configuré.<br>Cliquez sur <strong>+ Ajouter</strong> pour commencer.</p></div>`;
+    el.innerHTML = `<div class="empty"><div class="ico"><svg class="inline-icon" style="width:20px;height:20px"><use href="#icon-file"/></svg></div>
+      <p>No profiles configured.<br>Cliquez sur <strong>+ Add</strong> to get started.</p></div>`;
     return;
   }
   el.innerHTML = keys.map(name => {
@@ -1485,13 +1656,13 @@ async function loadProfiles() {
         <div class="profile-info">
           <h3>${esc(name)}${badge}</h3>
           <div class="profile-meta">
-            <span>📥 ${esc(p.sources.join(' · '))}</span>
-            <span>📤 ${esc(p.destination)}</span>
+            <span><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-file"/></svg> ${esc(p.sources.join(' · '))}</span>
+            <span><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-folder"/></svg> ${esc(p.destination)}</span>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-shrink:0">
-          <button class="btn btn-ghost" onclick="editProfile(${jsq(name)})">Éditer</button>
-          <button class="btn btn-danger" onclick="deleteProfile(${jsq(name)})">Supprimer</button>
+          <button class="btn btn-ghost" onclick="editProfile(${jsq(name)})">Edit</button>
+          <button class="btn btn-danger" onclick="deleteProfile(${jsq(name)})">Delete</button>
         </div>
       </div>
     </div>`;
@@ -1499,7 +1670,7 @@ async function loadProfiles() {
 }
 
 async function deleteProfile(name) {
-  if (!confirm(`Supprimer le profil "${name}" ?`)) return;
+  if (!confirm(`Delete le profil "${name}" ?`)) return;
   await pywebview.api.remove_profile(name);
   loadProfiles();
 }
@@ -1531,7 +1702,7 @@ function selectMode(mode) {
 
 function startBackup() {
   const profile = document.getElementById('backup-profile').value;
-  if (!profile) { alert('Sélectionnez un profil.'); return; }
+  if (!profile) { alert('Please select a profile.'); return; }
   const full     = document.getElementById('backup-full').checked;
   const compress = document.querySelector('input[name="backup-mode"]:checked').value === 'compress';
 
@@ -1540,7 +1711,7 @@ function startBackup() {
   document.getElementById('backup-bar').style.width = '0%';
   document.getElementById('backup-pct').textContent = '0 %';
   document.getElementById('backup-file').textContent = '';
-  document.getElementById('backup-status').textContent = 'Sauvegarde en cours…';
+  document.getElementById('backup-status').textContent = 'Backup in progress...';
   document.getElementById('backup-dot').style.display = '';
   document.getElementById('btn-run').disabled = true;
 
@@ -1576,12 +1747,12 @@ function backupComplete(report) {
 }
 
 function backupError(msg) {
-  alert('Erreur inattendue : ' + msg);
+  alert('Unexpected error: ' + msg);
   document.getElementById('btn-run').disabled = false;
   document.getElementById('backup-progress').classList.add('hidden');
 }
 
-// ── Groupes ───────────────────────────────────────────────
+// ── Groups ───────────────────────────────────────────────
 let _editingGroup = null;
 let _allGroups = {};
 let _groupProfileDraft = [];
@@ -1602,9 +1773,9 @@ function closeGroupForm() {
   _editingGroup = null;
   _groupProfileDraft = [];
   document.getElementById('group-form').classList.remove('open');
-  document.getElementById('group-form-title').textContent = 'Nouveau groupe';
+  document.getElementById('group-form-title').textContent = 'New Group';
   document.getElementById('group-edit-badge').classList.add('hidden');
-  document.getElementById('btn-save-group').textContent = 'Enregistrer';
+  document.getElementById('btn-save-group').textContent = 'Save';
   document.getElementById('g-name').value = '';
   renderGroupProfileList();
 }
@@ -1617,9 +1788,9 @@ async function editGroup(name) {
   document.getElementById('g-name').value = name;
   await populateGroupAddSelect();
   renderGroupProfileList();
-  document.getElementById('group-form-title').textContent = 'Modifier le groupe';
+  document.getElementById('group-form-title').textContent = 'Update Group';
   document.getElementById('group-edit-badge').classList.remove('hidden');
-  document.getElementById('btn-save-group').textContent = 'Modifier';
+  document.getElementById('btn-save-group').textContent = 'Update';
   document.getElementById('group-form').classList.add('open');
   document.getElementById('g-name').focus();
 }
@@ -1627,16 +1798,16 @@ async function editGroup(name) {
 function renderGroupProfileList() {
   const el = document.getElementById('group-profile-list');
   if (!_groupProfileDraft.length) {
-    el.innerHTML = `<div style="font-size:12px;color:var(--gray);padding:6px 0">Aucun profil ajouté pour le moment.</div>`;
+    el.innerHTML = `<div style="font-size:12px;color:var(--gray);padding:6px 0">No profiles added yet.</div>`;
     return;
   }
   el.innerHTML = _groupProfileDraft.map((name, idx) => `
     <div class="source-row">
       <span class="order-idx">${idx + 1}</span>
       <span style="flex:1;font-size:13px">${esc(name)}</span>
-      <button class="btn-icon" ${idx === 0 ? 'disabled' : ''} onclick="moveProfileInGroup(${idx},-1)" title="Monter">↑</button>
-      <button class="btn-icon" ${idx === _groupProfileDraft.length - 1 ? 'disabled' : ''} onclick="moveProfileInGroup(${idx},1)" title="Descendre">↓</button>
-      <button class="btn-icon del" onclick="removeProfileFromGroup(${idx})" title="Retirer">✕</button>
+      <button class="btn-icon" ${idx === 0 ? 'disabled' : ''} onclick="moveProfileInGroup(${idx},-1)" title="Mount"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-arrow-up"/></svg></button>
+      <button class="btn-icon" ${idx === _groupProfileDraft.length - 1 ? 'disabled' : ''} onclick="moveProfileInGroup(${idx},1)" title="Descendre"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-arrow-down"/></svg></button>
+      <button class="btn-icon del" onclick="removeProfileFromGroup(${idx})" title="Retirer"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-delete"/></svg></button>
     </div>`).join('');
 }
 
@@ -1672,7 +1843,7 @@ function removeProfileFromGroup(idx) {
 async function submitGroup() {
   const name = document.getElementById('g-name').value.trim();
   if (!name || !_groupProfileDraft.length) {
-    alert('Veuillez indiquer un nom et ajouter au moins un profil.'); return;
+    alert('Please provide a name and add at least one profile.'); return;
   }
   let res;
   if (_editingGroup) {
@@ -1681,7 +1852,7 @@ async function submitGroup() {
     res = await pywebview.api.add_group(name, _groupProfileDraft);
   }
   if (res.ok) { closeGroupForm(); loadGroups(); }
-  else         { alert('Erreur : ' + res.error); }
+  else         { alert('Error: ' + res.error); }
 }
 
 async function loadGroups() {
@@ -1689,8 +1860,8 @@ async function loadGroups() {
   const keys = Object.keys(_allGroups);
   const el = document.getElementById('groups-list');
   if (!keys.length) {
-    el.innerHTML = `<div class="empty"><div class="ico">🗂</div>
-      <p>Aucun groupe configuré.<br>Cliquez sur <strong>+ Créer un groupe</strong> pour commencer.</p></div>`;
+    el.innerHTML = `<div class="empty"><div class="ico"><svg class="inline-icon" style="width:20px;height:20px"><use href="#icon-group"/></svg></div>
+      <p>No groups configured.<br>Cliquez sur <strong>+ Create Group</strong> to get started.</p></div>`;
     return;
   }
   el.innerHTML = keys.map(name => {
@@ -1700,13 +1871,13 @@ async function loadGroups() {
         <div class="profile-info">
           <h3>${esc(name)}<span class="badge">${g.profiles.length} profil(s)</span></h3>
           <div class="profile-meta">
-            <span>🔗 ${esc(g.profiles.join(' → '))}</span>
+            <span><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-group"/></svg> ${esc(g.profiles.join(' → '))}</span>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-shrink:0">
           <button class="btn btn-primary" ${_groupRunning ? 'disabled' : ''} onclick="runGroup(${jsq(name)})">▶ Lancer</button>
-          <button class="btn btn-ghost" onclick="editGroup(${jsq(name)})">Éditer</button>
-          <button class="btn btn-danger" onclick="deleteGroup(${jsq(name)})">Supprimer</button>
+          <button class="btn btn-ghost" onclick="editGroup(${jsq(name)})">Edit</button>
+          <button class="btn btn-danger" onclick="deleteGroup(${jsq(name)})">Delete</button>
         </div>
       </div>
     </div>`;
@@ -1714,7 +1885,7 @@ async function loadGroups() {
 }
 
 async function deleteGroup(name) {
-  if (!confirm(`Supprimer le groupe "${name}" ?`)) return;
+  if (!confirm(`Delete group "${name}" ?`)) return;
   await pywebview.api.remove_group(name);
   loadGroups();
 }
@@ -1727,7 +1898,7 @@ function runGroup(name) {
   document.getElementById('group-bar').style.width = '0%';
   document.getElementById('group-pct') && (document.getElementById('group-pct').textContent = '0 %');
   document.getElementById('group-file').textContent = '';
-  document.getElementById('group-status').textContent = `Sauvegarde du groupe "${name}" en cours…`;
+  document.getElementById('group-status').textContent = `Group Backup "${name}" en cours…`;
   document.getElementById('group-dot').style.display = '';
   loadGroups();
   pywebview.api.run_group(name, false);
@@ -1736,7 +1907,7 @@ function runGroup(name) {
 function updateGroupProgress(idx, total, profileName, pct, path) {
   document.getElementById('group-bar').style.width = pct + '%';
   document.getElementById('group-pct').textContent = pct + ' %';
-  document.getElementById('group-status').textContent = `Profil ${idx}/${total} : ${profileName}`;
+  document.getElementById('group-status').textContent = `Profile ${idx}/${total} : ${profileName}`;
   document.getElementById('group-file').textContent = path;
 }
 
@@ -1752,7 +1923,7 @@ function groupBackupComplete(report) {
   breakdown.innerHTML = (report.per_profile || []).map(p => `
     <div class="group-result-row ${p.errors ? 'has-error' : ''}">
       <span class="name">${esc(p.profile)}</span>
-      <span class="stats">${p.copied} copiés · ${p.skipped} ignorés${p.errors ? ' · ' + p.errors + ' erreur(s)' : ''}</span>
+      <span class="stats">${p.copied} copied · ${p.skipped} skipped${p.errors ? ' · ' + p.errors + ' error(s)' : ''}</span>
     </div>`).join('');
 
   const el = document.getElementById('g-errlist');
@@ -1767,17 +1938,17 @@ function groupBackupComplete(report) {
 
 function groupBackupError(msg) {
   _groupRunning = false;
-  alert('Erreur inattendue : ' + msg);
+  alert('Unexpected error: ' + msg);
   document.getElementById('group-progress').classList.add('hidden');
   loadGroups();
 }
 
 // ── Restore ───────────────────────────────────────────────
-// La restauration écrase la destination : chaque lancement est confirmé.
+// Restore overwrites the destination: each launch is confirmed.
 function confirmRestore(src, dest) {
   return confirm(
-    'Restaurer :\n  ' + src + '\nvers :\n  ' + dest +
-    '\n\nLes fichiers présents à destination portant le même nom seront écrasés.\n\nContinuer ?'
+    'Restore :\n  ' + src + '\nto:\n  ' + dest +
+    '\n\nFiles with the same name at destination will be overwritten.\n\nContinue?'
   );
 }
 
@@ -1789,7 +1960,7 @@ async function loadRestorePage() {
 function startRestore() {
   const src  = document.getElementById('rst-src').value.trim();
   const dest = document.getElementById('rst-dest').value.trim();
-  if (!src || !dest) { alert('Veuillez remplir la source et la destination.'); return; }
+  if (!src || !dest) { alert('Please fill in source and destination.'); return; }
   if (!confirmRestore(src, dest)) return;
   const incremental = document.getElementById('rst-incremental').checked;
 
@@ -1798,7 +1969,7 @@ function startRestore() {
   document.getElementById('restore-bar').style.width = '0%';
   document.getElementById('restore-pct').textContent = '0 %';
   document.getElementById('restore-file').textContent = '';
-  document.getElementById('restore-status').textContent = 'Restauration en cours…';
+  document.getElementById('restore-status').textContent = 'Restore in progress...';
   document.getElementById('btn-restore').disabled = true;
   pywebview.api.restore(src, dest, incremental);
 }
@@ -1820,7 +1991,7 @@ function restoreComplete(report) {
 }
 
 function restoreError(msg) {
-  alert('Erreur : ' + msg);
+  alert('Error: ' + msg);
   document.getElementById('btn-restore').disabled = false;
   document.getElementById('restore-progress').classList.add('hidden');
 }
@@ -1836,7 +2007,7 @@ function renderErrors(elId, errors) {
   }
 }
 
-// ── Profils de restauration ───────────────────────────────
+// ── Restore Profiles ───────────────────────────────
 let _editingRestore = null;
 let _allRestores    = {};
 let _restoreRunning = false;
@@ -1853,9 +2024,9 @@ function toggleRestoreForm() {
 function closeRestoreForm() {
   _editingRestore = null;
   document.getElementById('restore-form').classList.remove('open');
-  document.getElementById('restore-form-title').textContent = 'Nouveau profil de restauration';
+  document.getElementById('restore-form-title').textContent = 'New Restore Profile';
   document.getElementById('restore-edit-badge').classList.add('hidden');
-  document.getElementById('btn-save-restore').textContent = 'Enregistrer';
+  document.getElementById('btn-save-restore').textContent = 'Save';
   document.getElementById('rp-name').value = '';
   document.getElementById('rp-src').value  = '';
   document.getElementById('rp-dest').value = '';
@@ -1872,9 +2043,9 @@ function editRestoreProfile(name) {
   document.getElementById('rp-dest').value = r.destination;
   document.getElementById('rp-incremental').checked = !!r.incremental;
   fillShareSelect('rp-src-share', r.source);
-  document.getElementById('restore-form-title').textContent = 'Modifier le profil de restauration';
+  document.getElementById('restore-form-title').textContent = 'Edit Restore Profile';
   document.getElementById('restore-edit-badge').classList.remove('hidden');
-  document.getElementById('btn-save-restore').textContent = 'Modifier';
+  document.getElementById('btn-save-restore').textContent = 'Update';
   document.getElementById('restore-form').classList.add('open');
   document.getElementById('rp-name').focus();
 }
@@ -1885,13 +2056,13 @@ async function submitRestoreProfile() {
   const dest = document.getElementById('rp-dest').value.trim();
   const incremental = document.getElementById('rp-incremental').checked;
   if (!name || !src || !dest) {
-    alert('Veuillez remplir le nom, la source et la destination.'); return;
+    alert('Please fill in name, source, and destination.'); return;
   }
   const res = _editingRestore
     ? await pywebview.api.update_restore(_editingRestore, name, src, dest, incremental)
     : await pywebview.api.add_restore(name, src, dest, incremental);
   if (res.ok) { closeRestoreForm(); loadRestoreProfiles(); }
-  else        { alert('Erreur : ' + res.error); }
+  else        { alert('Error: ' + res.error); }
 }
 
 async function loadRestoreProfiles() {
@@ -1899,26 +2070,26 @@ async function loadRestoreProfiles() {
   const keys = Object.keys(_allRestores);
   const el = document.getElementById('restores-list');
   if (!keys.length) {
-    el.innerHTML = `<div class="empty"><div class="ico">↩</div>
-      <p>Aucun profil de restauration.<br>Cliquez sur <strong>+ Créer un profil</strong> pour en enregistrer un.</p></div>`;
+    el.innerHTML = `<div class="empty"><div class="ico"><svg class="btn-icon-svg" style="width:14px;height:14px"><use href="#icon-restore-arrow"/></svg></div>
+      <p>No restore profiles.<br>Cliquez sur <strong>+ Create Profile</strong> pour en enregistrer un.</p></div>`;
     return;
   }
   el.innerHTML = keys.map(name => {
     const r = _allRestores[name];
-    const badge = r.incremental ? '<span class="badge">Incrémental</span>' : '';
+    const badge = r.incremental ? '<span class="badge">Incremental</span>' : '';
     return `<div class="card">
       <div class="profile-card">
         <div class="profile-info">
           <h3>${esc(name)}${badge}</h3>
           <div class="profile-meta">
-            <span>📥 ${esc(r.source)}</span>
-            <span>📤 ${esc(r.destination)}</span>
+            <span><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-file"/></svg> ${esc(r.source)}</span>
+            <span><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-folder"/></svg> ${esc(r.destination)}</span>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-shrink:0">
-          <button class="btn btn-primary" ${_restoreRunning ? 'disabled' : ''} onclick="runRestoreProfile(${jsq(name)})">↩ Restaurer</button>
-          <button class="btn btn-ghost" onclick="editRestoreProfile(${jsq(name)})">Éditer</button>
-          <button class="btn btn-danger" onclick="deleteRestoreProfile(${jsq(name)})">Supprimer</button>
+          <button class="btn btn-primary" ${_restoreRunning ? 'disabled' : ''} onclick="runRestoreProfile(${jsq(name)})">↩ Restore</button>
+          <button class="btn btn-ghost" onclick="editRestoreProfile(${jsq(name)})">Edit</button>
+          <button class="btn btn-danger" onclick="deleteRestoreProfile(${jsq(name)})">Delete</button>
         </div>
       </div>
     </div>`;
@@ -1926,7 +2097,7 @@ async function loadRestoreProfiles() {
 }
 
 async function deleteRestoreProfile(name) {
-  if (!confirm(`Supprimer le profil de restauration "${name}" ?`)) return;
+  if (!confirm(`Delete restore profile "${name}" ?`)) return;
   await pywebview.api.remove_restore(name);
   loadRestoreProfiles();
 }
@@ -1943,7 +2114,7 @@ async function runRestoreProfile(name) {
   document.getElementById('rp-bar').style.width = '0%';
   document.getElementById('rp-pct').textContent = '0 %';
   document.getElementById('rp-file').textContent = '';
-  document.getElementById('rp-status').textContent = `Restauration "${name}" en cours…`;
+  document.getElementById('rp-status').textContent = `Restore "${name}" en cours…`;
   loadRestoreProfiles();
 
   const res = await pywebview.api.run_restore(name);
@@ -1969,29 +2140,29 @@ function restoreProfileComplete(report) {
 
 function restoreProfileError(msg) {
   _restoreRunning = false;
-  alert('Erreur : ' + msg);
+  alert('Error: ' + msg);
   document.getElementById('rp-progress').classList.add('hidden');
   loadRestoreProfiles();
 }
 
-// ── Planifier ─────────────────────────────────────────────
-const _DAYS_FR = {MON:'Lundi',TUE:'Mardi',WED:'Mercredi',THU:'Jeudi',FRI:'Vendredi',SAT:'Samedi',SUN:'Dimanche'};
+// ── Schedule ─────────────────────────────────────────────
+const _DAYS_FR = {MON:'Monday',TUE:'Tuesday',WED:'Wednesday',THU:'Thursday',FRI:'Friday',SAT:'Saturday',SUN:'Sunday'};
 let _editingSchedule = null;
 let _allSchedules    = {};
 
 function freqLabel(s) {
-  if (s.frequency === 'hourly') return 'Toutes les heures';
-  if (s.frequency === 'daily')  return `Tous les jours à ${s.time}`;
-  if (s.frequency === 'weekly') return `Tous les ${_DAYS_FR[s.day] || s.day} à ${s.time}`;
+  if (s.frequency === 'hourly') return 'Every hour';
+  if (s.frequency === 'daily')  return `Daily at ${s.time}`;
+  if (s.frequency === 'weekly') return `Weekly on ${_DAYS_EN[s.day] || s.day} at ${s.time}`;
   return s.frequency;
 }
 
 function closeScheduleForm() {
   _editingSchedule = null;
   document.getElementById('schedule-form').classList.remove('open');
-  document.getElementById('schedule-form-title').textContent = 'Nouvelle planification';
+  document.getElementById('schedule-form-title').textContent = 'New Schedule';
   document.getElementById('schedule-edit-badge').classList.add('hidden');
-  document.getElementById('btn-save-schedule').textContent = 'Enregistrer';
+  document.getElementById('btn-save-schedule').textContent = 'Save';
   document.getElementById('sch-name').value = '';
   selectSchedType('profile');
   selectFreq('hourly');
@@ -2014,9 +2185,9 @@ async function editSchedule(name) {
   selectFreq(s.frequency);
   if (s.time) document.getElementById('sch-time').value = s.time;
   if (s.day)  document.getElementById('sch-day').value  = s.day;
-  document.getElementById('schedule-form-title').textContent = 'Modifier la planification';
+  document.getElementById('schedule-form-title').textContent = 'Update Schedule';
   document.getElementById('schedule-edit-badge').classList.remove('hidden');
-  document.getElementById('btn-save-schedule').textContent = 'Modifier';
+  document.getElementById('btn-save-schedule').textContent = 'Update';
   document.getElementById('schedule-form').classList.add('open');
   document.getElementById('sch-name').focus();
 }
@@ -2031,9 +2202,9 @@ function selectFreq(freq) {
 }
 
 const _SCHED_TYPES = {
-  profile: {label: 'Profil',                 icon: '📁', empty: 'profil de sauvegarde'},
-  group:   {label: 'Groupe',                 icon: '🗂', empty: 'groupe'},
-  restore: {label: 'Profil de restauration', icon: '↩',  empty: 'profil de restauration'},
+  profile: {label: 'Profile',                 icon: '<svg class="mode-icon" style="width:20px;height:20px"><use href="#icon-folder"/></svg>', empty: 'backup profile'},
+  group:   {label: 'Group',                 icon: '<svg class="inline-icon" style="width:20px;height:20px"><use href="#icon-group"/></svg>', empty: 'group'},
+  restore: {label: 'Restore Profile', icon: '<svg class="mode-icon" style="width:20px;height:20px"><use href="#icon-restore-arrow"/></svg>',  empty: 'restore profile'},
 };
 
 async function selectSchedType(type) {
@@ -2062,15 +2233,15 @@ async function loadSchedulePage() {
   pywebview.api.get_scheduler_info().then(info => {
     const el = document.getElementById('sched-backend');
     el.textContent = info.backend === 'none'
-      ? '⚠ Aucun moteur de planification détecté sur ce système.'
-      : 'Moteur de planification : ' + info.label;
+      ? '⚠ No scheduler backend detected on this system.'
+      : 'Scheduler backend: ' + info.label;
   });
   _allSchedules = await pywebview.api.get_schedules();
   const keys = Object.keys(_allSchedules);
   const el = document.getElementById('schedule-list');
   if (!keys.length) {
-    el.innerHTML = `<div class="empty"><div class="ico">⏰</div>
-      <p>Aucune planification configurée.<br>Cliquez sur <strong>+ Planifier</strong> pour commencer.</p></div>`;
+    el.innerHTML = `<div class="empty"><div class="ico"><svg class="inline-icon" style="width:20px;height:20px"><use href="#icon-schedule"/></svg></div>
+      <p>No schedules configured.<br>Cliquez sur <strong>+ Schedule</strong> to get started.</p></div>`;
     return;
   }
   el.innerHTML = keys.map(name => {
@@ -2084,8 +2255,8 @@ async function loadSchedulePage() {
           <div class="schedule-meta">${meta.icon} ${meta.label} : ${esc(s.target)}</div>
         </div>
         <div style="display:flex;gap:8px;flex-shrink:0">
-          <button class="btn btn-ghost" onclick="editSchedule(${jsq(name)})">Éditer</button>
-          <button class="btn btn-danger" onclick="deleteSchedule(${jsq(name)})">Supprimer</button>
+          <button class="btn btn-ghost" onclick="editSchedule(${jsq(name)})">Edit</button>
+          <button class="btn btn-danger" onclick="deleteSchedule(${jsq(name)})">Delete</button>
         </div>
       </div>
     </div>`;
@@ -2099,7 +2270,7 @@ async function submitSchedule() {
   const freq   = document.querySelector('input[name="sch-freq"]:checked').value;
   const time   = document.getElementById('sch-time').value || '02:00';
   const day    = document.getElementById('sch-day').value;
-  if (!name || !target) { alert('Veuillez renseigner un nom et sélectionner une cible.'); return; }
+  if (!name || !target) { alert('Please provide a name and select a target.'); return; }
   let res;
   if (_editingSchedule) {
     res = await pywebview.api.update_schedule(_editingSchedule, name, target, type, freq, time, day);
@@ -2110,15 +2281,15 @@ async function submitSchedule() {
     closeScheduleForm(); loadSchedulePage();
     if (res.warning) alert(res.warning);
   } else {
-    alert('Erreur : ' + res.error);
+    alert('Error: ' + res.error);
   }
 }
 
 async function deleteSchedule(name) {
-  if (!confirm(`Supprimer la planification "${name}" ?`)) return;
+  if (!confirm(`Delete schedule "${name}" ?`)) return;
   const res = await pywebview.api.remove_schedule(name);
   if (res.ok) loadSchedulePage();
-  else alert('Erreur : ' + res.error);
+  else alert('Error: ' + res.error);
 }
 
 // ── Logs ──────────────────────────────────────────────────
@@ -2133,7 +2304,7 @@ async function loadLogs() {
   const logs = await pywebview.api.get_logs();
   const el = document.getElementById('logs-list');
   if (!logs.length) {
-    el.innerHTML = `<div class="empty"><div class="ico">📭</div><p>Aucun journal de sauvegarde.</p></div>`;
+    el.innerHTML = `<div class="empty"><div class="ico"><svg class="inline-icon" style="width:20px;height:20px"><use href="#icon-file"/></svg></div><p>No backup logs.</p></div>`;
     return;
   }
   el.innerHTML = logs.map(f => `
@@ -2152,7 +2323,7 @@ async function viewLog(filename) {
   const content = await pywebview.api.get_log_content(filename);
   document.getElementById('log-viewer-title').textContent = filename;
   const viewer = document.getElementById('log-viewer-content');
-  viewer.textContent = content || '(fichier vide)';
+  viewer.textContent = content || '(empty file)';
   document.getElementById('log-viewer-card').classList.remove('hidden');
   viewer.scrollTop = viewer.scrollHeight;
 }
@@ -2168,8 +2339,8 @@ function copyLogContent() {
   document.execCommand('copy');
   document.body.removeChild(ta);
   const btn = document.getElementById('btn-copy-log');
-  btn.textContent = '✓ Copié';
-  setTimeout(() => { btn.textContent = '📋 Copier'; }, 2000);
+  btn.textContent = '<svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg> Copied';
+  setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
 }
 
 function closeLogViewer() {
@@ -2178,16 +2349,16 @@ function closeLogViewer() {
 }
 
 async function clearLogs() {
-  if (!confirm('Supprimer tous les fichiers journaux ?')) return;
+  if (!confirm('Delete all log files?')) return;
   closeLogViewer();
   const res = await pywebview.api.clear_logs();
   if (res.ok) {
     loadLogs();
-    if (res.deleted === 0) alert('Aucun journal à supprimer.');
+    if (res.deleted === 0) alert('No logs to delete.');
   }
 }
 
-// ── Réseau ────────────────────────────────────────────
+// ── Network ─────────────────────────────────────────────
 let _editingShare = null;
 let _allShares    = {};
 
@@ -2203,9 +2374,9 @@ function toggleShareForm() {
 function closeShareForm() {
   _editingShare = null;
   document.getElementById('share-form').classList.remove('open');
-  document.getElementById('share-form-title').textContent = 'Nouveau partage';
+  document.getElementById('share-form-title').textContent = 'New Share';
   document.getElementById('share-edit-badge').classList.add('hidden');
-  document.getElementById('btn-save-share').textContent = 'Enregistrer';
+  document.getElementById('btn-save-share').textContent = 'Save';
   ['ns-name','ns-server','ns-share','ns-subpath','ns-user','ns-pass','ns-domain']
     .forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('ns-pass-hint').classList.add('hidden');
@@ -2223,9 +2394,9 @@ function editShare(name) {
   document.getElementById('ns-pass').value    = '';
   document.getElementById('ns-domain').value  = s.domain;
   document.getElementById('ns-pass-hint').classList.remove('hidden');
-  document.getElementById('share-form-title').textContent = 'Modifier le partage';
+  document.getElementById('share-form-title').textContent = 'Update le partage';
   document.getElementById('share-edit-badge').classList.remove('hidden');
-  document.getElementById('btn-save-share').textContent = 'Modifier';
+  document.getElementById('btn-save-share').textContent = 'Update';
   document.getElementById('share-form').classList.add('open');
   document.getElementById('ns-name').focus();
 }
@@ -2239,7 +2410,7 @@ async function submitShare() {
   const pass    = document.getElementById('ns-pass').value;
   const domain  = document.getElementById('ns-domain').value.trim();
   if (!name || !server || !share) {
-    alert('Veuillez remplir les champs obligatoires (Nom, Serveur, Partage SMB).'); return;
+    alert('Veuillez remplir les champs obligatoires (Name, Serveur, Partage SMB).'); return;
   }
   let res;
   if (_editingShare) {
@@ -2248,7 +2419,7 @@ async function submitShare() {
     res = await pywebview.api.add_network_share(name, server, share, subpath, user, pass, domain);
   }
   if (res.ok) { closeShareForm(); loadNetworkShares(); }
-  else         { alert('Erreur : ' + res.error); }
+  else         { alert('Error: ' + res.error); }
 }
 
 async function loadNetworkShares() {
@@ -2256,16 +2427,16 @@ async function loadNetworkShares() {
   const keys = Object.keys(_allShares);
   const el = document.getElementById('shares-list');
   if (!keys.length) {
-    el.innerHTML = `<div class="empty"><div class="ico">🌐</div>
-      <p>Aucun partage réseau configuré.<br>Cliquez sur <strong>+ Ajouter</strong> pour commencer.</p></div>`;
+    el.innerHTML = `<div class="empty"><div class="ico"><svg class="inline-icon" style="width:20px;height:20px"><use href="#icon-network"/></svg></div>
+      <p>No network shares configured.<br>Cliquez sur <strong>+ Add</strong> to get started.</p></div>`;
     return;
   }
   el.innerHTML = keys.map(name => {
     const s = _allShares[name];
     const mounted = s.mounted;
     const dotCls  = mounted ? 'mounted' : 'unmounted';
-    const statusTxt = mounted ? 'Monté' : 'Non monté';
-    const mountBtn = `<button class="btn btn-success" onclick="doMount(${jsq(name)})">&#x25BA; Tester</button>`;
+    const statusTxt = mounted ? 'Mounted' : 'Not mounted';
+    const mountBtn = `<button class="btn btn-success" onclick="doMount(${jsq(name)})"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-backup"/></svg> Test</button>`;
     const pwIcon = s.has_password ? ' 🔒' : '';
     return `<div class="card" id="share-card-${esc(name)}">
       <div class="share-card">
@@ -2273,16 +2444,16 @@ async function loadNetworkShares() {
         <div class="share-info">
           <h3>${esc(name)}${pwIcon}</h3>
           <div class="share-meta">
-            <span>🖥 //${esc(s.server)}/${esc(s.share)}${s.subpath ? '/' + esc(s.subpath) : ''}</span>
+            <span><svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-server"/></svg> //${esc(s.server)}/${esc(s.share)}${s.subpath ? '/' + esc(s.subpath) : ''}</span>
             <span class="share-path" id="share-path-${esc(name)}">${esc(s.smb_uri)}</span>
           </div>
           <div class="share-msg" id="share-msg-${esc(name)}"></div>
         </div>
         <div class="share-actions">
           ${mountBtn}
-          <button class="btn btn-ghost" onclick="copySharePath(${jsq(name)})" title="Copier l'URI SMB (à coller dans la destination d'un profil)">&#x1F4CB;</button>
-          <button class="btn btn-ghost" onclick="editShare(${jsq(name)})">Éditer</button>
-          <button class="btn btn-danger" onclick="deleteShare(${jsq(name)})">Supprimer</button>
+          <button class="btn btn-ghost" onclick="copySharePath(${jsq(name)})" title="Copy SMB URI (paste into a profile destination)"><svg class="nav-icon" style="width:18px;height:18px"><use href="#icon-logs"/></svg></button>
+          <button class="btn btn-ghost" onclick="editShare(${jsq(name)})">Edit</button>
+          <button class="btn btn-danger" onclick="deleteShare(${jsq(name)})">Delete</button>
         </div>
       </div>
     </div>`;
@@ -2300,13 +2471,13 @@ function _showShareMsg(name, text, isOk) {
 
 async function doMount(name) {
   const res = await pywebview.api.mount_network_share(name);
-  _showShareMsg(name, (res.ok ? '✓ ' : '✕ ') + res.message, res.ok);
+  _showShareMsg(name, (res.ok ? '<svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg> ' : '<svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-delete"/></svg> ') + res.message, res.ok);
   if (res.ok) loadNetworkShares();
 }
 
 async function doUnmount(name) {
   const res = await pywebview.api.unmount_network_share(name);
-  _showShareMsg(name, (res.ok ? '✓ ' : '✕ ') + res.message, res.ok);
+  _showShareMsg(name, (res.ok ? '<svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg> ' : '<svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-delete"/></svg> ') + res.message, res.ok);
   if (res.ok) loadNetworkShares();
 }
 
@@ -2321,14 +2492,14 @@ function copySharePath(name) {
   ta.setSelectionRange(0, ta.value.length);
   document.execCommand('copy');
   document.body.removeChild(ta);
-  _showShareMsg(name, '✓ URI SMB copiée dans le presse-papiers', true);
+  _showShareMsg(name, '<svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg> SMB URI copied to clipboard', true);
 }
 
 async function deleteShare(name) {
-  if (!confirm(`Supprimer le partage "${name}" ?\n(Le partage ne sera pas démonté.)`)) return;
+  if (!confirm(`Delete le partage "${name}" ?\n(The share will not be unmounted.)`)) return;
   const res = await pywebview.api.remove_network_share(name);
   if (res.ok) loadNetworkShares();
-  else alert('Erreur : ' + res.error);
+  else alert('Error: ' + res.error);
 }
 
 async function refreshShares() {
@@ -2342,9 +2513,9 @@ function togglePw(id, eye) {
   eye.textContent = show ? '🙈' : '👁';
 }
 
-// ── Paramètres : thème ─────────────────────────────────────
-// Le thème est appliqué immédiatement sur <html> puis persisté dans
-// config.json, ce qui le rend indépendant du stockage du moteur de rendu.
+// ── Theme Settings ─────────────────────────────────────────
+// Theme is applied immediately to <html> then persisted in
+// config.json, making it independent of the rendering engine storage.
 async function setTheme(theme) {
   const previous = document.documentElement.getAttribute('data-theme');
   document.documentElement.setAttribute('data-theme', theme);
@@ -2352,14 +2523,14 @@ async function setTheme(theme) {
   const res = await pywebview.api.set_theme(theme);
   const msg = document.getElementById('theme-msg');
   if (res.ok) {
-    msg.textContent = 'Thème enregistré — il sera conservé au prochain démarrage.';
+    msg.textContent = 'Theme saved — it will be kept on next startup.';
     msg.classList.add('show');
     clearTimeout(msg._t);
     msg._t = setTimeout(() => msg.classList.remove('show'), 4000);
   } else {
     document.documentElement.setAttribute('data-theme', previous);
     markThemeSelected(previous);
-    alert('Erreur : ' + res.error);
+    alert('Error: ' + res.error);
   }
 }
 
@@ -2370,8 +2541,8 @@ function markThemeSelected(theme) {
 }
 
 async function syncThemeSelection() {
-  // Le thème est déjà posé sur <html> au chargement ; on relit la valeur
-  // stockée au cas où le gabarit n'aurait pas été substitué.
+  // Theme is already set on <html> on load; we re-read the value
+  // stored in case the template was not substituted.
   let theme = document.documentElement.getAttribute('data-theme');
   if (!theme || theme === '__THEME__') {
     theme = await pywebview.api.get_theme();
@@ -2380,24 +2551,24 @@ async function syncThemeSelection() {
   markThemeSelected(theme);
 }
 
-// ── Paramètres ─────────────────────────────────────────────
+// ── Settings ────────────────────────────────────────────────
 async function createShortcut() {
   const btn = document.getElementById('btn-shortcut');
   const msg = document.getElementById('shortcut-msg');
   btn.disabled = true;
-  btn.textContent = 'Création…';
+  btn.textContent = 'Creating...';
   msg.classList.remove('show');
 
   const res = await pywebview.api.create_shortcut();
 
   if (res.ok) {
-    btn.textContent = '✓ Créé';
-    msg.textContent = 'Raccourci créé : ' + res.path;
+    btn.textContent = '<svg class="inline-icon" style="width:14px;height:14px;vertical-align:-2px"><use href="#icon-check"/></svg> Created';
+    msg.textContent = 'Shortcut created: ' + res.path;
     msg.classList.add('show');
-    setTimeout(() => { btn.textContent = 'Ajouter au bureau'; btn.disabled = false; }, 4000);
+    setTimeout(() => { btn.textContent = 'Add au bureau'; btn.disabled = false; }, 4000);
   } else {
-    alert('Erreur : ' + res.error);
-    btn.textContent = 'Ajouter au bureau';
+    alert('Error: ' + res.error);
+    btn.textContent = 'Add au bureau';
     btn.disabled = false;
   }
 }

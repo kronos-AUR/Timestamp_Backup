@@ -24,19 +24,19 @@ from backup.core import restore_backup as _restore, run_backup as _run_backup
 # Importer les chemins depuis le module parent
 from timestamp import DATA_DIR, RUNTIME_DIR, CONFIG_DIR, ensure_directories
 
-# S'assurer que les répertoires existent
+# Ensure directories exist
 ensure_directories()
 
 logger = logging.getLogger(__name__)
 
-# Définir le répertoire de projet pour backup.config
+# Set project directory for backup.config
 import backup.config
 backup.config._project_root = CONFIG_DIR
 
 _ROOT = CONFIG_DIR
 _LOGS_DIR = DATA_DIR / "logs"
 
-# Intervalle minimal entre deux rafraîchissements de la barre de progression.
+# Minimum interval between progress bar refreshes.
 _PROGRESS_INTERVAL = 0.08
 
 
@@ -47,7 +47,7 @@ def _short_path(path) -> str:
 
 
 def _throttled(emit, interval: float = _PROGRESS_INTERVAL):
-    """Limite la fréquence des callbacks de progression."""
+    """Limit the frequency of progress callbacks."""
     last = [0.0]
 
     def callback(current, total, path):
@@ -209,7 +209,7 @@ class BackupAPI:
                 )
                 self._js("backupComplete", report)
             except Exception as e:
-                logger.exception("Sauvegarde interrompu")
+                logger.exception("Backup interrupted")
                 self._js("backupError", str(e))
 
         threading.Thread(target=_task, daemon=True).start()
@@ -272,7 +272,7 @@ class BackupAPI:
                 )
                 self._js(f"{prefix}Complete", report)
             except Exception as e:
-                logger.exception("Restauration interrompu")
+                logger.exception("Restore interrupted")
                 self._js(f"{prefix}Error", str(e))
 
         threading.Thread(target=_task, daemon=True).start()
@@ -442,7 +442,7 @@ class BackupAPI:
         if not desktop.exists():
             desktop = Path.home() / "Desktop"
         lnk = desktop / "Timestamp.lnk"
-        # Utiliser pythonw.exe pour éviter la fenêtre console
+        # Use pythonw.exe to avoid console window
         pythonw = Path(sys.executable).parent / "pythonw.exe"
         ico = RUNTIME_DIR / "icon.ico"
         icon_line = f"$s.IconLocation = {ps_quote(ico)};" if ico.exists() else ""

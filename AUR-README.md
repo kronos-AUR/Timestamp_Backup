@@ -1,36 +1,36 @@
 # Timestamp AUR Package
 
-Ce dépôt contient le paquet AUR pour **Timestamp**, un outil de sauvegarde et de restauration avec interface graphique.
+This repository contains the AUR package for **Timestamp**, a backup and restore tool with graphical user interface for Linux.
 
 ## Installation
 
-### Avec un helper AUR
+### Using an AUR Helper (Recommended)
 
 ```bash
-# Avec yay (recommandé)
+# With yay (recommended)
 yay -S timestamp
 
-# Avec paru
+# With paru
 paru -S timestamp
 
-# Avec pikaur
+# With pikaur
 pikaur -S timestamp
 ```
 
-### Manuellement
+### Manual Installation
 
 ```bash
-# Cloner le dépôt AUR
+# Clone the AUR repository
 git clone https://aur.archlinux.org/timestamp.git
 cd timestamp
 
-# Construire et installer
+# Build and install
 makepkg -si
 ```
 
-## Dépendances
+## Dependencies
 
-### Dépendances obligatoires
+### Required Dependencies
 - python
 - python-pywebview
 - python-qtpy
@@ -41,95 +41,109 @@ makepkg -si
 - cronie
 - xcb-util-cursor
 
-### Dépendances optionnelles
-- **python-smbc** : Pour le support SMB direct (accès aux partages réseau sans montage)
-- **gvfs-smb** : Pour le support montage SMB sous GNOME
-- **xdg-user-dirs** : Pour la gestion des dossiers utilisateur
-- **kio-fuse** : Pour le support montage SMB sous KDE
+### Optional Dependencies
+- **python-smbc**: For direct SMB support (access network shares without mounting)
+- **gvfs-smb**: For SMB mount support on GNOME
+- **xdg-user-dirs**: For user directories management
+- **kio-fuse**: For SMB mount support on KDE
 
-Installez les dépendances optionnelles avec :
+Install optional dependencies with:
 ```bash
 yay -S python-smbc gvfs-smb xdg-user-dirs kio-fuse
 ```
 
-## Utilisation
+## Usage
 
-### Lancer l'interface graphique
+### Launch the Graphical Interface
 ```bash
 timestamp-gui
 ```
 
-### Utiliser l'interface en ligne de commande
+### Use the Command Line Interface
 ```bash
-# Lister les profils
+# List profiles
 timestamp-cli profile list
 
-# Ajouter un profil de sauvegarde
-timestamp-cli profile add mon_profil /backup /home/user/Documents
+# Add a backup profile
+timestamp-cli profile add my_profile /backup /home/user/Documents
 
-# Lancer une sauvegarde
-timestamp-cli run mon_profil
+# Run a backup
+timestamp-cli run my_profile
 
-# Sauvegarde complète (ignore l'incrémental)
-timestamp-cli run mon_profil --full
+# Full backup (ignore incremental)
+timestamp-cli run my_profile --full
 
-# Lancer une sauvegarde de groupe
-timestamp-cli run mon_groupe --group
+# Run a group backup
+timestamp-cli run my_group --group
 
-# Restaurer depuis une sauvegarde
-timestamp-cli restore /backup/mon_profil.zip /restore/path
+# Restore from a backup
+timestamp-cli restore /backup/my_profile.zip /restore/path
 
-# Voir l'aide complète
+# Compressed backup
+timestamp-cli run my_profile --compress
+
+# Show complete help
 timestamp-cli --help
 ```
 
 ## Configuration
 
-Après l'installation, les fichiers de configuration sont créés dans :
-- `~/.config/timestamp/config.json` - Configuration principale
-- `~/.local/share/timestamp/logs/` - Journaux
-- `~/.local/share/timestamp/runtime/` - Données runtime (icônes, clés de chiffrement)
+After installation, configuration files are created in:
+- `~/.config/timestamp/config.json` - Main configuration
+- `~/.local/share/timestamp/logs/` - Log files
+- `~/.local/share/timestamp/runtime/` - Runtime data (icons, encryption keys)
 
-## Désinstallation
+## Uninstallation
 
 ```bash
-# Avec un helper AUR
+# Using an AUR helper
 yay -Rns timestamp
 
-# Manuellement
+# Manual removal
 sudo pacman -Rns timestamp
 
-# Supprimer les fichiers de configuration (optionnel)
+# Remove configuration files (optional)
 rm -rf ~/.config/timestamp/
 rm -rf ~/.local/share/timestamp/
 ```
 
-## Problèmes connus
+## Known Issues
 
-### QtWebEngine et Wayland
-Si vous utilisez Wayland et que l'interface graphique ne s'ouvre pas, essayez :
+### QtWebEngine and Wayland
+If you're using Wayland and the GUI doesn't open, try:
 ```bash
 QT_QPA_PLATFORM=xcb timestamp-gui
 ```
 
-### Problèmes avec SMB
-Si les partages réseau ne fonctionnent pas :
-1. Installez `python-smbc` pour le support SMB direct
-2. Ou installez `gvfs-smb` (GNOME) ou `kio-fuse` (KDE) pour le montage
+### SMB Issues
+If network shares don't work:
+1. Install `python-smbc` for direct SMB support
+2. Or install `gvfs-smb` (GNOME) or `kio-fuse` (KDE) for mounting
 
-### Cron non activé
-Si les planifications ne s'exécutent pas :
+### Cron Not Enabled
+If scheduled backups don't run:
 ```bash
 sudo systemctl enable --now cronie
 ```
 
-## Contribution
+### Running as Root
+If you run as root (e.g., on Kali Linux), you may need to set:
+```bash
+export QTWEBENGINE_CHROMIUM_FLAGS="--no-sandbox"
+```
 
-Pour contribuer à ce paquet AUR :
-1. Fork ce dépôt
-2. Faites vos modifications
-3. Envoyez une pull request
+## Contributing
 
-## Licence
+To contribute to this AUR package:
+1. Fork this repository
+2. Make your changes
+3. Send a pull request
 
-MIT License - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+## License
+
+**GNU General Public License version 3 (GPL-3.0-only)** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+For issues and feature requests, please open an issue on GitHub or visit the AUR package page:
+https://aur.archlinux.org/packages/timestamp
