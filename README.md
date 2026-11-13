@@ -2,7 +2,7 @@
 
 **Backup and restore tool with graphical user interface for Linux**
 
-[![AUR version](https://img.shields.io/aur/version/timestamp?style=flat-square)](https://aur.archlinux.org/packages/timestamp)
+[![AUR version](https://img.shields.io/aur/version/timestamp-backup?style=flat-square)](https://aur.archlinux.org/packages/timestamp-backup)
 [![License](https://img.shields.io/badge/license-GPL--3.0--only-blue.svg?style=flat-square)](LICENSE)
 
 Timestamp is a simple yet powerful backup solution designed for Linux users who want an easy-to-use tool with both GUI and CLI interfaces.
@@ -26,14 +26,14 @@ Timestamp is a simple yet powerful backup solution designed for Linux users who 
 
 ```bash
 # With yay (recommended)
-yay -S timestamp
+yay -S timestamp-backup
 
 # With paru
-paru -S timestamp
+paru -S timestamp-backup
 
 # With makepkg
-git clone https://aur.archlinux.org/timestamp.git
-cd timestamp
+git clone https://aur.archlinux.org/timestamp-backup.git
+cd timestamp-backup
 makepkg -si
 ```
 
@@ -66,7 +66,7 @@ yay -S python-smbc gvfs-smb xdg-user-dirs kio-fuse
 ### Graphical Interface
 
 ```bash
-timestamp-gui
+timestamp-backup-gui
 ```
 
 ### Command Line Interface
@@ -75,47 +75,47 @@ timestamp-gui
 
 ```bash
 # List profiles
-timestamp-cli profile list
+timestamp-backup-cli profile list
 
 # Add a backup profile
-timestamp-cli profile add my_backup /backup/path /home/user/Documents
+timestamp-backup-cli profile add my_backup /backup/path /home/user/Documents
 
 # Add a backup profile with compression
-timestamp-cli profile add my_backup /backup/path /home/user/Documents --compress
+timestamp-backup-cli profile add my_backup /backup/path /home/user/Documents --compress
 
 # Remove a profile
-timestamp-cli profile remove my_backup
+timestamp-backup-cli profile remove my_backup
 ```
 
 #### Backup
 
 ```bash
 # Run a backup
-timestamp-cli run my_backup
+timestamp-backup-cli run my_backup
 
 # Full backup (ignore incremental)
-timestamp-cli run my_backup --full
+timestamp-backup-cli run my_backup --full
 
 # Run a backup group
-timestamp-cli run my_group --group
+timestamp-backup-cli run my_group --group
 ```
 
 #### Restore
 
 ```bash
 # Manual restore
-timestamp-cli restore /backup/archive.tar.gz /restore/path
+timestamp-backup-cli restore /backup/archive.tar.gz /restore/path
 
 # Restore with incremental check
-timestamp-cli restore /backup/archive.tar.gz /restore/path --incremental
+timestamp-backup-cli restore /backup/archive.tar.gz /restore/path --incremental
 
 # Restore using a profile
-timestamp-cli restore --profile my_restore_profile
+timestamp-backup-cli restore --profile my_restore_profile
 
 # Manage restore profiles
-timestamp-cli restore-profile add my_restore /backup/archive.tar.gz /restore/path
-timestamp-cli restore-profile list
-timestamp-cli restore-profile remove my_restore
+timestamp-backup-cli restore-profile add my_restore /backup/archive.tar.gz /restore/path
+timestamp-backup-cli restore-profile list
+timestamp-backup-cli restore-profile remove my_restore
 ```
 
 Restoring a folder copies its content into the destination folder (the folder structure of the source is preserved); restoring an archive extracts its content the same way.
@@ -127,9 +127,9 @@ Scheduled backups are managed through the GUI or automatically when creating sch
 ## Configuration
 
 After installation, configuration files are stored in:
-- `~/.config/timestamp/config.json` - Main configuration
-- `~/.local/share/timestamp/logs/` - Log files
-- `~/.local/share/timestamp/runtime/` - Runtime data (icons, encryption keys)
+- `~/.config/timestamp-backup/config.json` - Main configuration
+- `~/.local/share/timestamp-backup/logs/` - Log files
+- `~/.local/share/timestamp-backup/runtime/` - Runtime data (icons, encryption keys)
 
 ## Themes
 
@@ -163,7 +163,7 @@ In the GUI:
 
 If you use Wayland and the GUI doesn't open, try:
 ```bash
-QT_QPA_PLATFORM=xcb timestamp-gui
+QT_QPA_PLATFORM=xcb timestamp-backup-gui
 ```
 
 ### SMB Issues
@@ -186,11 +186,11 @@ sudo systemctl enable --now cronie
 yay -Rns timestamp
 
 # Manual
-sudo pacman -Rns timestamp
+sudo pacman -Rns timestamp-backup
 
 # Remove configuration files (optional)
-rm -rf ~/.config/timestamp/
-rm -rf ~/.local/share/timestamp/
+rm -rf ~/.config/timestamp-backup/
+rm -rf ~/.local/share/timestamp-backup/
 ```
 
 ## Contributing

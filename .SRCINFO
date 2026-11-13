@@ -1,5 +1,5 @@
-pkgbase = timestamp
-	pkgname = timestamp
+pkgbase = timestamp-backup
+	pkgname = timestamp-backup
 	pkgver = 1.1
 	pkgrel = 2
 	url = https://github.com/kronos-AUR/Timestamp_Backup
@@ -22,17 +22,17 @@ pkgbase = timestamp
 	optdepends = xdg-user-dirs: User directories management
 	optdepends = kio-fuse: SMB mount support for KDE
 	groups = 
-	provides = timestamp
+	provides =
 	conflicts = 
 	replaces = 
 	backup = 
 	options = 
-	install = timestamp.install
+	install = timestamp-backup.install
 	changelog = 
 
 	pkgdesc = Portable backup and restore tool with graphical user interface - Compatible with Linux
 	
-	source = timestamp-1.1.tar.gz::https://github.com/kronos-AUR/Timestamp_Backup/archive/refs/tags/v1.1.tar.gz
+	source = timestamp-backup-1.1.tar.gz::https://github.com/kronos-AUR/Timestamp_Backup/archive/refs/tags/v1.1.tar.gz
 	source = config.json.default
 	sha256sums = SKIP
 	sha256sums = 99ae2234c584031bb0e3bb9846548945c0109d7bfd8d52906422accafeb0cb60

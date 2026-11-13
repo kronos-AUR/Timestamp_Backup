@@ -8,21 +8,21 @@ This repository contains the AUR package for **Timestamp**, a backup and restore
 
 ```bash
 # With yay (recommended)
-yay -S timestamp
+yay -S timestamp-backup
 
 # With paru
-paru -S timestamp
+paru -S timestamp-backup
 
 # With pikaur
-pikaur -S timestamp
+pikaur -S timestamp-backup
 ```
 
 ### Manual Installation
 
 ```bash
 # Clone the AUR repository
-git clone https://aur.archlinux.org/timestamp.git
-cd timestamp
+git clone https://aur.archlinux.org/timestamp-backup.git
+cd timestamp-backup
 
 # Build and install
 makepkg -si
@@ -56,43 +56,43 @@ yay -S python-smbc gvfs-smb xdg-user-dirs kio-fuse
 
 ### Launch the Graphical Interface
 ```bash
-timestamp-gui
+timestamp-backup-gui
 ```
 
 ### Use the Command Line Interface
 ```bash
 # List profiles
-timestamp-cli profile list
+timestamp-backup-cli profile list
 
 # Add a backup profile
-timestamp-cli profile add my_profile /backup /home/user/Documents
+timestamp-backup-cli profile add my_profile /backup /home/user/Documents
 
 # Run a backup
-timestamp-cli run my_profile
+timestamp-backup-cli run my_profile
 
 # Full backup (ignore incremental)
-timestamp-cli run my_profile --full
+timestamp-backup-cli run my_profile --full
 
 # Run a group backup
-timestamp-cli run my_group --group
+timestamp-backup-cli run my_group --group
 
 # Restore from a backup
-timestamp-cli restore /backup/my_profile.zip /restore/path
+timestamp-backup-cli restore /backup/my_profile.zip /restore/path
 
 # Add a profile with compression enabled, then run it
-timestamp-cli profile add my_backup /backup /home/user/Documents --compress
-timestamp-cli run my_backup
+timestamp-backup-cli profile add my_backup /backup /home/user/Documents --compress
+timestamp-backup-cli run my_backup
 
 # Show complete help
-timestamp-cli --help
+timestamp-backup-cli --help
 ```
 
 ## Configuration
 
 After installation, configuration files are created in:
-- `~/.config/timestamp/config.json` - Main configuration
-- `~/.local/share/timestamp/logs/` - Log files
-- `~/.local/share/timestamp/runtime/` - Runtime data (icons, encryption keys)
+- `~/.config/timestamp-backup/config.json` - Main configuration
+- `~/.local/share/timestamp-backup/logs/` - Log files
+- `~/.local/share/timestamp-backup/runtime/` - Runtime data (icons, encryption keys)
 
 ## Uninstallation
 
@@ -101,11 +101,11 @@ After installation, configuration files are created in:
 yay -Rns timestamp
 
 # Manual removal
-sudo pacman -Rns timestamp
+sudo pacman -Rns timestamp-backup
 
 # Remove configuration files (optional)
-rm -rf ~/.config/timestamp/
-rm -rf ~/.local/share/timestamp/
+rm -rf ~/.config/timestamp-backup/
+rm -rf ~/.local/share/timestamp-backup/
 ```
 
 ## Known Issues
@@ -113,7 +113,7 @@ rm -rf ~/.local/share/timestamp/
 ### QtWebEngine and Wayland
 If you're using Wayland and the GUI doesn't open, try:
 ```bash
-QT_QPA_PLATFORM=xcb timestamp-gui
+QT_QPA_PLATFORM=xcb timestamp-backup-gui
 ```
 
 ### SMB Issues
@@ -147,4 +147,4 @@ To contribute to this AUR package:
 ---
 
 For issues and feature requests, please open an issue on GitHub or visit the AUR package page:
-https://aur.archlinux.org/packages/timestamp
+https://aur.archlinux.org/packages/timestamp-backup

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 # Timestamp main script - default interface (GUI)
-exec timestamp-gui "$@"
+exec timestamp-backup-gui "$@"

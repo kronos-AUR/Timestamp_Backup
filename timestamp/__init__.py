@@ -10,16 +10,16 @@ import sys
 from pathlib import Path
 
 # Paths for AUR installation
-PKG_DIR = Path("/usr/lib/timestamp")
+PKG_DIR = Path("/usr/lib/timestamp-backup")
 
 # User configuration directory (XDG compliant)
-CONFIG_DIR = Path.home() / ".config" / "timestamp"
+CONFIG_DIR = Path.home() / ".config" / "timestamp-backup"
 
 # User data directory (XDG compliant)
-DATA_DIR = Path.home() / ".local" / "share" / "timestamp"
+DATA_DIR = Path.home() / ".local" / "share" / "timestamp-backup"
 
 # User cache directory (XDG compliant)
-CACHE_DIR = Path.home() / ".cache" / "timestamp"
+CACHE_DIR = Path.home() / ".cache" / "timestamp-backup"
 
 # Logs directory
 LOGS_DIR = DATA_DIR / "logs"

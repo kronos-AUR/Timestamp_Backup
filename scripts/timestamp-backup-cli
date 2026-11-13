@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Launcher for Timestamp graphical user interface."""
+"""Launcher for Timestamp command line interface."""
 
 import sys
 from pathlib import Path
 
 # Installation path
-PKG_DIR = Path("/usr/lib/timestamp")
+PKG_DIR = Path("/usr/lib/timestamp-backup")
 
 # Add package directory to sys.path
 if str(PKG_DIR) not in sys.path:
     sys.path.insert(0, str(PKG_DIR))
 
-# The package is installed flat in /usr/lib/timestamp: register its
+# The package is installed flat in /usr/lib/timestamp-backup: register its
 # __init__.py as the "timestamp" module so "from timestamp import ..."
-# works in app.py, backup.config and gui.api.
+# works in cli.py, backup.config and gui.api.
 _init = PKG_DIR / "__init__.py"
 if _init.exists():
     import importlib.util
@@ -22,8 +22,8 @@ if _init.exists():
     sys.modules.setdefault("timestamp", mod)
     spec.loader.exec_module(mod)
 
-# Launch the GUI application
-from app import main
+# Launch the CLI application
+from cli import main
 
 if __name__ == "__main__":
     main()

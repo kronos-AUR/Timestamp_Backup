@@ -26,7 +26,7 @@ from timestamp.gui.api import BackupAPI
 
 def _generate_icon():
     """Generate runtime icons from the SVG."""
-    svg_path = ICONS_DIR / "timestamp.svg"
+    svg_path = ICONS_DIR / "timestamp-backup.svg"
     out_dir = RUNTIME_DIR
     png_path = out_dir / "icon.png"
     ico_path = out_dir / "icon.ico"
@@ -35,7 +35,7 @@ def _generate_icon():
         return ico_path, png_path
     if not svg_path.exists():
         # Try with installation path
-        svg_path = Path("/usr/share/icons/hicolor/scalable/apps/timestamp.svg")
+        svg_path = Path("/usr/share/icons/hicolor/scalable/apps/timestamp-backup.svg")
         if not svg_path.exists():
             return None, None
 

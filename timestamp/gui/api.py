@@ -282,7 +282,7 @@ class BackupAPI:
 
     @staticmethod
     def _schedule_args(sched_type: str, target: str) -> list:
-        """Arguments passes au wrapper timestamp-cli."""
+        """Arguments passes au wrapper timestamp-backup-cli."""
         if sched_type == "group":
             return ["run", target, "--group"]
         if sched_type == "restore":
@@ -478,7 +478,7 @@ class BackupAPI:
             "Type=Application\n"
             "Name=Timestamp\n"
             "Comment=Logiciel de sauvegarde\n"
-            "Exec=timestamp-gui\n"
+            "Exec=timestamp-backup-gui\n"
             f"Icon={png if png.exists() else 'drive-harddisk'}\n"
             "Terminal=false\n"
             "StartupNotify=true\n"

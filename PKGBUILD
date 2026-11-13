@@ -1,6 +1,6 @@
 # Maintainer: Kronosaur
 
-pkgname=timestamp
+pkgname=timestamp-backup
 pkgver=1.1
 pkgrel=2
 pkgdesc="Portable backup and restore tool with graphical user interface - Compatible with Linux"
@@ -27,12 +27,12 @@ optdepends=(
     'xdg-user-dirs: User directories management'
     'kio-fuse: SMB mount support for KDE'
 )
-provides=('timestamp')
+provides=()
 conflicts=()
 replaces=()
 backup=()
 options=()
-install=timestamp.install
+install=timestamp-backup.install
 changelog=
 
 source=(
@@ -45,24 +45,24 @@ sha256sums=('SKIP'
 package() {
     cd "${srcdir}"/Timestamp_Backup-*
 
-    # Install Python files to /usr/lib/timestamp
+    # Install Python files to /usr/lib/timestamp-backup
     install -d "${pkgdir}/usr/lib/${pkgname}"
     cp -r timestamp/* "${pkgdir}/usr/lib/${pkgname}/"
     find "${pkgdir}/usr/lib/${pkgname}" -type d -name '__pycache__' -exec rm -rf {} +
     
     # Install icon
     install -d "${pkgdir}/usr/share/icons/hicolor/scalable/apps"
-    install -Dm644 timestamp/icon/timestamp.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/timestamp.svg"
+    install -Dm644 timestamp/icon/timestamp-backup.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/timestamp-backup.svg"
     
     # Install .desktop file
     install -d "${pkgdir}/usr/share/applications"
-    install -Dm644 scripts/timestamp.desktop "${pkgdir}/usr/share/applications/timestamp.desktop"
+    install -Dm644 scripts/timestamp-backup.desktop "${pkgdir}/usr/share/applications/timestamp-backup.desktop"
     
     # Install startup scripts in /usr/bin
     install -d "${pkgdir}/usr/bin"
-    install -Dm755 scripts/timestamp "${pkgdir}/usr/bin/timestamp"
-    install -Dm755 scripts/timestamp-gui "${pkgdir}/usr/bin/timestamp-gui"
-    install -Dm755 scripts/timestamp-cli "${pkgdir}/usr/bin/timestamp-cli"
+    install -Dm755 scripts/timestamp-backup "${pkgdir}/usr/bin/timestamp-backup"
+    install -Dm755 scripts/timestamp-backup-gui "${pkgdir}/usr/bin/timestamp-backup-gui"
+    install -Dm755 scripts/timestamp-backup-cli "${pkgdir}/usr/bin/timestamp-backup-cli"
     
     # Install default configuration file
     install -d "${pkgdir}/usr/share/${pkgname}"

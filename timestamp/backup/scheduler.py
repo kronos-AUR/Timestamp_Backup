@@ -5,11 +5,11 @@ Trois moteurs sont pris en charge, choisis automatiquement :
   - Windows : le Planificateur de tâches (``schtasks``), sous le dossier
     ``\\Timestamp``.
   - Linux avec cron : la crontab de l'utilisateur, chaque ligne étant marquée
-    par un commentaire ``# timestamp:<nom>`` qui sert de clé.
+    par un commentaire ``# timestamp-backup:<nom>`` qui sert de clé.
   - Linux sans cron : des timers systemd utilisateur.
 
 L'appelant fournit la commande sous forme de liste d'arguments passés au
-wrapper (``timestamp-cli``), par exemple ``["run", "Documents"]``
+wrapper (``timestamp-backup-cli``), par exemple ``["run", "Documents"]``
 ou ``["restore", "--profile", "Documents"]``.
 """
 import os
@@ -48,7 +48,7 @@ def validate_name(name: str) -> None:
 
 def _wrapper() -> str:
     """Retourne la commande du wrapper CLI (suppose dans le PATH)."""
-    return "timestamp-cli"
+    return "timestamp-backup-cli"
 
 
 def _split_time(time: str) -> tuple[str, str]:
@@ -179,8 +179,8 @@ def _schtasks_delete(name) -> None:
 
 def _cron_command(args: list[str]) -> str:
     """Genere la commande pour cron."""
-    # Utiliser timestamp-cli qui est dans PATH
-    cmd = "timestamp-cli " + " ".join([shlex.quote(a) for a in args])
+    # Utiliser timestamp-backup-cli qui est dans PATH
+    cmd = "timestamp-backup-cli " + " ".join([shlex.quote(a) for a in args])
     return cmd.replace("%", r"\%")
 
 
@@ -192,7 +192,7 @@ def _cron_line(name, args, frequency, time, day) -> str:
         schedule = f"{m} {h} * * {_DAYS_CRON.get(day or 'MON', '1')}"
     else:
         schedule = f"{m} {h} * * *"
-    return f"{schedule} {_cron_command(args)} # timestamp:{name}"
+    return f"{schedule} {_cron_command(args)} # timestamp-backup:{name}"
 
 
 def _cron_missing() -> RuntimeError:
@@ -240,14 +240,14 @@ def _cron_daemon_warning() -> str | None:
 
 
 def _cron_add(name, args, frequency, time, day) -> str | None:
-    lines = [l for l in _cron_read().splitlines() if f"# timestamp:{name}" not in l]
+    lines = [l for l in _cron_read().splitlines() if f"# timestamp-backup:{name}" not in l]
     lines.append(_cron_line(name, args, frequency, time, day))
     _cron_write("\n".join(lines) + "\n")
     return _cron_daemon_warning()
 
 
 def _cron_remove(name) -> None:
-    lines = [l for l in _cron_read().splitlines() if f"# timestamp:{name}" not in l]
+    lines = [l for l in _cron_read().splitlines() if f"# timestamp-backup:{name}" not in l]
     _cron_write("\n".join(lines) + "\n")
 
 
@@ -255,7 +255,7 @@ def _cron_remove(name) -> None:
 
 def _unit_slug(name: str) -> str:
     slug = re.sub(r"[^A-Za-z0-9_-]", "_", name)
-    return f"timestamp-{slug}"
+    return f"timestamp-backup-{slug}"
 
 
 def _systemd_dir() -> Path:
@@ -305,7 +305,7 @@ def _systemd_add(name, args, frequency, time, day) -> str | None:
     directory = _systemd_dir()
     directory.mkdir(parents=True, exist_ok=True)
 
-    exec_start = "timestamp-cli " + " ".join([shlex.quote(a) for a in args])
+    exec_start = "timestamp-backup-cli " + " ".join([shlex.quote(a) for a in args])
     (directory / f"{unit}.service").write_text(
         "[Unit]\n"
         f"Description=Timestamp — {name}\n\n"
