@@ -149,14 +149,21 @@ def _smb_uri(entry: dict) -> str:
 
 def _is_mounted(entry: dict) -> bool:
     """Vérifie si un partage est monté."""
+    server = entry.get("server", "")
+    share  = entry.get("share", "")
     if os.name == "nt":
-        server = entry.get("server", "")
-        share  = entry.get("share", "")
         try:
             return Path(f"\\\\{server}\\{share}").exists()
         except OSError:
             return False
-    return False
+    uid = os.getuid()
+    kiofuse = _kiofuse_root(uid)
+    if os.path.ismount(str(kiofuse)):
+        try:
+            return (kiofuse / "smb" / server / share).exists()
+        except OSError:
+            return False
+    return _find_gvfs_mount(server, share, uid) is not None
 
 
 def _public(name: str, entry: dict) -> dict:

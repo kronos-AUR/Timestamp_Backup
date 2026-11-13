@@ -10,10 +10,10 @@ post_install() {
     echo "  - CLI interface:       timestamp-cli"
     echo "  - CLI help:            timestamp-cli --help"
     echo ""
-    echo "Configuration files will be stored in:"
+    echo "Configuration files are created on first run in:"
     echo "  ~/.config/timestamp/"
     echo ""
-    echo "Backup data will be stored in:"
+    echo "Backup data and logs are stored in:"
     echo "  ~/.local/share/timestamp/"
     echo ""
     echo "To create a backup profile:"
@@ -27,35 +27,19 @@ post_install() {
     echo "  Example: 0 2 * * * /usr/bin/timestamp-cli run daily_backup"
     echo ""
     echo "================================================================"
-    
-    # Create user configuration directory
-    install -d -m 755 "$HOME/.config/timestamp"
-    
-    # Copy default configuration file if it doesn't exist
-    if [ ! -f "$HOME/.config/timestamp/config.json" ] && [ -f "/usr/share/timestamp/config.json.default" ]; then
-        install -D -m 644 /usr/share/timestamp/config.json.default "$HOME/.config/timestamp/config.json"
-    fi
-    
-    # Create logs directory
-    install -d -m 755 "$HOME/.local/share/timestamp/logs"
-    
-    # Create runtime directory
-    install -d -m 755 "$HOME/.local/share/timestamp/runtime"
-    
+
     # Update desktop application database
     update-desktop-database -q 2>/dev/null || true
-    
-    # Update MIME database
-    update-mime-database usr/share/mime 2>/dev/null || true
-    
-    # Enable cron service if available
-    if [ -x /usr/bin/systemctl ]; then
+
+    # Enable cron service if available (for scheduled backups).
+    # pacman install scripts already run as root: no sudo needed.
+    if command -v systemctl >/dev/null 2>&1; then
         if systemctl list-unit-files cronie.service &>/dev/null; then
-            echo "Enabling cronie service for scheduled backups..."
-            sudo systemctl enable --now cronie 2>/dev/null || echo "  Note: Could not enable cronie (requires sudo)"
+            systemctl enable --now cronie 2>/dev/null \
+                || echo "  Note: enable cronie manually: sudo systemctl enable --now cronie"
         elif systemctl list-unit-files cron.service &>/dev/null; then
-            echo "Enabling cron service for scheduled backups..."
-            sudo systemctl enable --now cron 2>/dev/null || echo "  Note: Could not enable cron (requires sudo)"
+            systemctl enable --now cron 2>/dev/null \
+                || echo "  Note: enable cron manually: sudo systemctl enable --now cron"
         fi
     fi
 }
@@ -63,10 +47,7 @@ post_install() {
 post_upgrade() {
     # Update desktop application database
     update-desktop-database -q 2>/dev/null || true
-    
-    # Update MIME database
-    update-mime-database usr/share/mime 2>/dev/null || true
-    
+
     echo "Timestamp has been upgraded to version $2."
 }
 
@@ -85,9 +66,6 @@ pre_remove() {
 post_remove() {
     # Update desktop application database
     update-desktop-database -q 2>/dev/null || true
-    
-    # Update MIME database
-    update-mime-database usr/share/mime 2>/dev/null || true
 }
 
 op=$1

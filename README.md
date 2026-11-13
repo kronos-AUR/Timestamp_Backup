@@ -18,7 +18,7 @@ Timestamp is a simple yet powerful backup solution designed for Linux users who 
 - **Multiple Themes** - Choose from 4 different themes (Dark, Monokai, Amber, Flexoki)
 - **Restore Functionality** - Restore individual files or entire backups
 - **Backup Groups** - Run multiple backups in sequence
-- **Cross-platform** - Works on Linux (tested on Arch, Debian, Ubuntu, Kali, Fedora)
+- **Linux** - Tested on Arch, Debian, Ubuntu, Kali, Fedora
 
 ## Installation
 
@@ -111,7 +111,14 @@ timestamp-cli restore /backup/archive.tar.gz /restore/path --incremental
 
 # Restore using a profile
 timestamp-cli restore --profile my_restore_profile
+
+# Manage restore profiles
+timestamp-cli restore-profile add my_restore /backup/archive.tar.gz /restore/path
+timestamp-cli restore-profile list
+timestamp-cli restore-profile remove my_restore
 ```
+
+Restoring a folder copies its content into the destination folder (the folder structure of the source is preserved); restoring an archive extracts its content the same way.
 
 #### Scheduled Backups
 
@@ -127,10 +134,10 @@ After installation, configuration files are stored in:
 ## Themes
 
 4 themes are available:
-- `dark` - Dark theme (default)
+- `flexoki` - Flexoki theme (default)
+- `dark` - Dark theme
 - `monokai` - Monokai theme
 - `amber` - Yellow/Gray theme
-- `flexoki` - Flexoki theme
 
 ## Network Shares
 

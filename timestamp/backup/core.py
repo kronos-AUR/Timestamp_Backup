@@ -183,7 +183,8 @@ def _run_smb_backup(
         )
         return report
 
-    # Collect source files
+    # Collect source files as (src, rel) pairs; rel keeps the source root
+    # directory name so the tree structure is preserved in the archive.
     all_files: list[tuple[Path, str]] = []
     for source in sources:
         src_root = Path(source)
@@ -191,12 +192,11 @@ def _run_smb_backup(
             report["errors"].append(f"Source introuvable : {source}")
             continue
         if src_root.is_file():
-            all_files.append((src_root, f"{dest_uri}/{src_root.name}"))
+            all_files.append((src_root, src_root.name))
         else:
             for file in src_root.rglob("*"):
                 if file.is_file():
-                    rel = str(file.relative_to(src_root.parent)).replace("\\", "/")
-                    all_files.append((file, f"{dest_uri}/{rel}"))
+                    all_files.append((file, file.relative_to(src_root.parent).as_posix()))
 
     total = len(all_files)
 
@@ -207,11 +207,11 @@ def _run_smb_backup(
             tmp_path = tmp.name
         try:
             with tarfile.open(tmp_path, "w:gz") as tf:
-                for i, (src, _) in enumerate(all_files):
+                for i, (src, rel) in enumerate(all_files):
                     if on_progress:
                         on_progress(i + 1, total, src)
                     try:
-                        tf.add(src, arcname=src.name)
+                        tf.add(src, arcname=rel)
                         report["copied"] += 1
                     except Exception as e:
                         report["errors"].append(f"{src}: {e}")
@@ -227,7 +227,8 @@ def _run_smb_backup(
             except Exception:
                 pass
     else:
-        for i, (src, dst_uri) in enumerate(all_files):
+        for i, (src, rel) in enumerate(all_files):
+            dst_uri = f"{dest_uri}/{rel}"
             if on_progress:
                 on_progress(i + 1, total, src)
             try:
@@ -275,7 +276,8 @@ def run_backup(
         logger.error(dest_error)
         return report
 
-    # Collecte tous les fichiers à traiter
+    # Collecte tous les fichiers à traiter sous forme (src, rel) ; rel
+    # inclut le nom du dossier source pour préserver l'arborescence.
     all_files: list[tuple[Path, Path]] = []
     for source in sources:
         src_root = Path(source)
@@ -284,13 +286,11 @@ def run_backup(
             logger.warning("Source introuvable : %s", source)
             continue
         if src_root.is_file():
-            rel = src_root.name
-            all_files.append((src_root, dest / rel))
+            all_files.append((src_root, Path(src_root.name)))
         else:
             for file in src_root.rglob("*"):
                 if file.is_file():
-                    rel = file.relative_to(src_root.parent)
-                    all_files.append((file, dest / rel))
+                    all_files.append((file, file.relative_to(src_root.parent)))
 
     total = len(all_files)
 
@@ -308,11 +308,11 @@ def run_backup(
             archive_path = archive_dir / f"{archive_name}.zip"
             with open(archive_path, "wb") as fh:
                 with zipfile.ZipFile(fh, "w", zipfile.ZIP_DEFLATED) as zf:
-                    for i, (src, _) in enumerate(all_files):
+                    for i, (src, rel) in enumerate(all_files):
                         if on_progress:
                             on_progress(i + 1, total, src)
                         try:
-                            zf.write(src, src.name)
+                            zf.write(src, rel.as_posix())
                             report["copied"] += 1
                         except Exception as e:
                             report["errors"].append(f"{src}: {e}")
@@ -323,11 +323,11 @@ def run_backup(
             archive_path = archive_dir / f"{archive_name}.tar.gz"
             with open(archive_path, "wb") as fh:
                 with tarfile.open(fileobj=fh, mode="w:gz") as tf:
-                    for i, (src, _) in enumerate(all_files):
+                    for i, (src, rel) in enumerate(all_files):
                         if on_progress:
                             on_progress(i + 1, total, src)
                         try:
-                            tf.add(src, arcname=src.name)
+                            tf.add(src, arcname=rel.as_posix())
                             report["copied"] += 1
                         except Exception as e:
                             report["errors"].append(f"{src}: {e}")
@@ -343,7 +343,8 @@ def run_backup(
         report["archive"] = str(archive_path)
 
     else:
-        for i, (src, dst) in enumerate(all_files):
+        for i, (src, rel) in enumerate(all_files):
+            dst = dest / rel
             if on_progress:
                 on_progress(i + 1, total, src)
             try:

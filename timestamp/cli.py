@@ -237,7 +237,7 @@ def cmd_group_list(args):
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="timestamp-cli",
-        description="Outil de sauvegarde simple - Windows & Linux",
+        description="Outil de sauvegarde et restauration - Linux",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

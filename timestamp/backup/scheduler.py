@@ -47,11 +47,7 @@ def validate_name(name: str) -> None:
 
 
 def _wrapper() -> str:
-    """Retourne le chemin du wrapper CLI."""
-    if sys.platform == "win32":
-        # Sous Windows, on utilise le script timestamp-cli
-        return str(_ROOT / "timestamp-cli")
-    # Sous Linux/Unix, on utilise timestamp-cli qui est dans PATH
+    """Retourne la commande du wrapper CLI (suppose dans le PATH)."""
     return "timestamp-cli"
 
 

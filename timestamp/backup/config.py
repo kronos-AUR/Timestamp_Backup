@@ -28,7 +28,7 @@ def _default_config() -> dict:
         "schedules": {},
         "groups":    {},
         "restores":  {},
-        "settings":  {"theme": "dark"},
+        "settings":  {"theme": "flexoki"},
     }
 
 

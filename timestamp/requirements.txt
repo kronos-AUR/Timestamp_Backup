@@ -2,3 +2,5 @@ pywebview>=4.4
 qtpy>=2.4
 cryptography>=40.0
 pillow>=10.0
+pyqt6
+pyqt6-webengine

@@ -71,3 +71,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Local user configuration (created at runtime, never ship in the package)
+timestamp/config.json

@@ -79,8 +79,9 @@ timestamp-cli run my_group --group
 # Restore from a backup
 timestamp-cli restore /backup/my_profile.zip /restore/path
 
-# Compressed backup
-timestamp-cli run my_profile --compress
+# Add a profile with compression enabled, then run it
+timestamp-cli profile add my_backup /backup /home/user/Documents --compress
+timestamp-cli run my_backup
 
 # Show complete help
 timestamp-cli --help

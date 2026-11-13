@@ -1,8 +1,8 @@
 pkgbase = timestamp
 	pkgname = timestamp
 	pkgver = 1.1
-	pkgrel = 1
-	url = https://github.com/yourusername/timestamp
+	pkgrel = 2
+	url = https://github.com/kronos-AUR/Timestamp_Backup
 	arch = x86_64
 	arch = aarch64
 	license = GPL3
@@ -32,7 +32,7 @@ pkgbase = timestamp
 
 	pkgdesc = Portable backup and restore tool with graphical user interface - Compatible with Linux
 	
-	source = timestamp-1.1.tar.gz::https://github.com/yourusername/timestamp/archive/refs/tags/v1.1.tar.gz
+	source = timestamp-1.1.tar.gz::https://github.com/kronos-AUR/Timestamp_Backup/archive/refs/tags/v1.1.tar.gz
 	source = config.json.default
 	sha256sums = SKIP
-	sha256sums = SKIP
+	sha256sums = 99ae2234c584031bb0e3bb9846548945c0109d7bfd8d52906422accafeb0cb60

@@ -8,5 +8,3 @@ Icon=timestamp
 Terminal=false
 StartupNotify=true
 Categories=Utility;Archiving;Backup;
-MimeType=
-Path=

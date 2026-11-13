@@ -2,7 +2,7 @@
 
 pkgname=timestamp
 pkgver=1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Portable backup and restore tool with graphical user interface - Compatible with Linux"
 url="https://github.com/kronos-AUR/Timestamp_Backup"
 license=('GPL3')
@@ -40,14 +40,15 @@ source=(
     "config.json.default"
 )
 sha256sums=('SKIP'
-            'SKIP')
+            '99ae2234c584031bb0e3bb9846548945c0109d7bfd8d52906422accafeb0cb60')
 
 package() {
-    cd "Timestamp_Backup-${pkgver}"
-    
+    cd "${srcdir}"/Timestamp_Backup-*
+
     # Install Python files to /usr/lib/timestamp
     install -d "${pkgdir}/usr/lib/${pkgname}"
     cp -r timestamp/* "${pkgdir}/usr/lib/${pkgname}/"
+    find "${pkgdir}/usr/lib/${pkgname}" -type d -name '__pycache__' -exec rm -rf {} +
     
     # Install icon
     install -d "${pkgdir}/usr/share/icons/hicolor/scalable/apps"
@@ -72,9 +73,6 @@ package() {
     install -d "${pkgdir}/usr/share/doc/${pkgname}"
     install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
     install -Dm644 LICENSE "${pkgdir}/usr/share/doc/${pkgname}/LICENSE"
-    
-    # Install install script
-    install -Dm644 timestamp.install "${pkgdir}/.INSTALL"
 }
 
 # vim: ts=4 sw=4 et:
