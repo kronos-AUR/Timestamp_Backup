@@ -28,6 +28,17 @@ cd timestamp-backup
 makepkg -si
 ```
 
+### From GitHub (without the AUR)
+
+```bash
+# Clone the source repository
+git clone https://github.com/kronos-AUR/Timestamp_Backup.git
+cd Timestamp_Backup
+
+# Build and install (dependencies are installed automatically)
+makepkg -si
+```
+
 ## Dependencies
 
 ### Required Dependencies
