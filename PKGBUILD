@@ -1,8 +1,8 @@
 # Maintainer: Kronosaur
 
 pkgname=timestamp-backup
-pkgver=1.1
-pkgrel=2
+pkgver=1.2
+pkgrel=1
 pkgdesc="Portable backup and restore tool with graphical user interface - Compatible with Linux"
 url="https://github.com/kronos-AUR/Timestamp_Backup"
 license=('GPL3')
