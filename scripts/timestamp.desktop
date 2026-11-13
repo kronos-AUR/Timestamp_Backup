@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Timestamp
+Comment=Outil de sauvegarde et de restauration
+Exec=timestamp-gui
+Icon=timestamp
+Terminal=false
+StartupNotify=true
+Categories=Utility;Archiving;Backup;
+MimeType=
+Path=

@@ -1,0 +1,70 @@
+# arg 1:  the new package version
+# arg 2:  the old package version
+post_install() {
+    echo "================================================================"
+    echo " Timestamp - Installation terminée"
+    echo "================================================================"
+    echo ""
+    echo "Pour lancer Timestamp:"
+    echo "  - Interface graphique : timestamp-gui"
+    echo "  - Interface CLI       : timestamp-cli"
+    echo "  - Aide CLI            : timestamp-cli --help"
+    echo ""
+    echo "Les fichiers de configuration seront stockés dans:"
+    echo "  ~/.config/timestamp/"
+    echo ""
+    echo "Pour créer un profil de sauvegarde:"
+    echo "  timestamp-cli profile add <nom> <destination> <source1> [source2...]"
+    echo ""
+    echo "================================================================"
+    
+    # Créer le dossier de configuration utilisateur
+    mkdir -p "$HOME/.config/timestamp"
+    
+    # Copier le fichier de configuration par défaut s'il n'existe pas
+    if [ ! -f "$HOME/.config/timestamp/config.json" ]; then
+        cp /usr/share/timestamp/config.json.default "$HOME/.config/timestamp/config.json"
+        chmod 644 "$HOME/.config/timestamp/config.json"
+    fi
+    
+    # Créer le dossier de logs
+    mkdir -p "$HOME/.local/share/timestamp/logs"
+    
+    # Créer le dossier runtime
+    mkdir -p "$HOME/.local/share/timestamp/runtime"
+    
+    # Activer le service cron si disponible
+    if command -v systemctl &>/dev/null; then
+        if systemctl list-unit-files cronie.service &>/dev/null; then
+            sudo systemctl enable --now cronie 2>/dev/null || true
+        elif systemctl list-unit-files cron.service &>/dev/null; then
+            sudo systemctl enable --now cron 2>/dev/null || true
+        fi
+    fi
+    
+    # Mettre à jour la base de données des applications desktop
+    update-desktop-database -q || true
+}
+
+post_upgrade() {
+    post_install
+}
+
+pre_remove() {
+    # Supprimer les fichiers de configuration si l'utilisateur le souhaite
+    # (on ne supprime pas par défaut pour préserver les données)
+    echo "Pour une désinstallation complète, supprimez manuellement:"
+    echo "  - ~/.config/timestamp/"
+    echo "  - ~/.local/share/timestamp/"
+    echo ""
+}
+
+post_remove() {
+    # Mettre à jour la base de données des applications desktop
+    update-desktop-database -q || true
+}
+
+op=$1
+shift
+
+$op $*

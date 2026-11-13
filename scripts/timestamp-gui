@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+"""Lanceur pour l'interface graphique de Timestamp."""
+
+import os
+import sys
+from pathlib import Path
+
+# Chemin d'installation
+PKG_DIR = Path("/usr/lib/timestamp")
+
+# Ajouter le dossier du paquet à sys.path
+if str(PKG_DIR) not in sys.path:
+    sys.path.insert(0, str(PKG_DIR))
+
+# Définir le répertoire de projet pour la configuration
+import backup.config
+CONFIG_DIR = Path.home() / ".config" / "timestamp"
+CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+backup.config._project_root = CONFIG_DIR
+
+# Définir les chemins runtime
+RUNTIME_DIR = Path.home() / ".local" / "share" / "timestamp" / "runtime"
+RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
+
+# Lancer l'application GUI
+from app import main
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Script principal Timestamp - interface par défaut (GUI)
+exec timestamp-gui "$@"

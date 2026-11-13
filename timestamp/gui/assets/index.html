@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="__THEME__">
+<head>
+<meta charset="UTF-8">
+<title>Timestamp</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Thèmes ───────────────────────────────────────────
+   Chaque thème ne redéfinit que des variables : aucune règle de mise en page
+   n'est dupliquée. Le thème actif est posé sur <html data-theme="…"> par
+   app.py au chargement (évite le clignotement) puis par setTheme(). */
+
+:root {
+  /* Sombre (par défaut) */
+  --bg:             #14171C;
+  --sidebar:        #0E1013;
+  --sidebar-text:   #E6E9EE;
+  --sidebar-muted:  #838A99;
+  --card:           #1B1F26;
+  --card2:          #232833;
+  --navy:           #3A4150;
+  --border:         #262B33;
+  --border2:        #2E3440;
+  --text:           #E6E9EE;
+  --gray:           #838A99;
+
+  --accent:         #3B82F6;
+  --accent-hl:      #60A5FA;
+  --on-accent:      #FFFFFF;
+  --accent-soft:    rgba(59,130,246,.12);
+  --accent-soft-lo: rgba(59,130,246,.08);
+  --accent-soft-hi: rgba(59,130,246,.20);
+  --accent-border:  rgba(59,130,246,.40);
+
+  --danger:         #EF4444;
+  --danger-hl:      #F87171;
+  --danger-soft:    rgba(239,68,68,.12);
+  --danger-soft-hl: rgba(239,68,68,.22);
+  --danger-bg:      rgba(239,68,68,.07);
+  --danger-border:  rgba(239,68,68,.35);
+
+  --success:        #10B981;
+  --success-hl:     #34D399;
+  --success-soft:   rgba(16,185,129,.14);
+  --success-soft-hl:rgba(16,185,129,.24);
+  --success-bg:     rgba(16,185,129,.08);
+  --success-border: rgba(16,185,129,.35);
+  --success-glow:   rgba(52,211,153,.5);
+
+  --muted-soft:     rgba(131,138,153,.16);
+  --muted-border:   rgba(131,138,153,.35);
+  --hover:          rgba(255,255,255,.04);
+  --neutral-soft:   rgba(255,255,255,.03);
+  --input-bg:       rgba(0,0,0,.30);
+  --option-bg:      #112038;
+  --log-bg:         #0A0C10;
+  --log-fg:         #7DB4F0;
+  --scheme:         dark;
+
+  --logo-bg:        #1B1F26;
+  --logo-ring:      #3B82F6;
+  --logo-tick:      #E6E9EE;
+  --logo-arrow:     #10B981;
+}
+
+:root[data-theme="monokai"] {
+  --bg:             #272822;
+  --sidebar:        #1D1E19;
+  --sidebar-text:   #F8F8F2;
+  --sidebar-muted:  #A59F85;
+  --card:           #2E2F28;
+  --card2:          #3E3D32;
+  --navy:           #75715E;
+  --border:         #3B3C33;
+  --border2:        #49483E;
+  --text:           #F8F8F2;
+  --gray:           #A59F85;
+
+  --accent:         #66D9EF;
+  --accent-hl:      #8EE6F2;
+  --on-accent:      #1D1E19;
+  --accent-soft:    rgba(102,217,239,.13);
+  --accent-soft-lo: rgba(102,217,239,.09);
+  --accent-soft-hi: rgba(102,217,239,.22);
+  --accent-border:  rgba(102,217,239,.45);
+
+  --danger:         #F92672;
+  --danger-hl:      #FF6188;
+  --danger-soft:    rgba(249,38,114,.14);
+  --danger-soft-hl: rgba(249,38,114,.24);
+  --danger-bg:      rgba(249,38,114,.08);
+  --danger-border:  rgba(249,38,114,.38);
+
+  --success:        #A6E22E;
+  --success-hl:     #C3E88D;
+  --success-soft:   rgba(166,226,46,.15);
+  --success-soft-hl:rgba(166,226,46,.26);
+  --success-bg:     rgba(166,226,46,.09);
+  --success-border: rgba(166,226,46,.38);
+  --success-glow:   rgba(166,226,46,.5);
+
+  --muted-soft:     rgba(165,159,133,.16);
+  --muted-border:   rgba(165,159,133,.38);
+  --hover:          rgba(248,248,242,.05);
+  --neutral-soft:   rgba(248,248,242,.04);
+  --input-bg:       rgba(0,0,0,.24);
+  --option-bg:      #3E3D32;
+  --log-bg:         #1D1E19;
+  --log-fg:         #A6E22E;
+  --scheme:         dark;
+
+  --logo-bg:        #2E2F28;
+  --logo-ring:      #66D9EF;
+  --logo-tick:      #F8F8F2;
+  --logo-arrow:     #A6E22E;
+}
+
+:root[data-theme="amber"] {
+  --bg:             #EDEDF0;
+  --sidebar:        #DDDDE2;
+  --sidebar-text:   #22222A;
+  --sidebar-muted:  #5A5A65;
+  --card:           #FFFFFF;
+  --card2:          #F4F4F7;
+  --navy:           #9A9AA5;
+  --border:         #DCDCE1;
+  --border2:        #C9C9D1;
+  --text:           #22222A;
+  --gray:           #63636E;
+
+  --accent:         #C98A00;
+  --accent-hl:      #A87400;
+  --on-accent:      #1F1B10;
+  --accent-soft:    rgba(201,138,0,.14);
+  --accent-soft-lo: rgba(201,138,0,.09);
+  --accent-soft-hi: rgba(201,138,0,.22);
+  --accent-border:  rgba(201,138,0,.45);
+
+  --danger:         #C62828;
+  --danger-hl:      #A81E1E;
+  --danger-soft:    rgba(198,40,40,.10);
+  --danger-soft-hl: rgba(198,40,40,.18);
+  --danger-bg:      rgba(198,40,40,.06);
+  --danger-border:  rgba(198,40,40,.32);
+
+  --success:        #1B7F5A;
+  --success-hl:     #146848;
+  --success-soft:   rgba(27,127,90,.12);
+  --success-soft-hl:rgba(27,127,90,.20);
+  --success-bg:     rgba(27,127,90,.07);
+  --success-border: rgba(27,127,90,.32);
+  --success-glow:   rgba(27,127,90,.35);
+
+  --muted-soft:     rgba(99,99,110,.13);
+  --muted-border:   rgba(99,99,110,.32);
+  --hover:          rgba(0,0,0,.05);
+  --neutral-soft:   rgba(0,0,0,.035);
+  --input-bg:       #FFFFFF;
+  --option-bg:      #FFFFFF;
+  --log-bg:         #22222A;
+  --log-fg:         #E8C46A;
+  --scheme:         light;
+
+  --logo-bg:        #FFFFFF;
+  --logo-ring:      #C98A00;
+  --logo-tick:      #22222A;
+  --logo-arrow:     #1B7F5A;
+}
+
+/* Flexoki — palette de Steph Ango (stephango.com/flexoki), variante sombre
+   officielle : noirs chauds (#100F0F), texte base-200 (#CECDC3),
+   accent cyan-400, danger red-400, succès green-400. */
+:root[data-theme="flexoki"] {
+  --bg:             #100F0F;
+  --sidebar:        #1C1B1A;
+  --sidebar-text:   #CECDC3;
+  --sidebar-muted:  #878580;
+  --card:           #1C1B1A;
+  --card2:          #282726;
+  --navy:           #343331;
+  --border:         #343331;
+  --border2:        #403E3C;
+  --text:           #CECDC3;
+  --gray:           #878580;
+
+  --accent:         #3AA99F;
+  --accent-hl:      #5ABDAC;
+  --on-accent:      #100F0F;
+  --accent-soft:    rgba(58,169,159,.13);
+  --accent-soft-lo: rgba(58,169,159,.09);
+  --accent-soft-hi: rgba(58,169,159,.22);
+  --accent-border:  rgba(58,169,159,.45);
+
+  --danger:         #D14D41;
+  --danger-hl:      #E8705F;
+  --danger-soft:    rgba(209,77,65,.14);
+  --danger-soft-hl: rgba(209,77,65,.24);
+  --danger-bg:      rgba(209,77,65,.08);
+  --danger-border:  rgba(209,77,65,.38);
+
+  --success:        #879A39;
+  --success-hl:     #A0AF54;
+  --success-soft:   rgba(135,154,57,.15);
+  --success-soft-hl:rgba(135,154,57,.26);
+  --success-bg:     rgba(135,154,57,.09);
+  --success-border: rgba(135,154,57,.38);
+  --success-glow:   rgba(135,154,57,.5);
+
+  --muted-soft:     rgba(135,133,128,.16);
+  --muted-border:   rgba(135,133,128,.38);
+  --hover:          rgba(206,205,195,.05);
+  --neutral-soft:   rgba(206,205,195,.04);
+  --input-bg:       rgba(0,0,0,.24);
+  --option-bg:      #282726;
+  --log-bg:         #1C1B1A;
+  --log-fg:         #A0AF54;
+  --scheme:         dark;
+
+  --logo-bg:        #282726;
+  --logo-ring:      #3AA99F;
+  --logo-tick:      #CECDC3;
+  --logo-arrow:     #879A39;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Sidebar ─────────────────────────────────────── */
+.sidebar {
+  width: 210px;
+  background: var(--sidebar);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border2);
+}
+
+.logo {
+  padding: 16px;
+  border-bottom: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-svg { width: 44px; height: 44px; flex-shrink: 0; }
+.logo-title { font-size: 15px; font-weight: 700; color: var(--sidebar-text); }
+.logo-sub   { font-size: 11px; color: var(--sidebar-muted); margin-top: 1px; }
+
+.nav { padding: 8px 0; flex: 1; overflow-y: auto; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: var(--sidebar-muted);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  user-select: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all .15s;
+}
+.nav-item:hover { color: var(--sidebar-text); background: var(--hover); }
+.nav-item.active {
+  color: var(--sidebar-text);
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+.nav-sym { width: 18px; text-align: center; font-size: 15px; flex-shrink: 0; opacity: .8; }
+
+/* ── Main ────────────────────────────────────────── */
+.main { flex: 1; overflow-y: auto; padding: 26px 30px; }
+.page { display: none; }
+.page.active { display: block; }
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+.page-title { font-size: 20px; font-weight: 700; }
+
+/* ── Cards ───────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 12px;
+}
+
+/* ── Buttons ─────────────────────────────────────── */
+.btn {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all .15s;
+}
+.btn-primary { background: var(--accent); color: var(--on-accent); }
+.btn-primary:hover { background: var(--accent-hl); }
+.btn-danger {
+  background: var(--danger-soft);
+  color: var(--danger-hl);
+  border-color: var(--danger-border);
+}
+.btn-danger:hover { background: var(--danger-soft-hl); }
+.btn-ghost {
+  background: transparent;
+  color: var(--gray);
+  border-color: var(--border2);
+}
+.btn-ghost:hover { color: var(--text); border-color: var(--navy); background: var(--hover); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.btn-icon {
+  padding: 6px 8px;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  background: var(--card2);
+  cursor: pointer;
+  color: var(--gray);
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  transition: all .15s;
+}
+.btn-icon:hover { color: var(--text); border-color: var(--navy); }
+.btn-icon.del:hover { color: var(--danger-hl); border-color: var(--danger-border); background: var(--danger-bg); }
+
+/* ── Forms ───────────────────────────────────────── */
+.form-group { margin-bottom: 14px; }
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--gray);
+}
+.form-input, .form-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .15s;
+}
+.form-input:focus, .form-select:focus { border-color: var(--accent-hl); }
+.form-input::placeholder { color: var(--gray); opacity: .6; }
+.form-select { cursor: pointer; }
+.form-select option { background: var(--option-bg); color: var(--text); }
+
+.input-row { display: flex; gap: 6px; }
+.input-row .form-input { flex: 1; }
+
+.source-list { display: flex; flex-direction: column; gap: 6px; }
+.source-row  { display: flex; gap: 6px; align-items: center; }
+.source-row .form-input { flex: 1; }
+
+/* Toggle */
+.toggle-wrap { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.toggle { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+.toggle input { display: none; }
+.slider {
+  position: absolute; inset: 0;
+  background: var(--border2); border-radius: 99px; cursor: pointer;
+  transition: background .2s;
+}
+.slider::before {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  background: var(--on-accent); border-radius: 50%;
+  top: 3px; left: 3px;
+  transition: transform .2s;
+}
+.toggle input:checked + .slider { background: var(--accent); }
+.toggle input:checked + .slider::before { transform: translateX(16px); }
+
+.add-form { display: none; margin-bottom: 12px; }
+.add-form.open { display: block; }
+.form-actions { display: flex; gap: 8px; margin-top: 16px; }
+
+.section-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--gray);
+  margin-bottom: 12px;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 99px;
+  background: var(--accent-soft-hi);
+  color: var(--accent-hl);
+  border: 1px solid var(--accent-border);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Type badge (profil / groupe) */
+.type-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 99px;
+  background: var(--muted-soft);
+  color: var(--gray);
+  border: 1px solid var(--muted-border);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.type-badge.group {
+  background: var(--accent-soft-hi);
+  color: var(--accent-hl);
+  border-color: var(--accent-border);
+}
+
+/* Profile card */
+.profile-card { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.profile-info h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+.profile-meta { font-size: 12px; color: var(--gray); display: flex; flex-direction: column; gap: 3px; }
+
+/* Progress */
+.progress-wrap { height: 6px; background: var(--border2); border-radius: 99px; margin: 10px 0; overflow: hidden; }
+.progress-bar  { height: 100%; background: var(--accent); width: 0%; border-radius: 99px; transition: width .2s; }
+.progress-info { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray); }
+.progress-file { max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; }
+
+.running-dot {
+  display: inline-block; width: 8px; height: 8px;
+  background: var(--accent-hl); border-radius: 50%;
+  animation: pulse 1s infinite; flex-shrink: 0;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* Stat boxes */
+.stat-row { display: flex; gap: 10px; margin-top: 14px; }
+.stat-box {
+  flex: 1; text-align: center;
+  padding: 14px 8px; border-radius: 8px;
+  border: 1px solid var(--border2);
+}
+.stat-box .val { font-size: 26px; font-weight: 700; margin-bottom: 2px; }
+.stat-box .lbl { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: .04em; }
+.stat-box.s { border-color: var(--success-border); background: var(--success-bg); }
+.stat-box.s .val { color: var(--success-hl); }
+.stat-box.n { background: var(--neutral-soft); }
+.stat-box.n .val { color: var(--gray); }
+.stat-box.d { border-color: var(--danger-border); background: var(--danger-bg); }
+.stat-box.d .val { color: var(--danger-hl); }
+
+.err-list {
+  margin-top: 10px; max-height: 120px; overflow-y: auto;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-radius: 6px; padding: 8px 10px;
+}
+.err-item { font-size: 11px; color: var(--danger-hl); padding: 2px 0; font-family: monospace; border-bottom: 1px solid var(--danger-border); }
+.err-item:last-child { border-bottom: none; }
+
+.archive-info { margin-top: 8px; font-size: 12px; color: var(--gray); }
+.archive-info span { color: var(--text); font-family: monospace; }
+
+.empty { text-align: center; padding: 44px 20px; color: var(--gray); }
+.empty .ico { font-size: 36px; margin-bottom: 10px; }
+.empty p { font-size: 13px; line-height: 1.8; }
+.empty strong { color: var(--text); }
+
+/* Log viewer */
+.log-file-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border: 1px solid var(--border2); border-radius: 8px;
+  margin-bottom: 8px; background: var(--card); gap: 10px; transition: all .15s;
+}
+.log-file-row:hover { border-color: var(--accent); background: var(--card2); }
+.log-file-info { flex: 1; min-width: 0; }
+.log-file-name { font-size: 13px; font-weight: 500; font-family: monospace; }
+.log-file-meta { font-size: 11px; color: var(--gray); margin-top: 2px; }
+.log-file-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+.log-viewer {
+  background: var(--log-bg);
+  color: var(--log-fg);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 14px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.log-viewer-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+}
+.log-viewer-title { font-size: 12px; font-weight: 600; color: var(--gray); font-family: monospace; }
+
+/* Mode selector */
+.mode-selector { display: flex; gap: 8px; }
+.mode-option {
+  flex: 1; display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border: 1px solid var(--border2); border-radius: 8px;
+  cursor: pointer; user-select: none; transition: all .15s;
+}
+.mode-option:hover { border-color: var(--accent); background: var(--accent-soft-lo); }
+.mode-option.selected { border-color: var(--accent-hl); background: var(--accent-soft-hi); }
+.mode-option input { display: none; }
+.mode-icon  { font-size: 20px; flex-shrink: 0; }
+.mode-label { font-size: 13px; font-weight: 600; }
+.mode-desc  { font-size: 11px; color: var(--gray); margin-top: 1px; }
+
+/* Schedule */
+.schedule-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.schedule-info h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.schedule-meta { font-size: 12px; color: var(--gray); }
+.freq-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 99px;
+  font-size: 11px; font-weight: 600;
+  background: var(--success-soft); color: var(--success-hl);
+  border: 1px solid var(--success-border); margin-left: 6px; vertical-align: middle;
+}
+
+.form-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+
+/* Tabs (page Sauvegarder) */
+.tab-bar { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 1px solid var(--border2); }
+.tab-btn {
+  padding: 10px 16px; background: transparent; border: none;
+  border-bottom: 2px solid transparent; color: var(--gray);
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: all .15s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Group result breakdown */
+.group-result-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; border: 1px solid var(--border2); border-radius: 6px;
+  margin-bottom: 6px; font-size: 12px;
+}
+.group-result-row .name { font-weight: 600; }
+.group-result-row .stats { color: var(--gray); }
+.group-result-row.has-error { border-color: var(--danger-border); background: var(--danger-bg); }
+.group-result-row.has-error .stats { color: var(--danger-hl); }
+.order-idx {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 5px; background: var(--card2);
+  color: var(--gray); font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+
+/* Settings */
+.about-box {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px; border: 1px solid var(--border2); border-radius: 10px;
+  background: var(--card); margin-bottom: 12px;
+}
+.about-icon { width: 72px; height: 72px; flex-shrink: 0; }
+.about-text h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.about-text p { font-size: 12px; color: var(--gray); line-height: 1.9; }
+
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-info { flex: 1; margin-right: 16px; }
+.setting-info h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.setting-info p { font-size: 12px; color: var(--gray); }
+.setting-msg { font-size: 11px; color: var(--success-hl); margin-top: 6px; display: none; }
+.setting-msg.show { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--navy); }
+
+.hidden { display: none !important; }
+hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+input[type="time"].form-input { color-scheme: var(--scheme); }
+
+/* Network shares */
+.share-card { display: flex; align-items: flex-start; gap: 12px; justify-content: space-between; }
+.share-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.share-dot.mounted   { background: var(--success-hl); box-shadow: 0 0 6px var(--success-glow); }
+.share-dot.unmounted { background: var(--danger-hl); }
+.share-info { flex: 1; min-width: 0; }
+.share-info h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.share-meta { font-size: 12px; color: var(--gray); display: flex; flex-direction: column; gap: 2px; }
+.share-path { font-family: monospace; font-size: 11px; color: var(--accent-hl); word-break: break-all; }
+.share-actions { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; align-items: flex-start; }
+.btn-success { background: var(--success-soft); color: var(--success-hl); border: 1px solid var(--success-border); }
+.btn-success:hover { background: var(--success-soft-hl); }
+.btn-unmount { background: var(--danger-bg); color: var(--danger-hl); border: 1px solid var(--danger-border); }
+.btn-unmount:hover { background: var(--danger-soft-hl); }
+.pw-wrap { position: relative; }
+.pw-wrap .form-input { padding-right: 40px; }
+.pw-eye { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--gray); font-size: 15px; user-select: none; line-height: 1; }
+.pw-eye:hover { color: var(--text); }
+.share-msg { font-size: 12px; margin-top: 8px; padding: 6px 10px; border-radius: 6px; display: none; }
+.share-msg.ok  { display: block; background: var(--success-bg); color: var(--success-hl); border: 1px solid var(--success-border); }
+.share-msg.err { display: block; background: var(--danger-bg); color: var(--danger-hl); border: 1px solid var(--danger-border); }
+.ns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+
+/* Logo : les couleurs suivent le thème (le CSS prime sur l'attribut fill) */
+.ts-bg    { fill: var(--logo-bg); }
+.ts-ring  { fill: none; stroke: var(--logo-ring); }
+.ts-tick  { fill: var(--logo-tick); }
+.ts-arrow { fill: var(--logo-arrow); }
+
+/* Sélecteur de thème */
+.theme-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+.theme-card {
+  flex: 1; min-width: 150px;
+  border: 1px solid var(--border2); border-radius: 10px;
+  padding: 12px; cursor: pointer; user-select: none;
+  background: var(--card2); transition: all .15s;
+}
+.theme-card:hover { border-color: var(--accent); }
+.theme-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.theme-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.theme-check { color: var(--accent-hl); font-size: 12px; visibility: hidden; }
+.theme-card.selected .theme-check { visibility: visible; }
+.theme-preview { display: flex; gap: 4px; margin-top: 10px; }
+.theme-swatch {
+  flex: 1; height: 26px; border-radius: 5px;
+  border: 1px solid rgba(128,128,128,.35);
+}
+@media (max-width: 680px) { .ns-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ── SVG icon symbol (referenced via <use href="#ts-icon">) ── -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+<symbol id="ts-icon" viewBox="0 0 512 512">
+  <rect class="ts-bg" x="16" y="16" width="480" height="480" rx="108"/>
+  <circle class="ts-ring" cx="256" cy="256" r="148" stroke-width="26"/>
+  <rect class="ts-tick" x="246" y="76"  width="20" height="34" rx="8"/>
+  <rect class="ts-tick" x="246" y="402" width="20" height="34" rx="8"/>
+  <rect class="ts-tick" x="76"  y="246" width="34" height="20" rx="8"/>
+  <rect class="ts-tick" x="402" y="246" width="34" height="20" rx="8"/>
+  <path class="ts-arrow" d="M226 156 h60 v100 h60 l-90 90 l-90 -90 h60 Z"/>
+</symbol>
+</svg>
+
+<!-- ── Sidebar ──────────────────────────────────────────── -->
+<nav class="sidebar">
+  <div class="logo">
+    <svg class="logo-svg"><use href="#ts-icon"/></svg>
+    <div>
+      <div class="logo-title">Timestamp</div>
+      <div class="logo-sub">Windows &amp; Linux</div>
+    </div>
+  </div>
+  <div class="nav">
+    <div class="nav-item active" id="nav-profiles" onclick="nav('profiles')">
+      <span class="nav-sym">&#x25A3;</span> Profils
+    </div>
+    <div class="nav-item" id="nav-backup" onclick="nav('backup')">
+      <span class="nav-sym">&#x25BA;</span> Sauvegarder
+    </div>
+    <div class="nav-item" id="nav-restore" onclick="nav('restore')">
+      <span class="nav-sym">&#x21A9;</span> Restaurer
+    </div>
+    <div class="nav-item" id="nav-schedule" onclick="nav('schedule')">
+      <span class="nav-sym">&#x23F0;</span> Planifier
+    </div>
+    <div class="nav-item" id="nav-network" onclick="nav('network')">
+      <span class="nav-sym">&#x1F310;</span> R&eacute;seau
+    </div>
+    <div class="nav-item" id="nav-logs" onclick="nav('logs')">
+      <span class="nav-sym">&#x1F4CB;</span> Journaux
+    </div>
+    <div class="nav-item" id="nav-settings" onclick="nav('settings')">
+      <span class="nav-sym">&#x2699;</span> Param&egrave;tres
+    </div>
+  </div>
+</nav>
+
+<!-- ── Main ─────────────────────────────────────────────── -->
+<main class="main">
+
+  <!-- ═══ PROFILS ═══════════════════════════════════════ -->
+  <section class="page active" id="page-profiles">
+    <div class="page-header">
+      <div class="page-title">Profils</div>
+      <button class="btn btn-primary" onclick="toggleAddForm()">+ Ajouter</button>
+    </div>
+
+    <div class="card add-form" id="add-form">
+      <div class="form-title-row">
+        <span class="section-label" id="profile-form-title" style="margin-bottom:0">Nouveau profil</span>
+        <span id="profile-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode édition</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nom du profil</label>
+        <input class="form-input" id="p-name" placeholder="ex : Documents_quotidien">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sources</label>
+        <div class="source-list" id="source-list">
+          <div class="source-row">
+            <input class="form-input" placeholder="Dossier ou fichier source">
+            <button class="btn-icon" onclick="pickFolderForInput(this)" title="Parcourir">📂</button>
+            <button class="btn-icon del" onclick="removeSource(this)" title="Supprimer">✕</button>
+          </div>
+        </div>
+        <button class="btn btn-ghost" style="margin-top:8px;font-size:12px" onclick="addSource()">+ Ajouter une source</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Destination</label>
+        <div class="input-row">
+          <input class="form-input" id="p-dest" placeholder="Dossier de sauvegarde">
+          <button class="btn-icon" onclick="pickFolderForId('p-dest')" title="Parcourir">📂</button>
+        </div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
+          <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">ou partage réseau :</span>
+          <select class="form-select" id="p-dest-share" onchange="applyShareDest()" style="flex:1;font-size:12px;height:32px;padding:4px 8px">
+            <option value="">— Sélectionner un partage enregistré —</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Options</label>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="p-compress">
+            <span class="slider"></span>
+          </label>
+          <span>Compresser les sauvegardes</span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-save-profile" onclick="submitProfile()">Enregistrer</button>
+        <button class="btn btn-ghost" onclick="closeProfileForm()">Annuler</button>
+      </div>
+    </div>
+
+    <div id="profiles-list"></div>
+  </section>
+
+  <!-- ═══ SAUVEGARDER ═══════════════════════════════════ -->
+  <section class="page" id="page-backup">
+    <div class="page-header">
+      <div class="page-title">Sauvegarder</div>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-btn-single" onclick="switchBackupTab('single')">Sauvegarde individuelle</button>
+      <button class="tab-btn" id="tab-btn-groups" onclick="switchBackupTab('groups')">Groupes</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-single">
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">Profil</label>
+          <select class="form-select" id="backup-profile" onchange="onProfileChange()"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mode</label>
+          <div class="mode-selector">
+            <label class="mode-option selected" id="mode-copy" onclick="selectMode('copy')">
+              <input type="radio" name="backup-mode" value="copy" checked>
+              <span class="mode-icon">📋</span>
+              <div>
+                <div class="mode-label">Copie simple</div>
+                <div class="mode-desc">Fichiers copiés tels quels</div>
+              </div>
+            </label>
+            <label class="mode-option" id="mode-compress" onclick="selectMode('compress')">
+              <input type="radio" name="backup-mode" value="compress">
+              <span class="mode-icon">🗜</span>
+              <div>
+                <div class="mode-label">Compression</div>
+                <div class="mode-desc">Archive .zip / .tar.gz</div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--gray)">
+            <input type="checkbox" id="backup-full" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <span>Sauvegarde complète (ignore l'incrémental)</span>
+          </label>
+        </div>
+        <button class="btn btn-primary" id="btn-run" onclick="startBackup()">▶ Lancer la sauvegarde</button>
+      </div>
+
+      <div class="card hidden" id="backup-progress">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span class="running-dot" id="backup-dot"></span>
+          <strong id="backup-status">Sauvegarde en cours…</strong>
+        </div>
+        <div class="progress-wrap"><div class="progress-bar" id="backup-bar"></div></div>
+        <div class="progress-info">
+          <span class="progress-file" id="backup-file"></span>
+          <span id="backup-pct">0 %</span>
+        </div>
+      </div>
+
+      <div class="card hidden" id="backup-results">
+        <div class="section-label">Résultats</div>
+        <div class="stat-row">
+          <div class="stat-box s"><div class="val" id="r-copied">0</div><div class="lbl">Copiés</div></div>
+          <div class="stat-box n"><div class="val" id="r-skipped">0</div><div class="lbl">Ignorés</div></div>
+          <div class="stat-box d"><div class="val" id="r-errcnt">0</div><div class="lbl">Erreurs</div></div>
+        </div>
+        <div class="archive-info hidden" id="r-archive">Archive : <span id="r-archive-path"></span></div>
+        <div class="err-list hidden" id="r-errlist"></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-groups">
+      <div class="page-header" style="margin-bottom:14px">
+        <span class="section-label" style="margin-bottom:0">Groupes de sauvegarde</span>
+        <button class="btn btn-primary" onclick="toggleGroupForm()">+ Créer un groupe</button>
+      </div>
+
+      <div class="card add-form" id="group-form">
+        <div class="form-title-row">
+          <span class="section-label" id="group-form-title" style="margin-bottom:0">Nouveau groupe</span>
+          <span id="group-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode édition</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom du groupe</label>
+          <input class="form-input" id="g-name" placeholder="ex : Sauvegarde_complete">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Profils inclus (dans l'ordre d'exécution)</label>
+          <div class="source-list" id="group-profile-list"></div>
+          <div class="input-row" style="margin-top:8px">
+            <select class="form-select" id="group-add-profile-select"></select>
+            <button class="btn btn-ghost" onclick="addProfileToGroup()">+ Ajouter</button>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="btn-save-group" onclick="submitGroup()">Enregistrer</button>
+          <button class="btn btn-ghost" onclick="closeGroupForm()">Annuler</button>
+        </div>
+      </div>
+
+      <div id="groups-list"></div>
+
+      <div class="card hidden" id="group-progress">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span class="running-dot" id="group-dot"></span>
+          <strong id="group-status">Sauvegarde du groupe en cours…</strong>
+        </div>
+        <div class="progress-wrap"><div class="progress-bar" id="group-bar"></div></div>
+        <div class="progress-info">
+          <span class="progress-file" id="group-file"></span>
+          <span id="group-pct">0 %</span>
+        </div>
+      </div>
+
+      <div class="card hidden" id="group-results">
+        <div class="section-label">Résultats</div>
+        <div class="stat-row">
+          <div class="stat-box s"><div class="val" id="g-copied">0</div><div class="lbl">Copiés</div></div>
+          <div class="stat-box n"><div class="val" id="g-skipped">0</div><div class="lbl">Ignorés</div></div>
+          <div class="stat-box d"><div class="val" id="g-errcnt">0</div><div class="lbl">Erreurs</div></div>
+        </div>
+        <div style="margin-top:12px" id="group-breakdown"></div>
+        <div class="err-list hidden" id="g-errlist"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RESTAURER ════════════════════════════════════ -->
+  <section class="page" id="page-restore">
+    <div class="page-header">
+      <div class="page-title">Restaurer</div>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-btn-rst-manual" onclick="switchRestoreTab('manual')">Restauration manuelle</button>
+      <button class="tab-btn" id="tab-btn-rst-profiles" onclick="switchRestoreTab('profiles')">Profils de restauration</button>
+    </div>
+
+    <!-- ── Restauration ponctuelle ── -->
+    <div class="tab-panel active" id="tab-rst-manual">
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">Source (archive .zip / .tar.gz ou dossier de sauvegarde)</label>
+          <div class="input-row">
+            <input class="form-input" id="rst-src" placeholder="Chemin vers l'archive ou le dossier">
+            <button class="btn-icon" onclick="pickFileForId('rst-src')" title="Sélectionner une archive">📄</button>
+            <button class="btn-icon" onclick="pickFolderForId('rst-src')" title="Sélectionner un dossier">📂</button>
+          </div>
+          <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
+            <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">ou partage réseau :</span>
+            <select class="form-select" id="rst-src-share" onchange="applyShareTo('rst-src-share','rst-src')" style="flex:1;font-size:12px;height:32px;padding:4px 8px">
+              <option value="">— Sélectionner un partage enregistré —</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Destination (son contenu sera écrasé)</label>
+          <div class="input-row">
+            <input class="form-input" id="rst-dest" placeholder="Dossier où restaurer les fichiers">
+            <button class="btn-icon" onclick="pickFolderForId('rst-dest')" title="Parcourir">📂</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="toggle-wrap">
+            <label class="toggle">
+              <input type="checkbox" id="rst-incremental">
+              <span class="slider"></span>
+            </label>
+            <span>Ignorer les fichiers déjà identiques (restauration incrémentale)</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="btn-restore" onclick="startRestore()">↩ Restaurer</button>
+      </div>
+
+      <div class="card hidden" id="restore-progress">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span class="running-dot"></span>
+          <strong id="restore-status">Restauration en cours…</strong>
+        </div>
+        <div class="progress-wrap"><div class="progress-bar" id="restore-bar"></div></div>
+        <div class="progress-info">
+          <span class="progress-file" id="restore-file"></span>
+          <span id="restore-pct">0 %</span>
+        </div>
+      </div>
+
+      <div class="card hidden" id="restore-results">
+        <div class="section-label">Résultats</div>
+        <div class="stat-row">
+          <div class="stat-box s"><div class="val" id="rst-restored">0</div><div class="lbl">Restaurés</div></div>
+          <div class="stat-box n"><div class="val" id="rst-skipped">0</div><div class="lbl">Ignorés</div></div>
+          <div class="stat-box d"><div class="val" id="rst-errcnt">0</div><div class="lbl">Erreurs</div></div>
+        </div>
+        <div class="err-list hidden" id="rst-errlist"></div>
+      </div>
+    </div>
+
+    <!-- ── Profils de restauration ── -->
+    <div class="tab-panel" id="tab-rst-profiles">
+      <div class="page-header" style="margin-bottom:14px">
+        <span class="section-label" style="margin-bottom:0">Profils enregistrés</span>
+        <button class="btn btn-primary" onclick="toggleRestoreForm()">+ Créer un profil</button>
+      </div>
+
+      <div class="card add-form" id="restore-form">
+        <div class="form-title-row">
+          <span class="section-label" id="restore-form-title" style="margin-bottom:0">Nouveau profil de restauration</span>
+          <span id="restore-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode édition</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom du profil</label>
+          <input class="form-input" id="rp-name" placeholder="ex : Restauration_Documents">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Source (dossier ou archive, locale ou distante)</label>
+          <div class="input-row">
+            <input class="form-input" id="rp-src" placeholder="Chemin vers l'archive ou le dossier">
+            <button class="btn-icon" onclick="pickFileForId('rp-src')" title="Sélectionner une archive">📄</button>
+            <button class="btn-icon" onclick="pickFolderForId('rp-src')" title="Sélectionner un dossier">📂</button>
+          </div>
+          <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
+            <span style="font-size:12px;color:var(--gray);white-space:nowrap;flex-shrink:0">ou partage réseau :</span>
+            <select class="form-select" id="rp-src-share" onchange="applyShareTo('rp-src-share','rp-src')" style="flex:1;font-size:12px;height:32px;padding:4px 8px">
+              <option value="">— Sélectionner un partage enregistré —</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Destination (son contenu sera écrasé)</label>
+          <div class="input-row">
+            <input class="form-input" id="rp-dest" placeholder="Dossier à restaurer">
+            <button class="btn-icon" onclick="pickFolderForId('rp-dest')" title="Parcourir">📂</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Options</label>
+          <div class="toggle-wrap">
+            <label class="toggle">
+              <input type="checkbox" id="rp-incremental">
+              <span class="slider"></span>
+            </label>
+            <span>Ignorer les fichiers déjà identiques (restauration incrémentale)</span>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="btn-save-restore" onclick="submitRestoreProfile()">Enregistrer</button>
+          <button class="btn btn-ghost" onclick="closeRestoreForm()">Annuler</button>
+        </div>
+      </div>
+
+      <div id="restores-list"></div>
+
+      <div class="card hidden" id="rp-progress">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span class="running-dot"></span>
+          <strong id="rp-status">Restauration en cours…</strong>
+        </div>
+        <div class="progress-wrap"><div class="progress-bar" id="rp-bar"></div></div>
+        <div class="progress-info">
+          <span class="progress-file" id="rp-file"></span>
+          <span id="rp-pct">0 %</span>
+        </div>
+      </div>
+
+      <div class="card hidden" id="rp-results">
+        <div class="section-label">Résultats</div>
+        <div class="stat-row">
+          <div class="stat-box s"><div class="val" id="rp-restored">0</div><div class="lbl">Restaurés</div></div>
+          <div class="stat-box n"><div class="val" id="rp-skipped">0</div><div class="lbl">Ignorés</div></div>
+          <div class="stat-box d"><div class="val" id="rp-errcnt">0</div><div class="lbl">Erreurs</div></div>
+        </div>
+        <div class="err-list hidden" id="rp-errlist"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PLANIFIER ════════════════════════════════════ -->
+  <section class="page" id="page-schedule">
+    <div class="page-header">
+      <div class="page-title">Tâches automatiques</div>
+      <button class="btn btn-primary" onclick="toggleScheduleForm()">+ Planifier</button>
+    </div>
+    <div style="font-size:12px;color:var(--gray);margin:-12px 0 16px" id="sched-backend"></div>
+
+    <div class="card add-form" id="schedule-form">
+      <div class="form-title-row">
+        <span class="section-label" id="schedule-form-title" style="margin-bottom:0">Nouvelle planification</span>
+        <span id="schedule-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode édition</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nom</label>
+        <input class="form-input" id="sch-name" placeholder="ex : Sauvegarde_nuit">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Type</label>
+        <div class="mode-selector">
+          <label class="mode-option selected" id="type-profile" onclick="selectSchedType('profile')">
+            <input type="radio" name="sch-type" value="profile" checked>
+            <span class="mode-icon">📋</span>
+            <div><div class="mode-label">Profil simple</div><div class="mode-desc">Une seule sauvegarde</div></div>
+          </label>
+          <label class="mode-option" id="type-group" onclick="selectSchedType('group')">
+            <input type="radio" name="sch-type" value="group">
+            <span class="mode-icon">🗂</span>
+            <div><div class="mode-label">Groupe</div><div class="mode-desc">Plusieurs sauvegardes enchaînées</div></div>
+          </label>
+          <label class="mode-option" id="type-restore" onclick="selectSchedType('restore')">
+            <input type="radio" name="sch-type" value="restore">
+            <span class="mode-icon">↩</span>
+            <div><div class="mode-label">Restauration</div><div class="mode-desc">Profil de restauration</div></div>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="sch-target-label">Profil</label>
+        <select class="form-select" id="sch-target"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fréquence</label>
+        <div class="mode-selector">
+          <label class="mode-option selected" id="freq-hourly" onclick="selectFreq('hourly')">
+            <input type="radio" name="sch-freq" value="hourly" checked>
+            <span class="mode-icon">⏱</span>
+            <div><div class="mode-label">Horaire</div><div class="mode-desc">Toutes les heures</div></div>
+          </label>
+          <label class="mode-option" id="freq-daily" onclick="selectFreq('daily')">
+            <input type="radio" name="sch-freq" value="daily">
+            <span class="mode-icon">📅</span>
+            <div><div class="mode-label">Quotidien</div><div class="mode-desc">Une fois par jour</div></div>
+          </label>
+          <label class="mode-option" id="freq-weekly" onclick="selectFreq('weekly')">
+            <input type="radio" name="sch-freq" value="weekly">
+            <span class="mode-icon">📆</span>
+            <div><div class="mode-label">Hebdomadaire</div><div class="mode-desc">Un jour par semaine</div></div>
+          </label>
+        </div>
+      </div>
+      <div id="sch-time-group" class="form-group hidden">
+        <label class="form-label">Heure</label>
+        <input type="time" class="form-input" id="sch-time" value="02:00" style="width:150px">
+      </div>
+      <div id="sch-day-group" class="form-group hidden">
+        <label class="form-label">Jour</label>
+        <select class="form-select" id="sch-day" style="width:200px">
+          <option value="MON">Lundi</option>
+          <option value="TUE">Mardi</option>
+          <option value="WED">Mercredi</option>
+          <option value="THU">Jeudi</option>
+          <option value="FRI">Vendredi</option>
+          <option value="SAT">Samedi</option>
+          <option value="SUN">Dimanche</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-save-schedule" onclick="submitSchedule()">Enregistrer</button>
+        <button class="btn btn-ghost" onclick="closeScheduleForm()">Annuler</button>
+      </div>
+    </div>
+
+    <div id="schedule-list"></div>
+  </section>
+
+  <!-- ═══ RÉSEAU ══════════════════════════════════════════ -->
+  <section class="page" id="page-network">
+    <div class="page-header">
+      <div class="page-title">Partages r&eacute;seau</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost" onclick="refreshShares()">&#x21BB; Actualiser</button>
+        <button class="btn btn-primary" onclick="toggleShareForm()">+ Ajouter</button>
+      </div>
+    </div>
+
+    <div class="card add-form" id="share-form">
+      <div class="form-title-row">
+        <span class="section-label" id="share-form-title" style="margin-bottom:0">Nouveau partage</span>
+        <span id="share-edit-badge" class="hidden" style="font-size:11px;color:var(--accent-hl);font-weight:600;">Mode &eacute;dition</span>
+      </div>
+      <div class="ns-grid">
+        <div class="form-group">
+          <label class="form-label">Nom affich&eacute; *</label>
+          <input class="form-input" id="ns-name" placeholder="ex : NAS_Bureau" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Domaine (optionnel)</label>
+          <input class="form-input" id="ns-domain" placeholder="ex : WORKGROUP" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Adresse du serveur *</label>
+          <input class="form-input" id="ns-server" placeholder="ex : 192.168.1.10" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom du partage SMB *</label>
+          <input class="form-input" id="ns-share" placeholder="ex : Partage" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Utilisateur</label>
+          <input class="form-input" id="ns-user" placeholder="ex : kronos" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <div class="pw-wrap">
+            <input class="form-input" id="ns-pass" type="password" placeholder="Mot de passe" autocomplete="new-password">
+            <span class="pw-eye" onclick="togglePw('ns-pass',this)" title="Afficher / masquer">&#x1F441;</span>
+          </div>
+          <div id="ns-pass-hint" class="hidden" style="font-size:11px;color:var(--gray);margin-top:3px">
+            Laisser vide pour conserver le mot de passe existant
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sous-dossier dans le partage (optionnel)</label>
+        <input class="form-input" id="ns-subpath" placeholder="ex : Sauvegardes/Linux" autocomplete="off">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-save-share" onclick="submitShare()">Enregistrer</button>
+        <button class="btn btn-ghost" onclick="closeShareForm()">Annuler</button>
+      </div>
+    </div>
+
+    <div id="shares-list"></div>
+  </section>
+
+  <!-- ═══ JOURNAUX ══════════════════════════════════════ -->
+  <section class="page" id="page-logs">
+    <div class="page-header">
+      <div class="page-title">Journaux</div>
+      <button class="btn btn-danger" onclick="clearLogs()">🗑 Vider les journaux</button>
+    </div>
+    <div id="logs-list"></div>
+    <div class="card hidden" id="log-viewer-card">
+      <div class="log-viewer-header">
+        <span class="log-viewer-title" id="log-viewer-title"></span>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-ghost" style="font-size:12px" id="btn-copy-log" onclick="copyLogContent()">📋 Copier</button>
+          <button class="btn btn-ghost" style="font-size:12px" onclick="closeLogViewer()">✕ Fermer</button>
+        </div>
+      </div>
+      <div class="log-viewer" id="log-viewer-content"></div>
+    </div>
+  </section>
+
+  <!-- ═══ PARAMETRES ════════════════════════════════════ -->
+  <section class="page" id="page-settings">
+    <div class="page-header">
+      <div class="page-title">Paramètres</div>
+    </div>
+
+    <div class="about-box">
+      <svg class="about-icon"><use href="#ts-icon"/></svg>
+      <div class="about-text">
+        <h2>Timestamp</h2>
+        <p>
+          Version 1.1<br>
+          Logiciel de sauvegarde et de restauration portable<br>
+          Compatible Windows &amp; Linux (Debian, Kali, Ubuntu, Arch, CachyOS)
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Apparence</div>
+      <div class="theme-grid" id="theme-grid">
+        <div class="theme-card" data-theme-id="dark" onclick="setTheme('dark')">
+          <div class="theme-name">Sombre <span class="theme-check">✓</span></div>
+          <div class="theme-preview">
+            <div class="theme-swatch" style="background:#14171C"></div>
+            <div class="theme-swatch" style="background:#1B1F26"></div>
+            <div class="theme-swatch" style="background:#3B82F6"></div>
+            <div class="theme-swatch" style="background:#10B981"></div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme-id="monokai" onclick="setTheme('monokai')">
+          <div class="theme-name">Monokai <span class="theme-check">✓</span></div>
+          <div class="theme-preview">
+            <div class="theme-swatch" style="background:#272822"></div>
+            <div class="theme-swatch" style="background:#66D9EF"></div>
+            <div class="theme-swatch" style="background:#A6E22E"></div>
+            <div class="theme-swatch" style="background:#F92672"></div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme-id="amber" onclick="setTheme('amber')">
+          <div class="theme-name">Jaune / Gris <span class="theme-check">✓</span></div>
+          <div class="theme-preview">
+            <div class="theme-swatch" style="background:#EDEDF0"></div>
+            <div class="theme-swatch" style="background:#DDDDE2"></div>
+            <div class="theme-swatch" style="background:#C98A00"></div>
+            <div class="theme-swatch" style="background:#22222A"></div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme-id="flexoki" onclick="setTheme('flexoki')">
+          <div class="theme-name">Flexoki <span class="theme-check">✓</span></div>
+          <div class="theme-preview">
+            <div class="theme-swatch" style="background:#100F0F"></div>
+            <div class="theme-swatch" style="background:#282726"></div>
+            <div class="theme-swatch" style="background:#3AA99F"></div>
+            <div class="theme-swatch" style="background:#879A39"></div>
+          </div>
+        </div>
+      </div>
+      <div class="setting-msg" id="theme-msg"></div>
+    </div>
+
+    <div class="card">
+      <div class="setting-row">
+        <div class="setting-info">
+          <h4>Raccourci bureau</h4>
+          <p>Crée un raccourci Timestamp sur le bureau (.lnk Windows / .desktop Linux)</p>
+          <div class="setting-msg" id="shortcut-msg"></div>
+        </div>
+        <button class="btn btn-primary" id="btn-shortcut" onclick="createShortcut()">
+          Ajouter au bureau
+        </button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ── Navigation ─────────────────────────────────────────────
+function nav(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.getElementById('nav-' + page).classList.add('active');
+  if (page === 'backup')   { loadBackupProfiles(); loadGroups(); }
+  if (page === 'restore')  loadRestorePage();
+  if (page === 'logs')     loadLogs();
+  if (page === 'schedule') loadSchedulePage();
+  if (page === 'network')  loadNetworkShares();
+}
+
+function switchRestoreTab(tab) {
+  document.getElementById('tab-btn-rst-manual').classList.toggle('active', tab === 'manual');
+  document.getElementById('tab-btn-rst-profiles').classList.toggle('active', tab === 'profiles');
+  document.getElementById('tab-rst-manual').classList.toggle('active', tab === 'manual');
+  document.getElementById('tab-rst-profiles').classList.toggle('active', tab === 'profiles');
+}
+
+function switchBackupTab(tab) {
+  document.getElementById('tab-btn-single').classList.toggle('active', tab === 'single');
+  document.getElementById('tab-btn-groups').classList.toggle('active', tab === 'groups');
+  document.getElementById('tab-single').classList.toggle('active', tab === 'single');
+  document.getElementById('tab-groups').classList.toggle('active', tab === 'groups');
+}
+
+window.addEventListener('pywebviewready', () => { loadProfiles(); syncThemeSelection(); });
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// Littéral JavaScript utilisable à l'intérieur d'un attribut onclick="…".
+// esc() seul ne suffit pas ici : une apostrophe devenue &#39; est redécodée
+// en ' par l'analyseur HTML avant l'analyse JS et referme la chaîne — un nom
+// comme « Sauvegarde d'été » cassait alors le bouton.
+function jsq(v) {
+  const js = String(v)
+    .replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+    .replace(/\r/g, '\\r').replace(/\n/g, '\\n');
+  return "'" + js.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                 .replace(/>/g, '&gt;').replace(/"/g, '&quot;') + "'";
+}
+
+// ── Profils ───────────────────────────────────────────────
+let _editingProfile = null;
+let _allProfiles = {};
+
+function toggleAddForm() {
+  const f = document.getElementById('add-form');
+  if (f.classList.contains('open')) { closeProfileForm(); return; }
+  _editingProfile = null;
+  f.classList.add('open');
+  populateSharePicker();
+  document.getElementById('p-name').focus();
+}
+
+function closeProfileForm() {
+  _editingProfile = null;
+  document.getElementById('add-form').classList.remove('open');
+  document.getElementById('profile-form-title').textContent = 'Nouveau profil';
+  document.getElementById('profile-edit-badge').classList.add('hidden');
+  document.getElementById('btn-save-profile').textContent = 'Enregistrer';
+  document.getElementById('p-name').value = '';
+  document.getElementById('p-dest').value = '';
+  document.getElementById('p-dest-share').value = '';
+  document.getElementById('p-compress').checked = false;
+  document.getElementById('source-list').innerHTML = `
+    <div class="source-row">
+      <input class="form-input" placeholder="Dossier ou fichier source">
+      <button class="btn-icon" onclick="pickFolderForInput(this)">📂</button>
+      <button class="btn-icon del" onclick="removeSource(this)">✕</button>
+    </div>`;
+}
+
+function editProfile(name) {
+  const p = _allProfiles[name];
+  if (!p) return;
+  _editingProfile = name;
+  document.getElementById('p-name').value = name;
+  document.getElementById('p-dest').value = p.destination;
+  document.getElementById('p-compress').checked = !!p.compress;
+  document.getElementById('source-list').innerHTML = p.sources.map(src => `
+    <div class="source-row">
+      <input class="form-input" value="${esc(src)}" placeholder="Dossier ou fichier source">
+      <button class="btn-icon" onclick="pickFolderForInput(this)">📂</button>
+      <button class="btn-icon del" onclick="removeSource(this)">✕</button>
+    </div>`).join('');
+  document.getElementById('profile-form-title').textContent = 'Modifier le profil';
+  document.getElementById('profile-edit-badge').classList.remove('hidden');
+  document.getElementById('btn-save-profile').textContent = 'Modifier';
+  document.getElementById('add-form').classList.add('open');
+  populateSharePicker(p.destination);
+  document.getElementById('p-name').focus();
+}
+
+function addSource() {
+  const row = document.createElement('div');
+  row.className = 'source-row';
+  row.innerHTML = `
+    <input class="form-input" placeholder="Dossier ou fichier source">
+    <button class="btn-icon" onclick="pickFolderForInput(this)" title="Parcourir">📂</button>
+    <button class="btn-icon del" onclick="removeSource(this)" title="Supprimer">✕</button>`;
+  document.getElementById('source-list').appendChild(row);
+}
+
+function removeSource(btn) {
+  const rows = document.querySelectorAll('#source-list .source-row');
+  if (rows.length > 1) btn.closest('.source-row').remove();
+}
+
+function pickFolderForInput(btn) {
+  const input = btn.closest('.source-row').querySelector('.form-input');
+  pywebview.api.pick_folder().then(p => { if (p) input.value = p; });
+}
+
+function pickFolderForId(id) {
+  pywebview.api.pick_folder().then(p => { if (p) document.getElementById(id).value = p; });
+}
+
+function populateSharePicker(preselect) {
+  return fillShareSelect('p-dest-share', preselect);
+}
+
+function applyShareDest() {
+  const val = document.getElementById('p-dest-share').value;
+  if (val) document.getElementById('p-dest').value = val;
+}
+
+function pickFileForId(id) {
+  pywebview.api.pick_file().then(p => { if (p) document.getElementById(id).value = p; });
+}
+
+// Recopie l'URI SMB du partage choisi dans le champ de chemin associé.
+function applyShareTo(selectId, inputId) {
+  const val = document.getElementById(selectId).value;
+  if (val) document.getElementById(inputId).value = val;
+}
+
+async function fillShareSelect(selectId, preselect) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  const shares = await pywebview.api.get_network_shares();
+  sel.innerHTML = '<option value="">— Sélectionner un partage enregistré —</option>';
+  for (const [name, s] of Object.entries(shares)) {
+    const opt = document.createElement('option');
+    opt.value = s.smb_uri;
+    opt.textContent = name + '  (' + s.server + ')';
+    sel.appendChild(opt);
+  }
+  sel.value = preselect || '';
+}
+
+async function submitProfile() {
+  const name     = document.getElementById('p-name').value.trim();
+  const sources  = [...document.querySelectorAll('#source-list .source-row input')]
+                     .map(i => i.value.trim()).filter(Boolean);
+  const dest     = document.getElementById('p-dest').value.trim();
+  const compress = document.getElementById('p-compress').checked;
+  if (!name || !sources.length || !dest) {
+    alert('Veuillez remplir tous les champs obligatoires.'); return;
+  }
+  let res;
+  if (_editingProfile) {
+    res = await pywebview.api.update_profile(_editingProfile, name, sources, dest, compress);
+  } else {
+    res = await pywebview.api.add_profile(name, sources, dest, compress);
+  }
+  if (res.ok) { closeProfileForm(); loadProfiles(); }
+  else         { alert('Erreur : ' + res.error); }
+}
+
+async function loadProfiles() {
+  _allProfiles = await pywebview.api.get_profiles();
+  const keys = Object.keys(_allProfiles);
+  const el = document.getElementById('profiles-list');
+  if (!keys.length) {
+    el.innerHTML = `<div class="empty"><div class="ico">📭</div>
+      <p>Aucun profil configuré.<br>Cliquez sur <strong>+ Ajouter</strong> pour commencer.</p></div>`;
+    return;
+  }
+  el.innerHTML = keys.map(name => {
+    const p = _allProfiles[name];
+    const badge = p.compress ? '<span class="badge">Compression</span>' : '';
+    return `<div class="card">
+      <div class="profile-card">
+        <div class="profile-info">
+          <h3>${esc(name)}${badge}</h3>
+          <div class="profile-meta">
+            <span>📥 ${esc(p.sources.join(' · '))}</span>
+            <span>📤 ${esc(p.destination)}</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="btn btn-ghost" onclick="editProfile(${jsq(name)})">Éditer</button>
+          <button class="btn btn-danger" onclick="deleteProfile(${jsq(name)})">Supprimer</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deleteProfile(name) {
+  if (!confirm(`Supprimer le profil "${name}" ?`)) return;
+  await pywebview.api.remove_profile(name);
+  loadProfiles();
+}
+
+// ── Backup ────────────────────────────────────────────────
+let _backupProfiles = {};
+
+async function loadBackupProfiles() {
+  _backupProfiles = await pywebview.api.get_profiles();
+  const keys = Object.keys(_backupProfiles);
+  const sel = document.getElementById('backup-profile');
+  sel.innerHTML = keys.length
+    ? keys.map(k => `<option value="${esc(k)}">${esc(k)}</option>`).join('')
+    : '<option value="">— Aucun profil —</option>';
+  onProfileChange();
+}
+
+function onProfileChange() {
+  const name = document.getElementById('backup-profile').value;
+  const profile = _backupProfiles[name];
+  if (profile) selectMode(profile.compress ? 'compress' : 'copy');
+}
+
+function selectMode(mode) {
+  document.getElementById('mode-copy').classList.toggle('selected', mode === 'copy');
+  document.getElementById('mode-compress').classList.toggle('selected', mode === 'compress');
+  document.querySelector(`input[name="backup-mode"][value="${mode}"]`).checked = true;
+}
+
+function startBackup() {
+  const profile = document.getElementById('backup-profile').value;
+  if (!profile) { alert('Sélectionnez un profil.'); return; }
+  const full     = document.getElementById('backup-full').checked;
+  const compress = document.querySelector('input[name="backup-mode"]:checked').value === 'compress';
+
+  document.getElementById('backup-results').classList.add('hidden');
+  document.getElementById('backup-progress').classList.remove('hidden');
+  document.getElementById('backup-bar').style.width = '0%';
+  document.getElementById('backup-pct').textContent = '0 %';
+  document.getElementById('backup-file').textContent = '';
+  document.getElementById('backup-status').textContent = 'Sauvegarde en cours…';
+  document.getElementById('backup-dot').style.display = '';
+  document.getElementById('btn-run').disabled = true;
+
+  pywebview.api.run_backup(profile, full, compress);
+}
+
+function updateProgress(current, total, pct, path) {
+  document.getElementById('backup-bar').style.width = pct + '%';
+  document.getElementById('backup-pct').textContent = pct + ' %';
+  document.getElementById('backup-file').textContent = path;
+}
+
+function backupComplete(report) {
+  document.getElementById('backup-progress').classList.add('hidden');
+  document.getElementById('backup-results').classList.remove('hidden');
+  document.getElementById('r-copied').textContent  = report.copied;
+  document.getElementById('r-skipped').textContent = report.skipped;
+  document.getElementById('r-errcnt').textContent  = report.errors.length;
+  if (report.archive) {
+    document.getElementById('r-archive').classList.remove('hidden');
+    document.getElementById('r-archive-path').textContent = report.archive;
+  } else {
+    document.getElementById('r-archive').classList.add('hidden');
+  }
+  const el = document.getElementById('r-errlist');
+  if (report.errors.length) {
+    el.classList.remove('hidden');
+    el.innerHTML = report.errors.map(e => `<div class="err-item">${esc(e)}</div>`).join('');
+  } else {
+    el.classList.add('hidden');
+  }
+  document.getElementById('btn-run').disabled = false;
+}
+
+function backupError(msg) {
+  alert('Erreur inattendue : ' + msg);
+  document.getElementById('btn-run').disabled = false;
+  document.getElementById('backup-progress').classList.add('hidden');
+}
+
+// ── Groupes ───────────────────────────────────────────────
+let _editingGroup = null;
+let _allGroups = {};
+let _groupProfileDraft = [];
+let _groupRunning = false;
+
+function toggleGroupForm() {
+  const f = document.getElementById('group-form');
+  if (f.classList.contains('open')) { closeGroupForm(); return; }
+  _editingGroup = null;
+  _groupProfileDraft = [];
+  renderGroupProfileList();
+  populateGroupAddSelect();
+  f.classList.add('open');
+  document.getElementById('g-name').focus();
+}
+
+function closeGroupForm() {
+  _editingGroup = null;
+  _groupProfileDraft = [];
+  document.getElementById('group-form').classList.remove('open');
+  document.getElementById('group-form-title').textContent = 'Nouveau groupe';
+  document.getElementById('group-edit-badge').classList.add('hidden');
+  document.getElementById('btn-save-group').textContent = 'Enregistrer';
+  document.getElementById('g-name').value = '';
+  renderGroupProfileList();
+}
+
+async function editGroup(name) {
+  const g = _allGroups[name];
+  if (!g) return;
+  _editingGroup = name;
+  _groupProfileDraft = [...g.profiles];
+  document.getElementById('g-name').value = name;
+  await populateGroupAddSelect();
+  renderGroupProfileList();
+  document.getElementById('group-form-title').textContent = 'Modifier le groupe';
+  document.getElementById('group-edit-badge').classList.remove('hidden');
+  document.getElementById('btn-save-group').textContent = 'Modifier';
+  document.getElementById('group-form').classList.add('open');
+  document.getElementById('g-name').focus();
+}
+
+function renderGroupProfileList() {
+  const el = document.getElementById('group-profile-list');
+  if (!_groupProfileDraft.length) {
+    el.innerHTML = `<div style="font-size:12px;color:var(--gray);padding:6px 0">Aucun profil ajouté pour le moment.</div>`;
+    return;
+  }
+  el.innerHTML = _groupProfileDraft.map((name, idx) => `
+    <div class="source-row">
+      <span class="order-idx">${idx + 1}</span>
+      <span style="flex:1;font-size:13px">${esc(name)}</span>
+      <button class="btn-icon" ${idx === 0 ? 'disabled' : ''} onclick="moveProfileInGroup(${idx},-1)" title="Monter">↑</button>
+      <button class="btn-icon" ${idx === _groupProfileDraft.length - 1 ? 'disabled' : ''} onclick="moveProfileInGroup(${idx},1)" title="Descendre">↓</button>
+      <button class="btn-icon del" onclick="removeProfileFromGroup(${idx})" title="Retirer">✕</button>
+    </div>`).join('');
+}
+
+async function populateGroupAddSelect() {
+  const profiles = await pywebview.api.get_profiles();
+  const sel = document.getElementById('group-add-profile-select');
+  const keys = Object.keys(profiles);
+  sel.innerHTML = keys.length
+    ? keys.map(k => `<option value="${esc(k)}">${esc(k)}</option>`).join('')
+    : '<option value="">— Aucun profil —</option>';
+}
+
+function addProfileToGroup() {
+  const sel = document.getElementById('group-add-profile-select');
+  const name = sel.value;
+  if (!name) return;
+  _groupProfileDraft.push(name);
+  renderGroupProfileList();
+}
+
+function moveProfileInGroup(idx, dir) {
+  const j = idx + dir;
+  if (j < 0 || j >= _groupProfileDraft.length) return;
+  [_groupProfileDraft[idx], _groupProfileDraft[j]] = [_groupProfileDraft[j], _groupProfileDraft[idx]];
+  renderGroupProfileList();
+}
+
+function removeProfileFromGroup(idx) {
+  _groupProfileDraft.splice(idx, 1);
+  renderGroupProfileList();
+}
+
+async function submitGroup() {
+  const name = document.getElementById('g-name').value.trim();
+  if (!name || !_groupProfileDraft.length) {
+    alert('Veuillez indiquer un nom et ajouter au moins un profil.'); return;
+  }
+  let res;
+  if (_editingGroup) {
+    res = await pywebview.api.update_group(_editingGroup, name, _groupProfileDraft);
+  } else {
+    res = await pywebview.api.add_group(name, _groupProfileDraft);
+  }
+  if (res.ok) { closeGroupForm(); loadGroups(); }
+  else         { alert('Erreur : ' + res.error); }
+}
+
+async function loadGroups() {
+  _allGroups = await pywebview.api.get_groups();
+  const keys = Object.keys(_allGroups);
+  const el = document.getElementById('groups-list');
+  if (!keys.length) {
+    el.innerHTML = `<div class="empty"><div class="ico">🗂</div>
+      <p>Aucun groupe configuré.<br>Cliquez sur <strong>+ Créer un groupe</strong> pour commencer.</p></div>`;
+    return;
+  }
+  el.innerHTML = keys.map(name => {
+    const g = _allGroups[name];
+    return `<div class="card">
+      <div class="profile-card">
+        <div class="profile-info">
+          <h3>${esc(name)}<span class="badge">${g.profiles.length} profil(s)</span></h3>
+          <div class="profile-meta">
+            <span>🔗 ${esc(g.profiles.join(' → '))}</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="btn btn-primary" ${_groupRunning ? 'disabled' : ''} onclick="runGroup(${jsq(name)})">▶ Lancer</button>
+          <button class="btn btn-ghost" onclick="editGroup(${jsq(name)})">Éditer</button>
+          <button class="btn btn-danger" onclick="deleteGroup(${jsq(name)})">Supprimer</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deleteGroup(name) {
+  if (!confirm(`Supprimer le groupe "${name}" ?`)) return;
+  await pywebview.api.remove_group(name);
+  loadGroups();
+}
+
+function runGroup(name) {
+  if (_groupRunning) return;
+  _groupRunning = true;
+  document.getElementById('group-results').classList.add('hidden');
+  document.getElementById('group-progress').classList.remove('hidden');
+  document.getElementById('group-bar').style.width = '0%';
+  document.getElementById('group-pct') && (document.getElementById('group-pct').textContent = '0 %');
+  document.getElementById('group-file').textContent = '';
+  document.getElementById('group-status').textContent = `Sauvegarde du groupe "${name}" en cours…`;
+  document.getElementById('group-dot').style.display = '';
+  loadGroups();
+  pywebview.api.run_group(name, false);
+}
+
+function updateGroupProgress(idx, total, profileName, pct, path) {
+  document.getElementById('group-bar').style.width = pct + '%';
+  document.getElementById('group-pct').textContent = pct + ' %';
+  document.getElementById('group-status').textContent = `Profil ${idx}/${total} : ${profileName}`;
+  document.getElementById('group-file').textContent = path;
+}
+
+function groupBackupComplete(report) {
+  _groupRunning = false;
+  document.getElementById('group-progress').classList.add('hidden');
+  document.getElementById('group-results').classList.remove('hidden');
+  document.getElementById('g-copied').textContent  = report.copied;
+  document.getElementById('g-skipped').textContent = report.skipped;
+  document.getElementById('g-errcnt').textContent  = report.errors.length;
+
+  const breakdown = document.getElementById('group-breakdown');
+  breakdown.innerHTML = (report.per_profile || []).map(p => `
+    <div class="group-result-row ${p.errors ? 'has-error' : ''}">
+      <span class="name">${esc(p.profile)}</span>
+      <span class="stats">${p.copied} copiés · ${p.skipped} ignorés${p.errors ? ' · ' + p.errors + ' erreur(s)' : ''}</span>
+    </div>`).join('');
+
+  const el = document.getElementById('g-errlist');
+  if (report.errors.length) {
+    el.classList.remove('hidden');
+    el.innerHTML = report.errors.map(e => `<div class="err-item">${esc(e)}</div>`).join('');
+  } else {
+    el.classList.add('hidden');
+  }
+  loadGroups();
+}
+
+function groupBackupError(msg) {
+  _groupRunning = false;
+  alert('Erreur inattendue : ' + msg);
+  document.getElementById('group-progress').classList.add('hidden');
+  loadGroups();
+}
+
+// ── Restore ───────────────────────────────────────────────
+// La restauration écrase la destination : chaque lancement est confirmé.
+function confirmRestore(src, dest) {
+  return confirm(
+    'Restaurer :\n  ' + src + '\nvers :\n  ' + dest +
+    '\n\nLes fichiers présents à destination portant le même nom seront écrasés.\n\nContinuer ?'
+  );
+}
+
+async function loadRestorePage() {
+  fillShareSelect('rst-src-share', document.getElementById('rst-src').value);
+  await loadRestoreProfiles();
+}
+
+function startRestore() {
+  const src  = document.getElementById('rst-src').value.trim();
+  const dest = document.getElementById('rst-dest').value.trim();
+  if (!src || !dest) { alert('Veuillez remplir la source et la destination.'); return; }
+  if (!confirmRestore(src, dest)) return;
+  const incremental = document.getElementById('rst-incremental').checked;
+
+  document.getElementById('restore-results').classList.add('hidden');
+  document.getElementById('restore-progress').classList.remove('hidden');
+  document.getElementById('restore-bar').style.width = '0%';
+  document.getElementById('restore-pct').textContent = '0 %';
+  document.getElementById('restore-file').textContent = '';
+  document.getElementById('restore-status').textContent = 'Restauration en cours…';
+  document.getElementById('btn-restore').disabled = true;
+  pywebview.api.restore(src, dest, incremental);
+}
+
+function updateRestoreProgress(current, total, pct, path) {
+  document.getElementById('restore-bar').style.width = pct + '%';
+  document.getElementById('restore-pct').textContent = pct + ' %';
+  document.getElementById('restore-file').textContent = path;
+}
+
+function restoreComplete(report) {
+  document.getElementById('restore-progress').classList.add('hidden');
+  document.getElementById('restore-results').classList.remove('hidden');
+  document.getElementById('rst-restored').textContent = report.restored;
+  document.getElementById('rst-skipped').textContent  = report.skipped || 0;
+  document.getElementById('rst-errcnt').textContent   = report.errors.length;
+  renderErrors('rst-errlist', report.errors);
+  document.getElementById('btn-restore').disabled = false;
+}
+
+function restoreError(msg) {
+  alert('Erreur : ' + msg);
+  document.getElementById('btn-restore').disabled = false;
+  document.getElementById('restore-progress').classList.add('hidden');
+}
+
+function renderErrors(elId, errors) {
+  const el = document.getElementById(elId);
+  if (errors && errors.length) {
+    el.classList.remove('hidden');
+    el.innerHTML = errors.map(e => `<div class="err-item">${esc(e)}</div>`).join('');
+  } else {
+    el.classList.add('hidden');
+    el.innerHTML = '';
+  }
+}
+
+// ── Profils de restauration ───────────────────────────────
+let _editingRestore = null;
+let _allRestores    = {};
+let _restoreRunning = false;
+
+function toggleRestoreForm() {
+  const f = document.getElementById('restore-form');
+  if (f.classList.contains('open')) { closeRestoreForm(); return; }
+  _editingRestore = null;
+  fillShareSelect('rp-src-share', '');
+  f.classList.add('open');
+  document.getElementById('rp-name').focus();
+}
+
+function closeRestoreForm() {
+  _editingRestore = null;
+  document.getElementById('restore-form').classList.remove('open');
+  document.getElementById('restore-form-title').textContent = 'Nouveau profil de restauration';
+  document.getElementById('restore-edit-badge').classList.add('hidden');
+  document.getElementById('btn-save-restore').textContent = 'Enregistrer';
+  document.getElementById('rp-name').value = '';
+  document.getElementById('rp-src').value  = '';
+  document.getElementById('rp-dest').value = '';
+  document.getElementById('rp-src-share').value = '';
+  document.getElementById('rp-incremental').checked = false;
+}
+
+function editRestoreProfile(name) {
+  const r = _allRestores[name];
+  if (!r) return;
+  _editingRestore = name;
+  document.getElementById('rp-name').value = name;
+  document.getElementById('rp-src').value  = r.source;
+  document.getElementById('rp-dest').value = r.destination;
+  document.getElementById('rp-incremental').checked = !!r.incremental;
+  fillShareSelect('rp-src-share', r.source);
+  document.getElementById('restore-form-title').textContent = 'Modifier le profil de restauration';
+  document.getElementById('restore-edit-badge').classList.remove('hidden');
+  document.getElementById('btn-save-restore').textContent = 'Modifier';
+  document.getElementById('restore-form').classList.add('open');
+  document.getElementById('rp-name').focus();
+}
+
+async function submitRestoreProfile() {
+  const name = document.getElementById('rp-name').value.trim();
+  const src  = document.getElementById('rp-src').value.trim();
+  const dest = document.getElementById('rp-dest').value.trim();
+  const incremental = document.getElementById('rp-incremental').checked;
+  if (!name || !src || !dest) {
+    alert('Veuillez remplir le nom, la source et la destination.'); return;
+  }
+  const res = _editingRestore
+    ? await pywebview.api.update_restore(_editingRestore, name, src, dest, incremental)
+    : await pywebview.api.add_restore(name, src, dest, incremental);
+  if (res.ok) { closeRestoreForm(); loadRestoreProfiles(); }
+  else        { alert('Erreur : ' + res.error); }
+}
+
+async function loadRestoreProfiles() {
+  _allRestores = await pywebview.api.get_restores();
+  const keys = Object.keys(_allRestores);
+  const el = document.getElementById('restores-list');
+  if (!keys.length) {
+    el.innerHTML = `<div class="empty"><div class="ico">↩</div>
+      <p>Aucun profil de restauration.<br>Cliquez sur <strong>+ Créer un profil</strong> pour en enregistrer un.</p></div>`;
+    return;
+  }
+  el.innerHTML = keys.map(name => {
+    const r = _allRestores[name];
+    const badge = r.incremental ? '<span class="badge">Incrémental</span>' : '';
+    return `<div class="card">
+      <div class="profile-card">
+        <div class="profile-info">
+          <h3>${esc(name)}${badge}</h3>
+          <div class="profile-meta">
+            <span>📥 ${esc(r.source)}</span>
+            <span>📤 ${esc(r.destination)}</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="btn btn-primary" ${_restoreRunning ? 'disabled' : ''} onclick="runRestoreProfile(${jsq(name)})">↩ Restaurer</button>
+          <button class="btn btn-ghost" onclick="editRestoreProfile(${jsq(name)})">Éditer</button>
+          <button class="btn btn-danger" onclick="deleteRestoreProfile(${jsq(name)})">Supprimer</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deleteRestoreProfile(name) {
+  if (!confirm(`Supprimer le profil de restauration "${name}" ?`)) return;
+  await pywebview.api.remove_restore(name);
+  loadRestoreProfiles();
+}
+
+async function runRestoreProfile(name) {
+  if (_restoreRunning) return;
+  const r = _allRestores[name];
+  if (!r) return;
+  if (!confirmRestore(r.source, r.destination)) return;
+
+  _restoreRunning = true;
+  document.getElementById('rp-results').classList.add('hidden');
+  document.getElementById('rp-progress').classList.remove('hidden');
+  document.getElementById('rp-bar').style.width = '0%';
+  document.getElementById('rp-pct').textContent = '0 %';
+  document.getElementById('rp-file').textContent = '';
+  document.getElementById('rp-status').textContent = `Restauration "${name}" en cours…`;
+  loadRestoreProfiles();
+
+  const res = await pywebview.api.run_restore(name);
+  if (!res.ok) restoreProfileError(res.error);
+}
+
+function updateRestoreProfileProgress(current, total, pct, path) {
+  document.getElementById('rp-bar').style.width = pct + '%';
+  document.getElementById('rp-pct').textContent = pct + ' %';
+  document.getElementById('rp-file').textContent = path;
+}
+
+function restoreProfileComplete(report) {
+  _restoreRunning = false;
+  document.getElementById('rp-progress').classList.add('hidden');
+  document.getElementById('rp-results').classList.remove('hidden');
+  document.getElementById('rp-restored').textContent = report.restored;
+  document.getElementById('rp-skipped').textContent  = report.skipped || 0;
+  document.getElementById('rp-errcnt').textContent   = report.errors.length;
+  renderErrors('rp-errlist', report.errors);
+  loadRestoreProfiles();
+}
+
+function restoreProfileError(msg) {
+  _restoreRunning = false;
+  alert('Erreur : ' + msg);
+  document.getElementById('rp-progress').classList.add('hidden');
+  loadRestoreProfiles();
+}
+
+// ── Planifier ─────────────────────────────────────────────
+const _DAYS_FR = {MON:'Lundi',TUE:'Mardi',WED:'Mercredi',THU:'Jeudi',FRI:'Vendredi',SAT:'Samedi',SUN:'Dimanche'};
+let _editingSchedule = null;
+let _allSchedules    = {};
+
+function freqLabel(s) {
+  if (s.frequency === 'hourly') return 'Toutes les heures';
+  if (s.frequency === 'daily')  return `Tous les jours à ${s.time}`;
+  if (s.frequency === 'weekly') return `Tous les ${_DAYS_FR[s.day] || s.day} à ${s.time}`;
+  return s.frequency;
+}
+
+function closeScheduleForm() {
+  _editingSchedule = null;
+  document.getElementById('schedule-form').classList.remove('open');
+  document.getElementById('schedule-form-title').textContent = 'Nouvelle planification';
+  document.getElementById('schedule-edit-badge').classList.add('hidden');
+  document.getElementById('btn-save-schedule').textContent = 'Enregistrer';
+  document.getElementById('sch-name').value = '';
+  selectSchedType('profile');
+  selectFreq('hourly');
+}
+
+function toggleScheduleForm() {
+  const f = document.getElementById('schedule-form');
+  if (f.classList.contains('open')) { closeScheduleForm(); return; }
+  _editingSchedule = null;
+  selectSchedType('profile').then(() => f.classList.add('open'));
+}
+
+async function editSchedule(name) {
+  const s = _allSchedules[name];
+  if (!s) return;
+  _editingSchedule = name;
+  await selectSchedType(s.type || 'profile');
+  document.getElementById('sch-name').value = name;
+  document.getElementById('sch-target').value = s.target;
+  selectFreq(s.frequency);
+  if (s.time) document.getElementById('sch-time').value = s.time;
+  if (s.day)  document.getElementById('sch-day').value  = s.day;
+  document.getElementById('schedule-form-title').textContent = 'Modifier la planification';
+  document.getElementById('schedule-edit-badge').classList.remove('hidden');
+  document.getElementById('btn-save-schedule').textContent = 'Modifier';
+  document.getElementById('schedule-form').classList.add('open');
+  document.getElementById('sch-name').focus();
+}
+
+function selectFreq(freq) {
+  ['hourly','daily','weekly'].forEach(f => {
+    document.getElementById('freq-' + f).classList.toggle('selected', f === freq);
+    document.querySelector(`input[name="sch-freq"][value="${f}"]`).checked = (f === freq);
+  });
+  document.getElementById('sch-time-group').classList.toggle('hidden', freq === 'hourly');
+  document.getElementById('sch-day-group').classList.toggle('hidden', freq !== 'weekly');
+}
+
+const _SCHED_TYPES = {
+  profile: {label: 'Profil',                 icon: '📁', empty: 'profil de sauvegarde'},
+  group:   {label: 'Groupe',                 icon: '🗂', empty: 'groupe'},
+  restore: {label: 'Profil de restauration', icon: '↩',  empty: 'profil de restauration'},
+};
+
+async function selectSchedType(type) {
+  Object.keys(_SCHED_TYPES).forEach(t => {
+    document.getElementById('type-' + t).classList.toggle('selected', t === type);
+  });
+  document.querySelector(`input[name="sch-type"][value="${type}"]`).checked = true;
+  document.getElementById('sch-target-label').textContent = _SCHED_TYPES[type].label;
+  return loadScheduleTargetSelect(type);
+}
+
+async function loadScheduleTargetSelect(type) {
+  let items;
+  if (type === 'group')        items = await pywebview.api.get_groups();
+  else if (type === 'restore') items = await pywebview.api.get_restores();
+  else                         items = await pywebview.api.get_profiles();
+  const keys = Object.keys(items);
+  const sel = document.getElementById('sch-target');
+  sel.innerHTML = keys.length
+    ? keys.map(k => `<option value="${esc(k)}">${esc(k)}</option>`).join('')
+    : `<option value="">— Aucun ${_SCHED_TYPES[type].empty} —</option>`;
+}
+
+async function loadSchedulePage() {
+  closeScheduleForm();
+  pywebview.api.get_scheduler_info().then(info => {
+    const el = document.getElementById('sched-backend');
+    el.textContent = info.backend === 'none'
+      ? '⚠ Aucun moteur de planification détecté sur ce système.'
+      : 'Moteur de planification : ' + info.label;
+  });
+  _allSchedules = await pywebview.api.get_schedules();
+  const keys = Object.keys(_allSchedules);
+  const el = document.getElementById('schedule-list');
+  if (!keys.length) {
+    el.innerHTML = `<div class="empty"><div class="ico">⏰</div>
+      <p>Aucune planification configurée.<br>Cliquez sur <strong>+ Planifier</strong> pour commencer.</p></div>`;
+    return;
+  }
+  el.innerHTML = keys.map(name => {
+    const s = _allSchedules[name];
+    const meta = _SCHED_TYPES[s.type] || _SCHED_TYPES.profile;
+    const typeBadge = `<span class="type-badge ${s.type !== 'profile' ? 'group' : ''}">${meta.label}</span>`;
+    return `<div class="card">
+      <div class="schedule-card">
+        <div class="schedule-info">
+          <h3>${esc(name)} <span class="freq-badge">${freqLabel(s)}</span>${typeBadge}</h3>
+          <div class="schedule-meta">${meta.icon} ${meta.label} : ${esc(s.target)}</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="btn btn-ghost" onclick="editSchedule(${jsq(name)})">Éditer</button>
+          <button class="btn btn-danger" onclick="deleteSchedule(${jsq(name)})">Supprimer</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function submitSchedule() {
+  const name   = document.getElementById('sch-name').value.trim();
+  const type   = document.querySelector('input[name="sch-type"]:checked').value;
+  const target = document.getElementById('sch-target').value;
+  const freq   = document.querySelector('input[name="sch-freq"]:checked').value;
+  const time   = document.getElementById('sch-time').value || '02:00';
+  const day    = document.getElementById('sch-day').value;
+  if (!name || !target) { alert('Veuillez renseigner un nom et sélectionner une cible.'); return; }
+  let res;
+  if (_editingSchedule) {
+    res = await pywebview.api.update_schedule(_editingSchedule, name, target, type, freq, time, day);
+  } else {
+    res = await pywebview.api.add_schedule(name, target, type, freq, time, day);
+  }
+  if (res.ok) {
+    closeScheduleForm(); loadSchedulePage();
+    if (res.warning) alert(res.warning);
+  } else {
+    alert('Erreur : ' + res.error);
+  }
+}
+
+async function deleteSchedule(name) {
+  if (!confirm(`Supprimer la planification "${name}" ?`)) return;
+  const res = await pywebview.api.remove_schedule(name);
+  if (res.ok) loadSchedulePage();
+  else alert('Erreur : ' + res.error);
+}
+
+// ── Logs ──────────────────────────────────────────────────
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' o';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' Ko';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' Mo';
+}
+
+async function loadLogs() {
+  closeLogViewer();
+  const logs = await pywebview.api.get_logs();
+  const el = document.getElementById('logs-list');
+  if (!logs.length) {
+    el.innerHTML = `<div class="empty"><div class="ico">📭</div><p>Aucun journal de sauvegarde.</p></div>`;
+    return;
+  }
+  el.innerHTML = logs.map(f => `
+    <div class="log-file-row">
+      <div class="log-file-info">
+        <div class="log-file-name">${esc(f.name)}</div>
+        <div class="log-file-meta">${esc(f.modified)} — ${formatSize(f.size)}</div>
+      </div>
+      <div class="log-file-actions">
+        <button class="btn btn-ghost" style="font-size:12px" onclick="viewLog(${jsq(f.name)})">Afficher</button>
+      </div>
+    </div>`).join('');
+}
+
+async function viewLog(filename) {
+  const content = await pywebview.api.get_log_content(filename);
+  document.getElementById('log-viewer-title').textContent = filename;
+  const viewer = document.getElementById('log-viewer-content');
+  viewer.textContent = content || '(fichier vide)';
+  document.getElementById('log-viewer-card').classList.remove('hidden');
+  viewer.scrollTop = viewer.scrollHeight;
+}
+
+function copyLogContent() {
+  const text = document.getElementById('log-viewer-content').textContent;
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+  document.body.appendChild(ta);
+  ta.select();
+  ta.setSelectionRange(0, ta.value.length);
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  const btn = document.getElementById('btn-copy-log');
+  btn.textContent = '✓ Copié';
+  setTimeout(() => { btn.textContent = '📋 Copier'; }, 2000);
+}
+
+function closeLogViewer() {
+  document.getElementById('log-viewer-card').classList.add('hidden');
+  document.getElementById('log-viewer-content').textContent = '';
+}
+
+async function clearLogs() {
+  if (!confirm('Supprimer tous les fichiers journaux ?')) return;
+  closeLogViewer();
+  const res = await pywebview.api.clear_logs();
+  if (res.ok) {
+    loadLogs();
+    if (res.deleted === 0) alert('Aucun journal à supprimer.');
+  }
+}
+
+// ── Réseau ────────────────────────────────────────────
+let _editingShare = null;
+let _allShares    = {};
+
+function toggleShareForm() {
+  const f = document.getElementById('share-form');
+  if (f.classList.contains('open')) { closeShareForm(); return; }
+  _editingShare = null;
+  document.getElementById('ns-pass-hint').classList.add('hidden');
+  f.classList.add('open');
+  document.getElementById('ns-name').focus();
+}
+
+function closeShareForm() {
+  _editingShare = null;
+  document.getElementById('share-form').classList.remove('open');
+  document.getElementById('share-form-title').textContent = 'Nouveau partage';
+  document.getElementById('share-edit-badge').classList.add('hidden');
+  document.getElementById('btn-save-share').textContent = 'Enregistrer';
+  ['ns-name','ns-server','ns-share','ns-subpath','ns-user','ns-pass','ns-domain']
+    .forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('ns-pass-hint').classList.add('hidden');
+}
+
+function editShare(name) {
+  const s = _allShares[name];
+  if (!s) return;
+  _editingShare = name;
+  document.getElementById('ns-name').value    = name;
+  document.getElementById('ns-server').value  = s.server;
+  document.getElementById('ns-share').value   = s.share;
+  document.getElementById('ns-subpath').value = s.subpath;
+  document.getElementById('ns-user').value    = s.username;
+  document.getElementById('ns-pass').value    = '';
+  document.getElementById('ns-domain').value  = s.domain;
+  document.getElementById('ns-pass-hint').classList.remove('hidden');
+  document.getElementById('share-form-title').textContent = 'Modifier le partage';
+  document.getElementById('share-edit-badge').classList.remove('hidden');
+  document.getElementById('btn-save-share').textContent = 'Modifier';
+  document.getElementById('share-form').classList.add('open');
+  document.getElementById('ns-name').focus();
+}
+
+async function submitShare() {
+  const name    = document.getElementById('ns-name').value.trim();
+  const server  = document.getElementById('ns-server').value.trim();
+  const share   = document.getElementById('ns-share').value.trim();
+  const subpath = document.getElementById('ns-subpath').value.trim();
+  const user    = document.getElementById('ns-user').value.trim();
+  const pass    = document.getElementById('ns-pass').value;
+  const domain  = document.getElementById('ns-domain').value.trim();
+  if (!name || !server || !share) {
+    alert('Veuillez remplir les champs obligatoires (Nom, Serveur, Partage SMB).'); return;
+  }
+  let res;
+  if (_editingShare) {
+    res = await pywebview.api.update_network_share(_editingShare, name, server, share, subpath, user, pass, domain);
+  } else {
+    res = await pywebview.api.add_network_share(name, server, share, subpath, user, pass, domain);
+  }
+  if (res.ok) { closeShareForm(); loadNetworkShares(); }
+  else         { alert('Erreur : ' + res.error); }
+}
+
+async function loadNetworkShares() {
+  _allShares = await pywebview.api.get_network_shares();
+  const keys = Object.keys(_allShares);
+  const el = document.getElementById('shares-list');
+  if (!keys.length) {
+    el.innerHTML = `<div class="empty"><div class="ico">🌐</div>
+      <p>Aucun partage réseau configuré.<br>Cliquez sur <strong>+ Ajouter</strong> pour commencer.</p></div>`;
+    return;
+  }
+  el.innerHTML = keys.map(name => {
+    const s = _allShares[name];
+    const mounted = s.mounted;
+    const dotCls  = mounted ? 'mounted' : 'unmounted';
+    const statusTxt = mounted ? 'Monté' : 'Non monté';
+    const mountBtn = `<button class="btn btn-success" onclick="doMount(${jsq(name)})">&#x25BA; Tester</button>`;
+    const pwIcon = s.has_password ? ' 🔒' : '';
+    return `<div class="card" id="share-card-${esc(name)}">
+      <div class="share-card">
+        <div class="share-dot ${dotCls}" title="${statusTxt}"></div>
+        <div class="share-info">
+          <h3>${esc(name)}${pwIcon}</h3>
+          <div class="share-meta">
+            <span>🖥 //${esc(s.server)}/${esc(s.share)}${s.subpath ? '/' + esc(s.subpath) : ''}</span>
+            <span class="share-path" id="share-path-${esc(name)}">${esc(s.smb_uri)}</span>
+          </div>
+          <div class="share-msg" id="share-msg-${esc(name)}"></div>
+        </div>
+        <div class="share-actions">
+          ${mountBtn}
+          <button class="btn btn-ghost" onclick="copySharePath(${jsq(name)})" title="Copier l'URI SMB (à coller dans la destination d'un profil)">&#x1F4CB;</button>
+          <button class="btn btn-ghost" onclick="editShare(${jsq(name)})">Éditer</button>
+          <button class="btn btn-danger" onclick="deleteShare(${jsq(name)})">Supprimer</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function _showShareMsg(name, text, isOk) {
+  const el = document.getElementById('share-msg-' + name);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'share-msg ' + (isOk ? 'ok' : 'err');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.className = 'share-msg'; }, 6000);
+}
+
+async function doMount(name) {
+  const res = await pywebview.api.mount_network_share(name);
+  _showShareMsg(name, (res.ok ? '✓ ' : '✕ ') + res.message, res.ok);
+  if (res.ok) loadNetworkShares();
+}
+
+async function doUnmount(name) {
+  const res = await pywebview.api.unmount_network_share(name);
+  _showShareMsg(name, (res.ok ? '✓ ' : '✕ ') + res.message, res.ok);
+  if (res.ok) loadNetworkShares();
+}
+
+function copySharePath(name) {
+  const el = document.getElementById('share-path-' + name);
+  if (!el) return;
+  const ta = document.createElement('textarea');
+  ta.value = el.textContent;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+  document.body.appendChild(ta);
+  ta.select();
+  ta.setSelectionRange(0, ta.value.length);
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  _showShareMsg(name, '✓ URI SMB copiée dans le presse-papiers', true);
+}
+
+async function deleteShare(name) {
+  if (!confirm(`Supprimer le partage "${name}" ?\n(Le partage ne sera pas démonté.)`)) return;
+  const res = await pywebview.api.remove_network_share(name);
+  if (res.ok) loadNetworkShares();
+  else alert('Erreur : ' + res.error);
+}
+
+async function refreshShares() {
+  await loadNetworkShares();
+}
+
+function togglePw(id, eye) {
+  const inp = document.getElementById(id);
+  const show = inp.type === 'password';
+  inp.type  = show ? 'text' : 'password';
+  eye.textContent = show ? '🙈' : '👁';
+}
+
+// ── Paramètres : thème ─────────────────────────────────────
+// Le thème est appliqué immédiatement sur <html> puis persisté dans
+// config.json, ce qui le rend indépendant du stockage du moteur de rendu.
+async function setTheme(theme) {
+  const previous = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', theme);
+  markThemeSelected(theme);
+  const res = await pywebview.api.set_theme(theme);
+  const msg = document.getElementById('theme-msg');
+  if (res.ok) {
+    msg.textContent = 'Thème enregistré — il sera conservé au prochain démarrage.';
+    msg.classList.add('show');
+    clearTimeout(msg._t);
+    msg._t = setTimeout(() => msg.classList.remove('show'), 4000);
+  } else {
+    document.documentElement.setAttribute('data-theme', previous);
+    markThemeSelected(previous);
+    alert('Erreur : ' + res.error);
+  }
+}
+
+function markThemeSelected(theme) {
+  document.querySelectorAll('#theme-grid .theme-card').forEach(card => {
+    card.classList.toggle('selected', card.dataset.themeId === theme);
+  });
+}
+
+async function syncThemeSelection() {
+  // Le thème est déjà posé sur <html> au chargement ; on relit la valeur
+  // stockée au cas où le gabarit n'aurait pas été substitué.
+  let theme = document.documentElement.getAttribute('data-theme');
+  if (!theme || theme === '__THEME__') {
+    theme = await pywebview.api.get_theme();
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+  markThemeSelected(theme);
+}
+
+// ── Paramètres ─────────────────────────────────────────────
+async function createShortcut() {
+  const btn = document.getElementById('btn-shortcut');
+  const msg = document.getElementById('shortcut-msg');
+  btn.disabled = true;
+  btn.textContent = 'Création…';
+  msg.classList.remove('show');
+
+  const res = await pywebview.api.create_shortcut();
+
+  if (res.ok) {
+    btn.textContent = '✓ Créé';
+    msg.textContent = 'Raccourci créé : ' + res.path;
+    msg.classList.add('show');
+    setTimeout(() => { btn.textContent = 'Ajouter au bureau'; btn.disabled = false; }, 4000);
+  } else {
+    alert('Erreur : ' + res.error);
+    btn.textContent = 'Ajouter au bureau';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
