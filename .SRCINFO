@@ -33,4 +33,6 @@ pkgbase = timestamp
 	pkgdesc = Portable backup and restore tool with graphical user interface - Compatible with Linux
 	
 	source = timestamp-1.1.tar.gz::https://github.com/yourusername/timestamp/archive/refs/tags/v1.1.tar.gz
+	source = config.json.default
+	sha256sums = SKIP
 	sha256sums = SKIP

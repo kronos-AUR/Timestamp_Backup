@@ -2,7 +2,7 @@
 # arg 2:  the old package version
 post_install() {
     echo "================================================================"
-    echo " Timestamp - Installation Complete"
+    echo "  Timestamp - Installation Complete"
     echo "================================================================"
     echo ""
     echo "To launch Timestamp:"
@@ -13,57 +13,84 @@ post_install() {
     echo "Configuration files will be stored in:"
     echo "  ~/.config/timestamp/"
     echo ""
+    echo "Backup data will be stored in:"
+    echo "  ~/.local/share/timestamp/"
+    echo ""
     echo "To create a backup profile:"
     echo "  timestamp-cli profile add <name> <destination> <source1> [source2...]"
+    echo ""
+    echo "To run a backup:"
+    echo "  timestamp-cli run <profile_name>"
+    echo ""
+    echo "For scheduling backups with cron:"
+    echo "  Edit your crontab with 'crontab -e'"
+    echo "  Example: 0 2 * * * /usr/bin/timestamp-cli run daily_backup"
     echo ""
     echo "================================================================"
     
     # Create user configuration directory
-    mkdir -p "$HOME/.config/timestamp"
+    install -d -m 755 "$HOME/.config/timestamp"
     
     # Copy default configuration file if it doesn't exist
-    if [ ! -f "$HOME/.config/timestamp/config.json" ]; then
-        cp /usr/share/timestamp/config.json.default "$HOME/.config/timestamp/config.json"
-        chmod 644 "$HOME/.config/timestamp/config.json"
+    if [ ! -f "$HOME/.config/timestamp/config.json" ] && [ -f "/usr/share/timestamp/config.json.default" ]; then
+        install -D -m 644 /usr/share/timestamp/config.json.default "$HOME/.config/timestamp/config.json"
     fi
     
     # Create logs directory
-    mkdir -p "$HOME/.local/share/timestamp/logs"
+    install -d -m 755 "$HOME/.local/share/timestamp/logs"
     
     # Create runtime directory
-    mkdir -p "$HOME/.local/share/timestamp/runtime"
-    
-    # Enable cron service if available
-    if command -v systemctl &>/dev/null; then
-        if systemctl list-unit-files cronie.service &>/dev/null; then
-            sudo systemctl enable --now cronie 2>/dev/null || true
-        elif systemctl list-unit-files cron.service &>/dev/null; then
-            sudo systemctl enable --now cron 2>/dev/null || true
-        fi
-    fi
+    install -d -m 755 "$HOME/.local/share/timestamp/runtime"
     
     # Update desktop application database
-    update-desktop-database -q || true
+    update-desktop-database -q 2>/dev/null || true
+    
+    # Update MIME database
+    update-mime-database usr/share/mime 2>/dev/null || true
+    
+    # Enable cron service if available
+    if [ -x /usr/bin/systemctl ]; then
+        if systemctl list-unit-files cronie.service &>/dev/null; then
+            echo "Enabling cronie service for scheduled backups..."
+            sudo systemctl enable --now cronie 2>/dev/null || echo "  Note: Could not enable cronie (requires sudo)"
+        elif systemctl list-unit-files cron.service &>/dev/null; then
+            echo "Enabling cron service for scheduled backups..."
+            sudo systemctl enable --now cron 2>/dev/null || echo "  Note: Could not enable cron (requires sudo)"
+        fi
+    fi
 }
 
 post_upgrade() {
-    post_install
+    # Update desktop application database
+    update-desktop-database -q 2>/dev/null || true
+    
+    # Update MIME database
+    update-mime-database usr/share/mime 2>/dev/null || true
+    
+    echo "Timestamp has been upgraded to version $2."
 }
 
 pre_remove() {
     # Configuration files are preserved by default
-    echo "For a complete uninstall, manually remove:"
-    echo "  - ~/.config/timestamp/"
-    echo "  - ~/.local/share/timestamp/"
+    echo ""
+    echo "Note: Your configuration files in ~/.config/timestamp/"
+    echo "      and backup data in ~/.local/share/timestamp/"
+    echo "      will be preserved after uninstallation."
+    echo ""
+    echo "To completely remove all data, run:"
+    echo "  rm -rf ~/.config/timestamp ~/.local/share/timestamp ~/.cache/timestamp"
     echo ""
 }
 
 post_remove() {
     # Update desktop application database
-    update-desktop-database -q || true
+    update-desktop-database -q 2>/dev/null || true
+    
+    # Update MIME database
+    update-mime-database usr/share/mime 2>/dev/null || true
 }
 
 op=$1
 shift
 
-$op $*
+$op "$@"

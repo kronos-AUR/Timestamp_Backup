@@ -5,7 +5,7 @@ pkgname=timestamp
 pkgver=1.1
 pkgrel=1
 pkgdesc="Portable backup and restore tool with graphical user interface - Compatible with Linux"
-url="https://github.com/yourusername/timestamp"
+url="https://github.com/kronos-AUR/Timestamp_Backup"
 license=('GPL3')
 arch=('x86_64' 'aarch64')
 groups=()
@@ -38,8 +38,10 @@ changelog=
 
 source=(
     "${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
+    "config.json.default"
 )
-sha256sums=('SKIP')
+sha256sums=('SKIP'
+            'SKIP')
 
 package() {
     cd "${pkgname}-${pkgver}"
@@ -65,6 +67,7 @@ package() {
     # Install default configuration file
     install -d "${pkgdir}/usr/share/${pkgname}"
     install -Dm644 timestamp/requirements.txt "${pkgdir}/usr/share/${pkgname}/requirements.txt"
+    install -Dm644 config.json.default "${pkgdir}/usr/share/${pkgname}/config.json.default"
     
     # Install documentation
     install -d "${pkgdir}/usr/share/doc/${pkgname}"
