@@ -49,7 +49,50 @@ makepkg -si
 
 `makepkg -si` downloads the sources (the `v<pkgver>` release tag referenced in the PKGBUILD), builds the package and installs the dependencies automatically. No AUR helper is needed.
 
+### Debian / Ubuntu / Kali (apt)
+
+There is no `.deb` package yet: clone the repository, install the dependencies with `apt`, then run Timestamp directly from the sources:
+
+```bash
+sudo apt update
+sudo apt install python3 python3-pip \
+    python3-pyqt6 python3-pyqt6.qtwebengine \
+    python3-qtpy python3-pil python3-cryptography python3-pywebview \
+    cron libxcb-cursor0
+
+# Optional (SMB network shares, user directories):
+sudo apt install python3-smbc gvfs-backends kio-fuse xdg-user-dirs
+
+git clone https://github.com/kronos-AUR/Timestamp_Backup.git
+cd Timestamp_Backup
+python3 scripts/timestamp-backup-cli --help   # CLI
+python3 scripts/timestamp-backup-gui          # GUI
+```
+
+### Fedora (dnf)
+
+Same approach with `dnf`:
+
+```bash
+sudo dnf install python3 python3-pip \
+    python3-pyqt6 python3-pyqt6-webengine \
+    python3-qtpy python3-pillow python3-cryptography python3-pywebview \
+    cronie xcb-util-cursor
+
+# Optional (SMB network shares, user directories):
+sudo dnf install gvfs-smb kio-fuse xdg-user-dirs
+
+git clone https://github.com/kronos-AUR/Timestamp_Backup.git
+cd Timestamp_Backup
+python3 scripts/timestamp-backup-cli --help   # CLI
+python3 scripts/timestamp-backup-gui          # GUI
+```
+
+On Debian/Fedora, the configuration is still stored in `~/.config/timestamp-backup/`. If a Python dependency is not packaged for your distribution, install it with pip instead (`pip install -r timestamp/requirements.txt`; on Debian 12+ / Ubuntu 23.04+ use a virtualenv or `pip install --user ...` because of PEP 668).
+
 ### Requirements
+
+The list below uses Arch Linux package names; use the `apt`/`dnf` blocks above for Debian/Fedora equivalents.
 
 **Required:**
 - python

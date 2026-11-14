@@ -39,6 +39,10 @@ cd Timestamp_Backup
 makepkg -si
 ```
 
+### Other distributions (Debian/Fedora, no AUR)
+
+On Debian/Ubuntu/Kali (`apt`) and Fedora (`dnf`), clone the source repository, install the dependencies with your package manager and run Timestamp from the sources — see the **Installation** section of [README.md](README.md) for the exact `apt`/`dnf` commands.
+
 ## Dependencies
 
 ### Required Dependencies

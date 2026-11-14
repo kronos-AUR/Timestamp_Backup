@@ -34,8 +34,8 @@ def _generate_icon():
     if ico_path.exists() and png_path.exists():
         return ico_path, png_path
     if not svg_path.exists():
-        # Try with installation path
-        svg_path = Path("/usr/share/icons/hicolor/scalable/apps/timestamp-backup.svg")
+        # Source checkout (git clone): use the bundled icon
+        svg_path = Path(__file__).resolve().parent / "icon" / "timestamp-backup.svg"
         if not svg_path.exists():
             return None, None
 

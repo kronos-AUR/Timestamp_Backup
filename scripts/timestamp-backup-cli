@@ -6,6 +6,9 @@ from pathlib import Path
 
 # Installation path
 PKG_DIR = Path("/usr/lib/timestamp-backup")
+if not PKG_DIR.exists():
+    # Run from a source checkout (git clone): use the bundled package directory
+    PKG_DIR = Path(__file__).resolve().parent.parent / "timestamp"
 
 # Add package directory to sys.path
 if str(PKG_DIR) not in sys.path:
