@@ -258,10 +258,4 @@ GNU General Public License version 3 (GPL-3.0-only) - see [LICENSE](LICENSE) fil
 
 ---
 
-## Documentation en Français
-
-Voir [AUR-README.md](AUR-README.md) pour la documentation en français.
-
----
-
 **Note:** This project is not affiliated with any commercial backup service. It's a free and open-source backup tool for personal use.
