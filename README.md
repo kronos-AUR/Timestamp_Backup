@@ -2,7 +2,6 @@
 
 **Backup and restore tool with graphical user interface for Linux**
 
-[![AUR version](https://img.shields.io/aur/version/timestamp-backup?style=flat-square)](https://aur.archlinux.org/packages/timestamp-backup)
 [![License](https://img.shields.io/badge/license-GPL--3.0--only-blue.svg?style=flat-square)](LICENSE)
 
 Timestamp is a simple yet powerful backup solution designed for Linux users who want an easy-to-use tool with both GUI and CLI interfaces.
@@ -22,22 +21,9 @@ Timestamp is a simple yet powerful backup solution designed for Linux users who 
 
 ## Installation
 
-### From AUR (Arch Linux)
+> **Note:** Timestamp is **not currently available on the AUR**. Arch Linux has blocked the creation of new AUR accounts, so the package cannot be published there at the moment. Please use the **git clone** method below — it is the recommended installation method.
 
-```bash
-# With yay (recommended)
-yay -S timestamp-backup
-
-# With paru
-paru -S timestamp-backup
-
-# With makepkg
-git clone https://aur.archlinux.org/timestamp-backup.git
-cd timestamp-backup
-makepkg -si
-```
-
-### From GitHub (without the AUR)
+### From GitHub with git clone (recommended)
 
 Clone the source repository and build the package locally:
 
@@ -48,6 +34,23 @@ makepkg -si
 ```
 
 `makepkg -si` downloads the sources (the `v<pkgver>` release tag referenced in the PKGBUILD), builds the package and installs the dependencies automatically. No AUR helper is needed.
+
+### From the AUR (Arch Linux) — currently unavailable
+
+Because Arch Linux has blocked the creation of new AUR accounts, `timestamp-backup` cannot be published on the AUR for now. If the package becomes available again, you will be able to install it with:
+
+```bash
+# With yay
+yay -S timestamp-backup
+
+# With paru
+paru -S timestamp-backup
+
+# With makepkg
+git clone https://aur.archlinux.org/timestamp-backup.git
+cd timestamp-backup
+makepkg -si
+```
 
 ### Debian / Ubuntu / Kali (apt)
 
